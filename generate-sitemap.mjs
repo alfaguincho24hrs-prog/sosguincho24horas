@@ -35,7 +35,6 @@ const getDynamicRoutes = () => {
   
   const citiesDataContent = fs.readFileSync(citiesDataPath, 'utf-8');
   
-  // Use a more robust regex to capture both formats: [ "Name", "UF" ] and ["Name", "UF"]
   const cityRegex = /\[\s*"([^"]+)"\s*,\s*"([^"]+)"\s*\]/g;
   const cities = [];
   let match;
@@ -54,45 +53,43 @@ const getDynamicRoutes = () => {
     const blogSlugRegex = /slug:\s*"([^"]+)"/g;
     let blogMatch;
     while ((blogMatch = blogSlugRegex.exec(blogDataContent)) !== null) {
-      blogRoutes.push(`/blog/${blogMatch[1]}`);
+      blogRoutes.push('/blog/' + blogMatch[1]);
     }
   }
 
-  // Deduplicate cities by slug and uf
-  const uniqueCities = Array.from(new Map(cities.map(c => [`${c.slug}-${c.uf}`, c])).values());
+  const uniqueCities = Array.from(new Map(cities.map(c => [c.slug + '-' + c.uf, c])).values());
 
   return [
-    ...uniqueCities.map(city => `/guincho-em-${city.slug}-${city.uf.toLowerCase()}`),
+    ...uniqueCities.map(city => '/guincho-em-' + city.slug + '-' + city.uf.toLowerCase()),
     ...blogRoutes
   ];
 };
 
 const generateSitemap = (routes) => {
   const now = new Date().toISOString().split('T')[0];
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${routes.map(route => `  <url>
-    <loc>${SITE_URL}${route}</loc>
-    <lastmod>${now}</lastmod>
-    <changefreq>${route === '/' ? 'daily' : 'weekly'}</changefreq>
-    <priority>${route === '/' ? '1.0' : route.includes('guincho-em') ? '0.8' : '0.6'}</priority>
-  </url>`).join('\n')}
-</urlset>`;
+  const xml = '<?xml version="1.0" encoding="UTF-8"?>\n' +
+'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+routes.map(route => '  <url>\n' +
+'    <loc>' + SITE_URL + route + '</loc>\n' +
+'    <lastmod>' + now + '</lastmod>\n' +
+'    <changefreq>' + (route === '/' ? 'daily' : 'weekly') + '</changefreq>\n' +
+'    <priority>' + (route === '/' ? '1.0' : route.includes('guincho-em') ? '0.8' : '0.6') + '</priority>\n' +
+'  </url>').join('\n') +
+'\n</urlset>';
   
   if (!fs.existsSync('./public')) {
     fs.mkdirSync('./public', { recursive: true });
   }
   
   fs.writeFileSync('./public/sitemap.xml', xml);
-  console.log(\`✅ Sitemap generated with \${routes.length} routes.\`);
+  console.log('✅ Sitemap generated with ' + routes.length + ' routes.');
 };
 
 const generateRobots = () => {
-  const content = \`User-agent: *
-Allow: /
-
-Sitemap: \${SITE_URL}/sitemap.xml
-\`;
+  const content = 'User-agent: *\n' +
+'Allow: /\n' +
+'\n' +
+'Sitemap: ' + SITE_URL + '/sitemap.xml\n';
   fs.writeFileSync('./public/robots.txt', content);
   console.log('✅ robots.txt generated.');
 };
