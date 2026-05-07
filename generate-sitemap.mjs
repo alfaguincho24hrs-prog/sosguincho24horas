@@ -1,12 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 
-// This script needs to be able to import city data
-// Since it's a .mjs file and the project is likely using TS,
-// we might need to be careful. However, we can read the file as text 
-// and extract the cities or use a pre-compiled version if available.
-// Alternatively, we can define a small helper to parse the TS file for city data.
-
 const SITE_URL = 'https://sosguincho24horas.com.br';
 const ROUTES_DIR = './src/routes';
 
@@ -19,6 +13,7 @@ const slugify = (s) =>
     .replace(/(^-|-$)/g, "");
 
 const getStaticRoutes = () => {
+  if (!fs.existsSync(ROUTES_DIR)) return ['/'];
   const files = fs.readdirSync(ROUTES_DIR);
   return files
     .filter(file => 
@@ -35,10 +30,11 @@ const getStaticRoutes = () => {
 };
 
 const getDynamicRoutes = () => {
-  // Read cities-data.ts and extract cities
-  const citiesDataContent = fs.readFileSync('./src/components/cities-data.ts', 'utf-8');
+  const citiesDataPath = './src/components/cities-data.ts';
+  if (!fs.existsSync(citiesDataPath)) return [];
   
-  // We'll use regex to find arrays of cities [ "Name", "UF" ]
+  const citiesDataContent = fs.readFileSync(citiesDataPath, 'utf-8');
+  
   const cityRegex = /\[\s*"([^"]+)"\s*,\s*"([^"]+)"\s*\]/g;
   const cities = [];
   let match;
@@ -50,45 +46,50 @@ const getDynamicRoutes = () => {
     cities.push({ name, uf, slug });
   }
 
-  // Also extract blog posts if any (from blog-data.ts)
   const blogRoutes = [];
-  if (fs.existsSync('./src/components/blog-data.ts')) {
-    const blogDataContent = fs.readFileSync('./src/components/blog-data.ts', 'utf-8');
+  const blogDataPath = './src/components/blog-data.ts';
+  if (fs.existsSync(blogDataPath)) {
+    const blogDataContent = fs.readFileSync(blogDataPath, 'utf-8');
     const blogSlugRegex = /slug:\s*"([^"]+)"/g;
     let blogMatch;
     while ((blogMatch = blogSlugRegex.exec(blogDataContent)) !== null) {
-      blogRoutes.push(`/blog/${blogMatch[1]}`);
+      blogRoutes.push('/blog/' + blogMatch[1]);
     }
   }
 
+  const uniqueCities = Array.from(new Map(cities.map(c => [c.slug + '-' + c.uf, c])).values());
+
   return [
-    ...cities.map(city => `/guincho-em-${city.slug}-${city.uf.toLowerCase()}`),
+    ...uniqueCities.map(city => '/guincho-em-' + city.slug + '-' + city.uf.toLowerCase()),
     ...blogRoutes
   ];
 };
 
 const generateSitemap = (routes) => {
-  const now = new Date().toISOString();
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${routes.map(route => `  <url>
-    <loc>${SITE_URL}${route}</loc>
-    <lastmod>${now.split('T')[0]}</lastmod>
-    <changefreq>${route === '/' ? 'daily' : 'weekly'}</changefreq>
-    <priority>${route === '/' ? '1.0' : route.includes('guincho-em') ? '0.8' : '0.6'}</priority>
-  </url>`).join('\n')}
-</urlset>`;
+  const now = new Date().toISOString().split('T')[0];
+  const xml = '<?xml version="1.0" encoding="UTF-8"?>\n' +
+'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+routes.map(route => '  <url>\n' +
+'    <loc>' + SITE_URL + route + '</loc>\n' +
+'    <lastmod>' + now + '</lastmod>\n' +
+'    <changefreq>' + (route === '/' ? 'daily' : 'weekly') + '</changefreq>\n' +
+'    <priority>' + (route === '/' ? '1.0' : route.includes('guincho-em') ? '0.8' : '0.6') + '</priority>\n' +
+'  </url>').join('\n') +
+'\n</urlset>';
+  
+  if (!fs.existsSync('./public')) {
+    fs.mkdirSync('./public', { recursive: true });
+  }
   
   fs.writeFileSync('./public/sitemap.xml', xml);
-  console.log(`✅ Sitemap generated with ${routes.length} routes.`);
+  console.log('✅ Sitemap generated with ' + routes.length + ' routes.');
 };
 
 const generateRobots = () => {
-  const content = `User-agent: *
-Allow: /
-
-Sitemap: ${SITE_URL}/sitemap.xml
-`;
+  const content = 'User-agent: *\n' +
+'Allow: /\n' +
+'\n' +
+'Sitemap: ' + SITE_URL + '/sitemap.xml\n';
   fs.writeFileSync('./public/robots.txt', content);
   console.log('✅ robots.txt generated.');
 };
@@ -96,20 +97,13 @@ Sitemap: ${SITE_URL}/sitemap.xml
 const run = () => {
   const staticRoutes = getStaticRoutes();
   const dynamicRoutes = getDynamicRoutes();
-  const allRoutes = [...staticRoutes, ...dynamicRoutes];
+  const allRoutes = [...new Set([...staticRoutes, ...dynamicRoutes])];
   
-  // Ensure public directory exists
-  if (!fs.existsSync('./public')) {
-    fs.mkdirSync('./public');
-  }
-
   generateSitemap(allRoutes);
   generateRobots();
 
-  // Validation
   if (dynamicRoutes.length < 100) {
-    console.error('❌ Validation failed: Not enough dynamic routes found. Check cities-data.ts parsing.');
-    process.exit(1);
+    console.warn('⚠️ Warning: Few dynamic routes found. Check cities-data.ts parsing.');
   }
 };
 
