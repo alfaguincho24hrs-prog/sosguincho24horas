@@ -139,7 +139,28 @@ function AdminPage() {
 }
 
 
-function AdminTabs({ initialCity }: { initialCity: string }) {
+function LogoutButton() {
+  const logout = useServerFn(logoutAdmin);
+  return (
+    <Button
+      variant="outline"
+      size="sm"
+      onClick={async () => {
+        try {
+          await logout({});
+        } catch {
+          // ignore
+        }
+        location.reload();
+      }}
+    >
+      <LogOut className="mr-2 h-4 w-4" /> Sair
+    </Button>
+  );
+}
+
+function AdminTabs({ initialCity, onLogout }: { initialCity: string; onLogout?: () => void }) {
+
   const [tab, setTab] = useState<"providers" | "blog">("providers");
   return (
     <div>
@@ -200,18 +221,9 @@ function AdminEditor({ initialCity }: { initialCity: string }) {
           </p>
         </div>
         <div className="flex gap-2">
-          <SettingsModal />
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              sessionStorage.removeItem(AUTH_KEY);
-              location.reload();
-            }}
-          >
-            <LogOut className="mr-2 h-4 w-4" /> Sair
-          </Button>
+          <LogoutButton />
         </div>
+
       </div>
 
       <div className="mb-6">
