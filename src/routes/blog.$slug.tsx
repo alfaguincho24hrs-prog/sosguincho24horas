@@ -6,6 +6,7 @@ import { getPostBySlug, type BlogPost } from "@/components/blog-data";
 
 export const Route = createFileRoute("/blog/$slug")({
   head: ({ params }) => {
+    const post = getPostBySlug(params.slug);
     const url = `https://sosguincho24horas.com.br/blog/${params.slug}`;
     return {
       meta: [
