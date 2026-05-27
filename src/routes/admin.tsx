@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   addProvider,
@@ -32,47 +33,15 @@ import {
   X,
 } from "lucide-react";
 import { toast } from "sonner";
+import { checkAdminSession, loginAdmin, logoutAdmin } from "@/lib/admin-auth.functions";
 
-const ADMIN_PASS_KEY = "admin_password_v1";
-const DEFAULT_PASS = "guincho-admin-2026";
-const AUTH_KEY = "admin_session_v1";
-const RESET_TOKEN_KEY = "admin_reset_token";
 
-type ResetToken = {
-  token: string;
-  expires: number;
-};
-
-function getResetToken(): ResetToken | null {
-  if (typeof window === "undefined") return null;
-  const raw = localStorage.getItem(RESET_TOKEN_KEY);
-  return raw ? JSON.parse(raw) : null;
-}
-
-function generateResetToken() {
-  if (typeof window === "undefined") return "";
-  const token = Math.random().toString(36).slice(2, 12);
-  const expires = Date.now() + 1000 * 60 * 15; // 15 minutos
-  localStorage.setItem(RESET_TOKEN_KEY, JSON.stringify({ token, expires }));
-  return token;
-}
-
-function getAdminPass() {
-  if (typeof window === "undefined") return DEFAULT_PASS;
-  return localStorage.getItem(ADMIN_PASS_KEY) || DEFAULT_PASS;
-}
-
-function setAdminPass(newPass: string) {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(ADMIN_PASS_KEY, newPass);
-}
 const MAX_PHOTOS = 4;
 
 export const Route = createFileRoute("/admin")({
   validateSearch: (s: Record<string, unknown>) => ({
     city: (s.city as string) || "",
-    token: (s.token as string) || undefined,
-  }) as { city: string; token?: string },
+  }) as { city: string },
   head: () => ({
     meta: [
       { title: "Painel Admin — Editar Anunciantes" },
@@ -84,90 +53,36 @@ export const Route = createFileRoute("/admin")({
 
 function AdminPage() {
   const search = Route.useSearch();
-  const [authed, setAuthed] = useState(false);
+  const [authed, setAuthed] = useState<boolean | null>(null);
   const [pwd, setPwd] = useState("");
-  const [resetMode, setResetMode] = useState(false);
-  const [email, setEmail] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
-  const resetTokenData = getResetToken();
-  const isResettingWithToken = search.token && resetTokenData && search.token === resetTokenData.token && Date.now() < resetTokenData.expires;
+  const checkSession = useServerFn(checkAdminSession);
+  const login = useServerFn(loginAdmin);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    setAuthed(sessionStorage.getItem(AUTH_KEY) === "1");
-  }, []);
+    let cancelled = false;
+    checkSession({})
+      .then((r) => {
+        if (!cancelled) setAuthed(!!r?.authed);
+      })
+      .catch(() => {
+        if (!cancelled) setAuthed(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [checkSession]);
 
-  if (isResettingWithToken) {
+  if (authed === null) {
     return (
-      <div className="container mx-auto max-w-md px-4 py-20">
-        <Card>
-          <CardContent className="p-6">
-            <h1 className="text-xl font-bold mb-4">Redefinir Senha</h1>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (pwd.length < 6) return toast.error("Mínimo 6 caracteres");
-                setAdminPass(pwd);
-                localStorage.removeItem(RESET_TOKEN_KEY);
-                sessionStorage.setItem(AUTH_KEY, "1");
-                setAuthed(true);
-                toast.success("Senha alterada e login realizado");
-                // Remove token from URL
-                window.history.replaceState({}, "", "/admin");
-              }}
-              className="space-y-3"
-            >
-              <Input
-                type="password"
-                placeholder="Nova senha"
-                value={pwd}
-                onChange={(e) => setPwd(e.target.value)}
-                autoFocus
-              />
-              <Button type="submit" className="w-full">Salvar e Entrar</Button>
-            </form>
-          </CardContent>
-        </Card>
+      <div className="container mx-auto max-w-md px-4 py-20 text-center text-sm text-muted-foreground">
+        Verificando sessão…
       </div>
     );
   }
 
   if (!authed) {
-    if (resetMode) {
-      return (
-        <div className="container mx-auto max-w-md px-4 py-20">
-          <Card>
-            <CardContent className="p-6">
-              <h1 className="text-xl font-bold mb-2">Esqueceu a senha?</h1>
-              <p className="text-sm text-muted-foreground mb-4">
-                Enviaremos um link de recuperação para o seu e-mail cadastrado.
-              </p>
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  const token = generateResetToken();
-                  const link = `${window.location.origin}/admin?token=${token}`;
-                  console.log("recovery-email-simulation", { to: email, link });
-                  toast.success("E-mail de recuperação enviado (simulação)");
-                  setResetMode(false);
-                }}
-                className="space-y-3"
-              >
-                <Input
-                  type="email"
-                  placeholder="Seu e-mail"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-                <Button type="submit" className="w-full">Enviar Link</Button>
-                <Button variant="ghost" className="w-full" onClick={() => setResetMode(false)}>Voltar</Button>
-              </form>
-            </CardContent>
-          </Card>
-        </div>
-      );
-    }
     return (
       <div className="container mx-auto max-w-md px-4 py-20">
         <Card>
@@ -180,14 +95,20 @@ function AdminPage() {
               Informe a senha do administrador para editar os anunciantes.
             </p>
             <form
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
                 e.preventDefault();
-                if (pwd === getAdminPass()) {
-                  sessionStorage.setItem(AUTH_KEY, "1");
+                if (submitting) return;
+                setSubmitting(true);
+                try {
+                  await login({ data: { password: pwd } });
                   setAuthed(true);
+                  setPwd("");
                   toast.success("Login realizado");
-                } else {
-                  toast.error("Senha incorreta");
+                } catch (err) {
+                  const msg = err instanceof Error ? err.message : "Falha ao autenticar";
+                  toast.error(msg.includes("not configured") ? msg : "Senha incorreta");
+                } finally {
+                  setSubmitting(false);
                 }
               }}
               className="space-y-3"
@@ -198,17 +119,15 @@ function AdminPage() {
                 value={pwd}
                 onChange={(e) => setPwd(e.target.value)}
                 autoFocus
+                maxLength={200}
               />
-              <Button type="submit" className="w-full">
+              <Button type="submit" className="w-full" disabled={submitting}>
                 Entrar
               </Button>
-              <button
-                type="button"
-                onClick={() => setResetMode(true)}
-                className="w-full text-center text-xs text-muted-foreground hover:underline mt-2"
-              >
-                Esqueceu a senha?
-              </button>
+              <p className="text-[11px] text-muted-foreground text-center pt-2">
+                A senha é definida pela variável de ambiente <code>ADMIN_PASSWORD</code> no servidor.
+                Para redefini-la, atualize o segredo e reimplante.
+              </p>
             </form>
           </CardContent>
         </Card>
@@ -216,10 +135,32 @@ function AdminPage() {
     );
   }
 
-  return <AdminTabs initialCity={search.city} />;
+  return <AdminTabs initialCity={search.city} onLogout={() => setAuthed(false)} />;
 }
 
-function AdminTabs({ initialCity }: { initialCity: string }) {
+
+function LogoutButton() {
+  const logout = useServerFn(logoutAdmin);
+  return (
+    <Button
+      variant="outline"
+      size="sm"
+      onClick={async () => {
+        try {
+          await logout({});
+        } catch {
+          // ignore
+        }
+        location.reload();
+      }}
+    >
+      <LogOut className="mr-2 h-4 w-4" /> Sair
+    </Button>
+  );
+}
+
+function AdminTabs({ initialCity, onLogout }: { initialCity: string; onLogout?: () => void }) {
+
   const [tab, setTab] = useState<"providers" | "blog">("providers");
   return (
     <div>
@@ -280,18 +221,9 @@ function AdminEditor({ initialCity }: { initialCity: string }) {
           </p>
         </div>
         <div className="flex gap-2">
-          <SettingsModal />
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              sessionStorage.removeItem(AUTH_KEY);
-              location.reload();
-            }}
-          >
-            <LogOut className="mr-2 h-4 w-4" /> Sair
-          </Button>
+          <LogoutButton />
         </div>
+
       </div>
 
       <div className="mb-6">
@@ -379,91 +311,8 @@ function AdminEditor({ initialCity }: { initialCity: string }) {
   );
 }
 
-function SettingsModal() {
-  const [open, setOpen] = useState(false);
-  const [current, setCurrent] = useState("");
-  const [newPass, setNewPass] = useState("");
-  const [confirm, setConfirm] = useState("");
+// Password changes are managed via the ADMIN_PASSWORD environment variable on the server.
 
-  const handleUpdate = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (current !== getAdminPass()) {
-      return toast.error("Senha atual incorreta");
-    }
-    if (newPass.length < 6) {
-      return toast.error("A nova senha deve ter no mínimo 6 caracteres");
-    }
-    if (newPass !== confirm) {
-      return toast.error("As senhas não coincidem");
-    }
-    setAdminPass(newPass);
-    toast.success("Senha alterada com sucesso!");
-    setOpen(false);
-    setCurrent("");
-    setNewPass("");
-    setConfirm("");
-  };
-
-  if (!open) {
-    return (
-      <Button variant="outline" size="sm" onClick={() => setOpen(true)}>
-        <Lock className="mr-2 h-4 w-4" /> Alterar Senha
-      </Button>
-    );
-  }
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm p-4">
-      <Card className="w-full max-w-sm shadow-xl">
-        <CardContent className="p-6">
-          <div className="mb-4 flex items-center justify-between">
-            <h3 className="text-lg font-bold">Configurações de Acesso</h3>
-            <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
-              <X className="h-4 w-4" />
-            </Button>
-          </div>
-          <form onSubmit={handleUpdate} className="space-y-4">
-            <div className="space-y-2">
-              <label className="text-xs font-medium">Senha atual</label>
-              <Input
-                type="password"
-                value={current}
-                onChange={(e) => setCurrent(e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="text-xs font-medium">Nova senha</label>
-              <Input
-                type="password"
-                value={newPass}
-                onChange={(e) => setNewPass(e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="text-xs font-medium">Confirmar nova senha</label>
-              <Input
-                type="password"
-                value={confirm}
-                onChange={(e) => setConfirm(e.target.value)}
-                required
-              />
-            </div>
-            <div className="flex gap-2 pt-2">
-              <Button type="button" variant="outline" className="flex-1" onClick={() => setOpen(false)}>
-                Cancelar
-              </Button>
-              <Button type="submit" className="flex-1">
-                Salvar
-              </Button>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
-    </div>
-  );
-}
 
 const TIERS: { value: ProviderTier; label: string; color: string }[] = [
   { value: "ghost", label: "Não pago (Ghost)", color: "bg-muted text-muted-foreground" },
