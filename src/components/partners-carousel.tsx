@@ -25,7 +25,12 @@ export function PartnersCarousel() {
               <CardContent className="space-y-3 p-6">
                 <div className="flex items-start justify-between">
                   <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                    <Truck className="h-5 w-5" />
+                    <img 
+                      src="/icon-192.png" 
+                      alt={`Logotipo da empresa de guincho ${p.name}`} 
+                      className="h-7 w-7 object-contain brightness-0 invert" 
+                      loading="lazy"
+                    />
                   </div>
                   <div className="flex items-center gap-1 text-sm font-medium text-accent-foreground">
                     <Star className="h-4 w-4 fill-accent text-accent" /> {p.rating}

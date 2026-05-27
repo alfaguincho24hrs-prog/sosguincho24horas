@@ -9,8 +9,8 @@ export const Route = createFileRoute("/blog/$slug")({
     const url = `https://sosguincho24horas.com.br/blog/${params.slug}`;
     return {
       meta: [
-        { title: `Artigo — ${params.slug} | SOS Guincho 24 horas Blog` },
-        { name: "description", content: "Leia o artigo completo no blog SOS Guincho 24 horas." },
+        { title: `${post?.title || params.slug} | Blog SOS Guincho 24 horas` },
+        { name: "description", content: post?.excerpt || "Leia dicas sobre guincho, reboque e auto socorro no blog SOS Guincho 24 horas." },
       ],
       links: [{ rel: "canonical", href: url }],
     };
