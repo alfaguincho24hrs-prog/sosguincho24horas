@@ -148,7 +148,7 @@ function HomePage() {
         <div className="absolute inset-0">
           <img
             src={heroImg}
-            alt="Guincho e Reboque 24 horas plataforma remoção de veículo e auto socorro"
+            alt="Serviço de guincho 24 horas e reboque plataforma para carros e motos em rodovias"
             className="h-full w-full object-cover"
             width={1920}
             height={1280}
