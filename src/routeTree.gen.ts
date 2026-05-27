@@ -26,9 +26,6 @@ import { Route as AnuncieRouteImport } from './routes/anuncie'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
-import { Route as ApiAdminSessionRouteImport } from './routes/api/admin/session'
-import { Route as ApiAdminLogoutRouteImport } from './routes/api/admin/logout'
-import { Route as ApiAdminLoginRouteImport } from './routes/api/admin/login'
 
 const ServicosDeGuinchoEReboqueRoute =
   ServicosDeGuinchoEReboqueRouteImport.update({
@@ -117,21 +114,6 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => BlogRoute,
 } as any)
-const ApiAdminSessionRoute = ApiAdminSessionRouteImport.update({
-  id: '/api/admin/session',
-  path: '/api/admin/session',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiAdminLogoutRoute = ApiAdminLogoutRouteImport.update({
-  id: '/api/admin/logout',
-  path: '/api/admin/logout',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiAdminLoginRoute = ApiAdminLoginRouteImport.update({
-  id: '/api/admin/login',
-  path: '/api/admin/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -151,9 +133,6 @@ export interface FileRoutesByFullPath {
   '/servicos': typeof ServicosRoute
   '/servicos-de-guincho-e-reboque': typeof ServicosDeGuinchoEReboqueRoute
   '/blog/$slug': typeof BlogSlugRoute
-  '/api/admin/login': typeof ApiAdminLoginRoute
-  '/api/admin/logout': typeof ApiAdminLogoutRoute
-  '/api/admin/session': typeof ApiAdminSessionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -173,9 +152,6 @@ export interface FileRoutesByTo {
   '/servicos': typeof ServicosRoute
   '/servicos-de-guincho-e-reboque': typeof ServicosDeGuinchoEReboqueRoute
   '/blog/$slug': typeof BlogSlugRoute
-  '/api/admin/login': typeof ApiAdminLoginRoute
-  '/api/admin/logout': typeof ApiAdminLogoutRoute
-  '/api/admin/session': typeof ApiAdminSessionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -196,9 +172,6 @@ export interface FileRoutesById {
   '/servicos': typeof ServicosRoute
   '/servicos-de-guincho-e-reboque': typeof ServicosDeGuinchoEReboqueRoute
   '/blog/$slug': typeof BlogSlugRoute
-  '/api/admin/login': typeof ApiAdminLoginRoute
-  '/api/admin/logout': typeof ApiAdminLogoutRoute
-  '/api/admin/session': typeof ApiAdminSessionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -220,9 +193,6 @@ export interface FileRouteTypes {
     | '/servicos'
     | '/servicos-de-guincho-e-reboque'
     | '/blog/$slug'
-    | '/api/admin/login'
-    | '/api/admin/logout'
-    | '/api/admin/session'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -242,9 +212,6 @@ export interface FileRouteTypes {
     | '/servicos'
     | '/servicos-de-guincho-e-reboque'
     | '/blog/$slug'
-    | '/api/admin/login'
-    | '/api/admin/logout'
-    | '/api/admin/session'
   id:
     | '__root__'
     | '/'
@@ -264,9 +231,6 @@ export interface FileRouteTypes {
     | '/servicos'
     | '/servicos-de-guincho-e-reboque'
     | '/blog/$slug'
-    | '/api/admin/login'
-    | '/api/admin/logout'
-    | '/api/admin/session'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -286,9 +250,6 @@ export interface RootRouteChildren {
   RodoviasValeDoParaibaRoute: typeof RodoviasValeDoParaibaRoute
   ServicosRoute: typeof ServicosRoute
   ServicosDeGuinchoEReboqueRoute: typeof ServicosDeGuinchoEReboqueRoute
-  ApiAdminLoginRoute: typeof ApiAdminLoginRoute
-  ApiAdminLogoutRoute: typeof ApiAdminLogoutRoute
-  ApiAdminSessionRoute: typeof ApiAdminSessionRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -412,27 +373,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof BlogRoute
     }
-    '/api/admin/session': {
-      id: '/api/admin/session'
-      path: '/api/admin/session'
-      fullPath: '/api/admin/session'
-      preLoaderRoute: typeof ApiAdminSessionRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/admin/logout': {
-      id: '/api/admin/logout'
-      path: '/api/admin/logout'
-      fullPath: '/api/admin/logout'
-      preLoaderRoute: typeof ApiAdminLogoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/admin/login': {
-      id: '/api/admin/login'
-      path: '/api/admin/login'
-      fullPath: '/api/admin/login'
-      preLoaderRoute: typeof ApiAdminLoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -463,9 +403,6 @@ const rootRouteChildren: RootRouteChildren = {
   RodoviasValeDoParaibaRoute: RodoviasValeDoParaibaRoute,
   ServicosRoute: ServicosRoute,
   ServicosDeGuinchoEReboqueRoute: ServicosDeGuinchoEReboqueRoute,
-  ApiAdminLoginRoute: ApiAdminLoginRoute,
-  ApiAdminLogoutRoute: ApiAdminLogoutRoute,
-  ApiAdminSessionRoute: ApiAdminSessionRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
