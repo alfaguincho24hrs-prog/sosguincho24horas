@@ -18,10 +18,12 @@ import { Route as GuinchoPesadoRouteImport } from './routes/guincho-pesado'
 import { Route as GuinchoLeveRouteImport } from './routes/guincho-leve'
 import { Route as GuinchoEmChar123slugChar125RouteImport } from './routes/guincho-em-{$slug}'
 import { Route as GuinchoDeMotosRouteImport } from './routes/guincho-de-motos'
+import { Route as FrotaGuinchoRouteImport } from './routes/frota-guincho'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as CoberturaRouteImport } from './routes/cobertura'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AutoSocorroRouteImport } from './routes/auto-socorro'
+import { Route as AreasAtendidasRouteImport } from './routes/areas-atendidas'
 import { Route as AnuncieRouteImport } from './routes/anuncie'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
@@ -74,6 +76,11 @@ const GuinchoDeMotosRoute = GuinchoDeMotosRouteImport.update({
   path: '/guincho-de-motos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FrotaGuinchoRoute = FrotaGuinchoRouteImport.update({
+  id: '/frota-guincho',
+  path: '/frota-guincho',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContatoRoute = ContatoRouteImport.update({
   id: '/contato',
   path: '/contato',
@@ -92,6 +99,11 @@ const BlogRoute = BlogRouteImport.update({
 const AutoSocorroRoute = AutoSocorroRouteImport.update({
   id: '/auto-socorro',
   path: '/auto-socorro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AreasAtendidasRoute = AreasAtendidasRouteImport.update({
+  id: '/areas-atendidas',
+  path: '/areas-atendidas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AnuncieRoute = AnuncieRouteImport.update({
@@ -119,10 +131,12 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/anuncie': typeof AnuncieRoute
+  '/areas-atendidas': typeof AreasAtendidasRoute
   '/auto-socorro': typeof AutoSocorroRoute
   '/blog': typeof BlogRouteWithChildren
   '/cobertura': typeof CoberturaRoute
   '/contato': typeof ContatoRoute
+  '/frota-guincho': typeof FrotaGuinchoRoute
   '/guincho-de-motos': typeof GuinchoDeMotosRoute
   '/guincho-em-{$slug}': typeof GuinchoEmChar123slugChar125Route
   '/guincho-leve': typeof GuinchoLeveRoute
@@ -138,10 +152,12 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/anuncie': typeof AnuncieRoute
+  '/areas-atendidas': typeof AreasAtendidasRoute
   '/auto-socorro': typeof AutoSocorroRoute
   '/blog': typeof BlogRouteWithChildren
   '/cobertura': typeof CoberturaRoute
   '/contato': typeof ContatoRoute
+  '/frota-guincho': typeof FrotaGuinchoRoute
   '/guincho-de-motos': typeof GuinchoDeMotosRoute
   '/guincho-em-{$slug}': typeof GuinchoEmChar123slugChar125Route
   '/guincho-leve': typeof GuinchoLeveRoute
@@ -158,10 +174,12 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/anuncie': typeof AnuncieRoute
+  '/areas-atendidas': typeof AreasAtendidasRoute
   '/auto-socorro': typeof AutoSocorroRoute
   '/blog': typeof BlogRouteWithChildren
   '/cobertura': typeof CoberturaRoute
   '/contato': typeof ContatoRoute
+  '/frota-guincho': typeof FrotaGuinchoRoute
   '/guincho-de-motos': typeof GuinchoDeMotosRoute
   '/guincho-em-{$slug}': typeof GuinchoEmChar123slugChar125Route
   '/guincho-leve': typeof GuinchoLeveRoute
@@ -179,10 +197,12 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/anuncie'
+    | '/areas-atendidas'
     | '/auto-socorro'
     | '/blog'
     | '/cobertura'
     | '/contato'
+    | '/frota-guincho'
     | '/guincho-de-motos'
     | '/guincho-em-{$slug}'
     | '/guincho-leve'
@@ -198,10 +218,12 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/anuncie'
+    | '/areas-atendidas'
     | '/auto-socorro'
     | '/blog'
     | '/cobertura'
     | '/contato'
+    | '/frota-guincho'
     | '/guincho-de-motos'
     | '/guincho-em-{$slug}'
     | '/guincho-leve'
@@ -217,10 +239,12 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/anuncie'
+    | '/areas-atendidas'
     | '/auto-socorro'
     | '/blog'
     | '/cobertura'
     | '/contato'
+    | '/frota-guincho'
     | '/guincho-de-motos'
     | '/guincho-em-{$slug}'
     | '/guincho-leve'
@@ -237,10 +261,12 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
   AnuncieRoute: typeof AnuncieRoute
+  AreasAtendidasRoute: typeof AreasAtendidasRoute
   AutoSocorroRoute: typeof AutoSocorroRoute
   BlogRoute: typeof BlogRouteWithChildren
   CoberturaRoute: typeof CoberturaRoute
   ContatoRoute: typeof ContatoRoute
+  FrotaGuinchoRoute: typeof FrotaGuinchoRoute
   GuinchoDeMotosRoute: typeof GuinchoDeMotosRoute
   GuinchoEmChar123slugChar125Route: typeof GuinchoEmChar123slugChar125Route
   GuinchoLeveRoute: typeof GuinchoLeveRoute
@@ -317,6 +343,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuinchoDeMotosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/frota-guincho': {
+      id: '/frota-guincho'
+      path: '/frota-guincho'
+      fullPath: '/frota-guincho'
+      preLoaderRoute: typeof FrotaGuinchoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contato': {
       id: '/contato'
       path: '/contato'
@@ -343,6 +376,13 @@ declare module '@tanstack/react-router' {
       path: '/auto-socorro'
       fullPath: '/auto-socorro'
       preLoaderRoute: typeof AutoSocorroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/areas-atendidas': {
+      id: '/areas-atendidas'
+      path: '/areas-atendidas'
+      fullPath: '/areas-atendidas'
+      preLoaderRoute: typeof AreasAtendidasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/anuncie': {
@@ -390,10 +430,12 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
   AnuncieRoute: AnuncieRoute,
+  AreasAtendidasRoute: AreasAtendidasRoute,
   AutoSocorroRoute: AutoSocorroRoute,
   BlogRoute: BlogRouteWithChildren,
   CoberturaRoute: CoberturaRoute,
   ContatoRoute: ContatoRoute,
+  FrotaGuinchoRoute: FrotaGuinchoRoute,
   GuinchoDeMotosRoute: GuinchoDeMotosRoute,
   GuinchoEmChar123slugChar125Route: GuinchoEmChar123slugChar125Route,
   GuinchoLeveRoute: GuinchoLeveRoute,
