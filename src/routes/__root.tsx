@@ -17,54 +17,60 @@ const SITE_JSONLD = {
     {
       "@type": "Organization",
       "@id": `${SITE_URL}/#organization`,
-      name: SITE.name,
-      url: `${SITE_URL}/`,
-      logo: `${SITE_URL}/icon-512.png`,
-      email: SITE.email,
-      telephone: SITE.phone,
-      sameAs: [],
+      "name": SITE.name,
+      "url": `${SITE_URL}/`,
+      "logo": `${SITE_URL}/icon-512.png`,
+      "email": SITE.email,
+      "telephone": SITE.phone,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": SITE.address.street,
+        "addressLocality": SITE.address.city,
+        "addressRegion": SITE.address.region,
+        "postalCode": SITE.address.postalCode,
+        "addressCountry": "BR"
+      }
     },
     {
       "@type": "WebSite",
       "@id": `${SITE_URL}/#website`,
-      url: `${SITE_URL}/`,
-      name: SITE.name,
-      inLanguage: "pt-BR",
-      publisher: { "@id": `${SITE_URL}/#organization` },
-      potentialAction: {
-        "@type": "SearchAction",
-        target: { "@type": "EntryPoint", urlTemplate: `${SITE_URL}/blog?q={search_term_string}` },
-        "query-input": "required name=search_term_string",
-      },
+      "url": `${SITE_URL}/`,
+      "name": SITE.name,
+      "inLanguage": "pt-BR",
+      "publisher": { "@id": `${SITE_URL}/#organization` }
     },
     {
       "@type": "LocalBusiness",
       "@id": `${SITE_URL}/#business`,
-      name: SITE.name,
-      description: "Rede nacional de guincho, reboque e auto socorro 24h em todo o Brasil.",
-      url: `${SITE_URL}/`,
-      telephone: SITE.phone,
-      email: SITE.email,
-      priceRange: "$$",
-      image: `${SITE_URL}/og-image.webp`,
-      areaServed: { "@type": "Country", name: "Brasil" },
-      address: {
+      "name": SITE.name,
+      "description": "Rede nacional de guincho, reboque e auto socorro 24h em todo o Brasil.",
+      "url": `${SITE_URL}/`,
+      "telephone": SITE.phone,
+      "email": SITE.email,
+      "priceRange": "$$",
+      "image": `${SITE_URL}/og-image.webp`,
+      "areaServed": { "@type": "Country", "name": "Brasil" },
+      "address": {
         "@type": "PostalAddress",
-        streetAddress: "Praça Dom Epaminondas, 1-4 sala 104",
-        addressLocality: "Taubaté",
-        addressRegion: "SP",
-        postalCode: "12010-090",
-        addressCountry: "BR",
+        "streetAddress": SITE.address.street,
+        "addressLocality": SITE.address.city,
+        "addressRegion": SITE.address.region,
+        "postalCode": SITE.address.postalCode,
+        "addressCountry": "BR",
       },
-      geo: { "@type": "GeoCoordinates", latitude: -23.026389, longitude: -45.555556 },
-      hasMap: "https://www.google.com/maps/search/?api=1&query=-23.026389,-45.555556",
-      openingHoursSpecification: [{
+      "geo": { "@type": "GeoCoordinates", "latitude": SITE.geo.latitude, "longitude": SITE.geo.longitude },
+      "openingHoursSpecification": [{
         "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-        opens: "00:00",
-        closes: "23:59",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+        "opens": "00:00",
+        "closes": "23:59",
       }],
-    },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "1250"
+      }
+    }
   ],
 };
 

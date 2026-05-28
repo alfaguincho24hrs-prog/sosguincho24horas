@@ -168,16 +168,18 @@ function HomePage() {
       <section className="bg-secondary/40 py-20">
         <div className="container mx-auto grid gap-10 px-4 md:grid-cols-3">
           {[
-            { icon: Clock, title: "Resposta rápida", text: "Tempo médio de chegada inferior a 40 minutos em áreas urbanas." },
+            { icon: Clock, title: "Resposta rápida", text: "Tempo médio de chegada inferior a 40 minutos em áreas urbanas e rodovias." },
             { icon: ShieldCheck, title: "Segurança garantida", text: "Empresas parceiras verificadas, com seguro e equipamentos certificados." },
             { icon: Zap, title: "Preço transparente", text: "Orçamento informado antes do atendimento, sem taxas surpresa." },
+            { icon: Truck, title: "Frota Completa", text: "Guinchos plataforma, pesados e munk para qualquer tipo de veículo." },
+            { icon: Star, title: "Experiência Real", text: "Mais de 10 anos de atuação e milhares de atendimentos realizados com sucesso." },
           ].map(({ icon: Icon, title, text }) => (
-            <div key={title} className="space-y-3">
+            <div key={title} className="space-y-3 p-4 border rounded-xl bg-background/50">
               <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)]">
                 <Icon className="h-6 w-6" />
               </div>
               <h3 className="text-xl font-semibold">{title}</h3>
-              <p className="text-muted-foreground">{text}</p>
+              <p className="text-muted-foreground text-sm">{text}</p>
             </div>
           ))}
         </div>
