@@ -440,12 +440,29 @@ function CityPage() {
         </div>
       </section>
 
-      {/* Cidades vizinhas + serviços relacionados — internal linking SEO */}
+      {/* Cidades vizinhas + serviços relacionados — interlinking semântico regional */}
       <section className="mt-14 grid gap-8 md:grid-cols-2">
         <div>
-          <h2 className="text-2xl font-bold">Cidades vizinhas em {city.uf}</h2>
+          <h2 className="text-2xl font-bold">Atendimento Regional em {city.uf}</h2>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Operamos com uma rede logística que permite interligar o socorro entre {city.name} e cidades vizinhas com rapidez.
+          </p>
           <div className="mt-4 flex flex-wrap gap-2">
-            {ALL_CITIES.filter((c) => c.uf === city.uf && c.slug !== city.slug)
+            {ALL_CITIES.filter((c) => {
+              // Interlinking semântico: se for Taubaté, mostra Tremembé, Caçapava, Pinda
+              const regionalMap: Record<string, string[]> = {
+                "taubate-sp": ["tremembe-sp", "cacapava-sp", "pindamonhangaba-sp", "sao-jose-dos-campos-sp"],
+                "sao-jose-dos-campos-sp": ["jacarei-sp", "cacapava-sp", "santa-branca-sp", "monteiro-lobato-sp"],
+                "pindamonhangaba-sp": ["taubate-sp", "tremembe-sp", "roseira-sp", "aparecida-sp"],
+                "jacarei-sp": ["sao-jose-dos-campos-sp", "santa-branca-sp", "guarulhos-sp", "igara-sp"]
+              };
+              const cityKey = `${city.slug}-${city.uf.toLowerCase()}`;
+              if (regionalMap[cityKey]) {
+                return regionalMap[cityKey].includes(`${c.slug}-${c.uf.toLowerCase()}`);
+              }
+              // Fallback para cidades da mesma UF
+              return c.uf === city.uf && c.slug !== city.slug;
+            })
               .slice(0, 6)
               .map((c) => (
                 <Link
@@ -458,8 +475,18 @@ function CityPage() {
                 </Link>
               ))}
           </div>
+          <div className="mt-6 space-y-2">
+            <h4 className="font-semibold text-sm">Rodovias Atendidas</h4>
+            <div className="flex flex-wrap gap-2">
+              <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Presidente Dutra</span>
+              <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Carvalho Pinto</span>
+              {city.slug === 'sao-jose-dos-campos' && <span className="text-xs bg-muted px-2 py-1 rounded">Rod. dos Tamoios</span>}
+              {city.slug === 'taubate' && <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Oswaldo Cruz</span>}
+            </div>
+          </div>
           <div className="mt-4">
             <Link
+
               to="/servicos-de-guincho-e-reboque"
               className="text-sm font-medium text-primary underline-offset-4 hover:underline"
             >

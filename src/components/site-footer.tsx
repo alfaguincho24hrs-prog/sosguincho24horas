@@ -56,7 +56,14 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-primary-foreground/10 py-5 text-center text-xs text-primary-foreground/60">
-        © {new Date().getFullYear()} {SITE.name}. Todos os direitos reservados.
+        <div className="mb-2">
+          © {new Date().getFullYear()} {SITE.name}. Todos os direitos reservados.
+        </div>
+        <div className="space-y-1 opacity-80">
+          <p>CNPJ: 43.141.256/0001-40 | {SITE.name}</p>
+          <p>{SITE.address.street}, {SITE.address.neighborhood} - {SITE.address.city}/{SITE.address.region}</p>
+          <p>Telefone: {SITE.phone} | Atendimento 24 Horas</p>
+        </div>
       </div>
     </footer>
   );

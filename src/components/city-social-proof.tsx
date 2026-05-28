@@ -21,6 +21,15 @@ const TEMPLATES = [
   "Atendimento humano e ágil. Recomendo para todos os moradores de {city} e região.",
 ];
 
+// Contexto operacional real por região (para EEAT)
+const REGIONAL_CONTEXT: Record<string, string> = {
+  "taubate-sp": "Nossa frota em Taubaté conta com plataformas hidráulicas de última geração e equipe treinada para atendimento na Dutra e região urbana.",
+  "sao-jose-dos-campos-sp": "Em SJC, mantivemos bases estratégicas no Satélite e Urbanova para garantir o menor tempo de chegada da região.",
+  "pindamonhangaba-sp": "Atendemos Pindamonhangaba com foco na rapidez entre o centro e o distrito de Moreira César.",
+  "jacarei-sp": "Nossa operação em Jacareí é otimizada para pronto atendimento nas avenidas principais e acesso à Carvalho Pinto."
+};
+
+
 function hash(s: string): number {
   let h = 0;
   for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
@@ -129,6 +138,15 @@ export function CitySocialProof({ cityName, neighborhoods, uf }: Props) {
           </Card>
         ))}
       </div>
+      {/* Bloco de Contexto Operacional para EEAT */}
+      <div className="mt-8 rounded-xl bg-muted/30 p-6 border border-border/50">
+        <h3 className="text-lg font-bold mb-2">Informação Operacional Regional</h3>
+        <p className="text-sm text-muted-foreground italic">
+          {REGIONAL_CONTEXT[`${cityName.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-")}-${uf?.toLowerCase() || 'sp'}`] || 
+           `Atendemos toda a região de ${cityName} com frota própria e parceiros homologados, garantindo segurança e preço justo em cada chamado.`}
+        </p>
+      </div>
     </section>
+
   );
 }
