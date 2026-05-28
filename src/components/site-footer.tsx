@@ -30,8 +30,9 @@ export function SiteFooter() {
         <div>
           <h4 className="mb-3 text-sm font-semibold uppercase tracking-wider text-accent">Portal</h4>
           <ul className="space-y-2 text-sm text-primary-foreground/80">
+            <li><Link to="/areas-atendidas" className="hover:text-accent">Áreas atendidas</Link></li>
+            <li><Link to="/frota-guincho" className="hover:text-accent">Nossa frota</Link></li>
             <li><Link to="/cobertura" className="hover:text-accent">Cobertura nacional</Link></li>
-            <li><Link to="/anuncie" className="hover:text-accent">Anuncie sua empresa</Link></li>
             <li><Link to="/blog" className="hover:text-accent">Blog</Link></li>
             <li><Link to="/contato" className="hover:text-accent">Fale conosco</Link></li>
           </ul>

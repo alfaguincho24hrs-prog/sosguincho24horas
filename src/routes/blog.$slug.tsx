@@ -65,10 +65,23 @@ function BlogPostPage() {
         <h1 className="text-3xl font-bold leading-tight md:text-4xl">{post.title}</h1>
         <p className="mt-4 text-lg text-muted-foreground">{post.excerpt}</p>
 
-        <div className="mt-8 space-y-5 text-base leading-relaxed text-foreground">
+        <div className="mt-8 space-y-5 text-base leading-relaxed text-foreground article-content">
           {post.content.split(/\n\n+/).map((p, i) => (
             <p key={i}>{p}</p>
           ))}
+        </div>
+
+        {/* FAQ Contextual (Mockup for EEAT) */}
+        <div className="mt-12 space-y-4">
+          <h3 className="text-xl font-bold">Dúvidas frequentes sobre este serviço</h3>
+          <div className="border rounded-lg p-4 bg-muted/20">
+            <p className="font-semibold">Qual o tempo de chegada para este atendimento?</p>
+            <p className="text-sm text-muted-foreground">Em média de 30 a 45 minutos em áreas urbanas.</p>
+          </div>
+          <div className="border rounded-lg p-4 bg-muted/20">
+            <p className="font-semibold">Como posso pagar o serviço?</p>
+            <p className="text-sm text-muted-foreground">Aceitamos PIX, cartões de débito/crédito e dinheiro.</p>
+          </div>
         </div>
 
         <div className="mt-12 rounded-xl border border-border/60 bg-muted/30 p-6 text-center">
