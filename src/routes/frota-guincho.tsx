@@ -9,6 +9,7 @@ export const Route = createFileRoute("/frota-guincho")({
       { title: "Nossa Frota de Guinchos 24h | SOS Guincho 24 horas" },
       { name: "description", content: "Conheça nossa frota de guinchos plataformas, pesados e auto socorro. Equipamentos modernos para transporte seguro de veículos em todo o Brasil." },
     ],
+    links: [{ rel: "canonical", href: "https://sosguincho24horas.com.br/frota-guincho" }],
   }),
   component: FrotaPage,
 });

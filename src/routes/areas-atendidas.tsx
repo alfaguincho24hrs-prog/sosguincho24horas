@@ -9,6 +9,7 @@ export const Route = createFileRoute("/areas-atendidas")({
       { title: "Áreas Atendidas — Cobertura Nacional SOS Guincho 24h" },
       { name: "description", content: "Confira as cidades, rodovias e regiões atendidas pela nossa rede de guincho 24 horas. Atendimento prioritário no Vale do Paraíba e todo o Brasil." },
     ],
+    links: [{ rel: "canonical", href: "https://sosguincho24horas.com.br/areas-atendidas" }],
   }),
   component: AreasAtendidasPage,
 });
