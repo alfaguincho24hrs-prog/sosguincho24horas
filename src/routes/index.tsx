@@ -28,27 +28,32 @@ export const Route = createFileRoute("/")({
         type: "application/ld+json",
         children: JSON.stringify({
           "@context": "https://schema.org",
-          "@type": "Service",
-          "serviceType": "Guincho e Reboque 24 Horas",
-          "provider": {
-            "@type": "LocalBusiness",
-            "name": SITE.name,
-            "image": "https://sosguincho24horas.com.br/assets/reboque.webp",
-            "telephone": SITE.phone,
-            "priceRange": "$$",
-            "address": {
-              "@type": "PostalAddress",
-              "streetAddress": "Praça Dom Epaminondas, 1-4 sala 104",
-              "addressLocality": "Taubaté",
-              "addressRegion": "SP",
-              "postalCode": "12010-090",
-              "addressCountry": "BR"
-            },
-            "geo": {
-              "@type": "GeoCoordinates",
-              "latitude": -23.026389,
-              "longitude": -45.555556
-            }
+          "@type": "LocalBusiness",
+          "@id": `https://sosguincho24horas.com.br/index.html`,
+          "url": `https://sosguincho24horas.com.br/`,
+          "name": SITE.name,
+          "image": "https://sosguincho24horas.com.br/assets/reboque.webp",
+          "telephone": SITE.phone,
+          "priceRange": "$$",
+          "description": "Serviço de guincho 24 horas, reboque de carros e motos, auto socorro mecânico e remoção de veículos. Atendimento rápido em SP e Vale do Paraíba.",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Praça Dom Epaminondas, 1-4 sala 104",
+            "addressLocality": "Taubaté",
+            "addressRegion": "SP",
+            "postalCode": "12010-090",
+            "addressCountry": "BR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": -23.026389,
+            "longitude": -45.555556
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+            "opens": "00:00",
+            "closes": "23:59"
           },
           "areaServed": [
             { "@type": "City", "name": "São Paulo" },
@@ -63,30 +68,12 @@ export const Route = createFileRoute("/")({
             "@type": "OfferCatalog",
             "name": "Serviços de Guincho",
             "itemListElement": [
-              {
-                "@type": "Offer",
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": "Guincho para Carros",
-                  "description": "Reboque especializado para veículos leves com plataforma hidráulica."
-                }
-              },
-              {
-                "@type": "Offer",
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": "Guincho para Motos",
-                  "description": "Transporte seguro de motocicletas de todas as cilindradas."
-                }
-              },
-              {
-                "@type": "Offer",
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": "Guincho Pesado",
-                  "description": "Resgate e transporte de caminhões, ônibus e máquinas pesadas."
-                }
-              }
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Guincho para Carros" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Guincho para Motos" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Guincho Pesado" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Auto Socorro Mecânico" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Pane Seca" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Remoção Veicular" } }
             ]
           }
         }),
