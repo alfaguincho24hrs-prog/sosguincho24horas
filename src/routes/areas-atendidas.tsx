@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { MapPin, Truck } from "lucide-react";
-import { CITIES } from "@/components/site-data";
+import { CITIES, SITE } from "@/components/site-data";
 import { SeoBlock } from "@/components/seo-block";
 
 export const Route = createFileRoute("/areas-atendidas")({
@@ -8,6 +8,27 @@ export const Route = createFileRoute("/areas-atendidas")({
     meta: [
       { title: "Áreas Atendidas — Cobertura Nacional SOS Guincho 24h" },
       { name: "description", content: "Confira as cidades, rodovias e regiões atendidas pela nossa rede de guincho 24 horas. Atendimento prioritário no Vale do Paraíba e todo o Brasil." },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          "name": `${SITE.name} - Áreas Atendidas`,
+          "image": "https://sosguincho24horas.com.br/assets/reboque.webp",
+          "@id": "https://sosguincho24horas.com.br/areas-atendidas.html",
+          "url": "https://sosguincho24horas.com.br/areas-atendidas",
+          "telephone": SITE.phone,
+          "priceRange": "$$",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Brasil",
+            "addressRegion": "SP",
+            "addressCountry": "BR"
+          }
+        })
+      }
     ],
     links: [{ rel: "canonical", href: "https://sosguincho24horas.com.br/areas-atendidas" }],
   }),

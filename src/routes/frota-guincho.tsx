@@ -9,6 +9,27 @@ export const Route = createFileRoute("/frota-guincho")({
       { title: "Nossa Frota de Guinchos 24h | SOS Guincho 24 horas" },
       { name: "description", content: "Conheça nossa frota de guinchos plataformas, pesados e auto socorro. Equipamentos modernos para transporte seguro de veículos em todo o Brasil." },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          "name": `${SITE.name} - Frota`,
+          "image": "https://sosguincho24horas.com.br/assets/reboque.webp",
+          "@id": "https://sosguincho24horas.com.br/frota-guincho.html",
+          "url": "https://sosguincho24horas.com.br/frota-guincho",
+          "telephone": SITE.phone,
+          "priceRange": "$$",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Brasil",
+            "addressRegion": "SP",
+            "addressCountry": "BR"
+          }
+        })
+      }
+    ],
     links: [{ rel: "canonical", href: "https://sosguincho24horas.com.br/frota-guincho" }],
   }),
   component: FrotaPage,
