@@ -20,6 +20,8 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: "Seu carro parou? SOS Guincho 24h na sua cidade para motos, leves e pesados. Resgate rápido em SP e Vale do Paraíba!" },
       { property: "og:image", content: "https://sosguincho24horas.com.br/og-image.webp" },
       { property: "og:url", content: "https://sosguincho24horas.com.br/" },
+      { name: "twitter:title", content: "Guincho 24 Horas no Brasil | Reboque e Auto Socorro" },
+      { name: "twitter:description", content: "Seu carro parou? SOS Guincho 24h na sua cidade para motos, leves e pesados. Resgate rápido em SP e Vale do Paraíba!" },
     ],
     scripts: [
       {
