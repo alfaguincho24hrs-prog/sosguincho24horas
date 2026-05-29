@@ -40,7 +40,7 @@ export function PartnersCarousel() {
                 <p className="flex items-center gap-2 text-sm text-muted-foreground">
                   <MapPin className="h-4 w-4" /> {p.city}
                 </p>
-                <Button asChild className="w-full" variant="secondary">
+                <Button asChild className="w-full bg-[image:var(--gradient-cta)] text-primary hover:opacity-95 shadow-sm">
                   <a href={`tel:${p.phone.replace(/\D/g, "")}`}>
                     <Phone className="h-4 w-4" /> {p.phone}
                   </a>
