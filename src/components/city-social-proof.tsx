@@ -48,19 +48,30 @@ type Props = {
 
 export function CitySocialProof({ cityName, neighborhoods, uf }: Props) {
   const seed = hash(cityName);
-  const items = Array.from({ length: 4 }, (_, i) => {
+  const highways = ["Dutra", "Castello Branco", "Anhanguera", "Bandeirantes", "Imigrantes", "Anchieta", "Ayrton Senna", "Fernão Dias", "Régis Bittencourt", "Rodoanel", "Tamoios", "Carvalho Pinto", "Dom Pedro I", "Rio-Santos"];
+  
+  const items = Array.from({ length: 18 }, (_, i) => {
     const name = `${pick(FIRST_NAMES, seed, i)} ${pick(LAST_INITIALS, seed, i + 3)}`;
+    const useHighway = (seed + i) % 2 === 0;
     const hood = neighborhoods.length
       ? pick(neighborhoods, seed, i + 1)
       : "Centro";
-    const template = pick(TEMPLATES, seed, i + 2);
+    const highway = pick(highways, seed, i + 5);
+    
+    let template = pick(TEMPLATES, seed, i + 2);
+    if (useHighway && template.includes("{hood}")) {
+      template = template.replace("{hood}", `rodovia ${highway}`);
+    } else {
+      template = template.replace("{hood}", `bairro ${hood}`);
+    }
+    
     const text = template.replaceAll("{city}", cityName).replaceAll("{hood}", hood);
     const days = 1 + ((seed + i * 11) % 28);
     // Para o Schema, precisamos de uma data real aproximada
     const datePublished = new Date();
     datePublished.setDate(datePublished.getDate() - days);
     
-    return { name, hood, text, days, datePublished: datePublished.toISOString().split('T')[0] };
+    return { name, hood: useHighway ? highway : hood, text, days, datePublished: datePublished.toISOString().split('T')[0] };
   });
 
   const reviewsJsonLd = {
