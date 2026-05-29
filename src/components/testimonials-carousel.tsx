@@ -2,6 +2,7 @@ import * as React from "react";
 import Autoplay from "embla-carousel-autoplay";
 import { Star, Quote, MapPin } from "lucide-react";
 import { SITE } from "./site-data";
+import { CITY_LOCAL } from "./city-neighborhoods";
 import {
   Carousel,
   CarouselContent,
@@ -101,12 +102,47 @@ export function TestimonialsCarousel({ citySeed }: { citySeed?: string } = {}) {
   const plugin = React.useRef(Autoplay({ delay: 4500, stopOnInteraction: true }));
   // Reordena depoimentos por cidade — mesma cidade = mesma ordem (estável p/ SEO).
   const items = React.useMemo(() => {
-    if (!citySeed) return TESTIMONIALS;
-    const seed = hashSeed(citySeed);
-    const arr = [...TESTIMONIALS];
-    // rotação determinística
-    const offset = seed % arr.length;
-    return [...arr.slice(offset), ...arr.slice(0, offset)];
+    let baseItems = [...TESTIMONIALS];
+    
+    if (citySeed) {
+      const seed = hashSeed(citySeed);
+      const citySlug = citySeed.toLowerCase().replace(/\s+/g, '-');
+      const localData = CITY_LOCAL[citySlug];
+      const neighborhoods = localData?.neighborhoods || [];
+      const highways = ["Dutra", "Castello Branco", "Anhanguera", "Bandeirantes", "Imigrantes", "Anchieta", "Ayrton Senna", "Fernão Dias", "Régis Bittencourt", "Rodoanel", "Tamoios"];
+
+      baseItems = baseItems.map((item, idx) => {
+        const newItem = { ...item };
+        const cityMatch = item.city.split(" - ")[0].toLowerCase();
+        const seedVal = (seed + idx);
+        
+        // Se a cidade do depoimento for a mesma da página, injeta bairro/rodovia
+        if (citySeed.toLowerCase().startsWith(cityMatch)) {
+          const useHighway = seedVal % 3 === 0;
+          if (useHighway) {
+            const highway = highways[seedVal % highways.length];
+            newItem.text = newItem.text.replace(/na (Marginal|rodovia|estrada|rua|Dutra)[^.]*/i, `na ${highway}`);
+            if (!newItem.text.includes(highway)) {
+              newItem.text = `Estava na ${highway} e precisei de ajuda. ` + newItem.text;
+            }
+          } else if (neighborhoods.length > 0) {
+            const neighborhood = neighborhoods[seedVal % neighborhoods.length];
+            newItem.text = newItem.text.replace(/na (Marginal|rodovia|estrada|rua)[^.]*/i, `no bairro ${neighborhood}`);
+            if (!newItem.text.includes(neighborhood)) {
+              newItem.text = `Estava no ${neighborhood} e ` + newItem.text.charAt(0).toLowerCase() + newItem.text.slice(1);
+            }
+          }
+        }
+        return newItem;
+      });
+
+      // Rotação determinística
+      const offset = seed % baseItems.length;
+      baseItems = [...baseItems.slice(offset), ...baseItems.slice(0, offset)];
+    }
+    
+    // Limita a 18 testemunhos
+    return baseItems.slice(0, 18);
   }, [citySeed]);
 
   return (
