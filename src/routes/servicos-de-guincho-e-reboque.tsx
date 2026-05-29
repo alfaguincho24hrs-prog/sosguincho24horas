@@ -174,10 +174,10 @@ function CitiesIndexPage() {
           {ALPHABET.map((letter) => (
             <section key={letter} id={`letra-${letter}`} className="scroll-mt-24">
               <div className="mb-4 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[image:var(--gradient-cta)] text-primary">
                   <span className="text-lg font-bold">{letter}</span>
                 </div>
-                <h2 className="text-2xl font-bold">Cidades com letra {letter}</h2>
+                <h2 className="text-2xl font-bold text-accent/90">Cidades com letra {letter}</h2>
               </div>
               <CitiesGrid cities={CITIES_BY_LETTER[letter]} />
             </section>
