@@ -70,7 +70,7 @@ export const Route = createFileRoute("/guincho-em-{$slug}")({
     if (!loaderData) return { meta: [] };
     const { city } = loaderData;
     const title = `Guincho em ${city.name} - ${city.uf} | Reboque 24 Horas | ${SITE.name}`;
-    const description = `Guincho 24 horas em ${city.name}/${city.uf}. Reboque rápido para carros, motos, caminhões, auto socorro e pane seca. Atendimento imediato em toda ${city.name}.`;
+    const description = `Precisa de guincho em ${city.name}/${city.uf}? Oferecemos reboque 24 horas rápido e seguro para carros, motos e pesados em toda a região de ${city.name}. Auto socorro imediato com o melhor preço!`;
     const url = `${SITE_URL}/guincho-em-${city.slug}-${city.uf.toLowerCase()}`;
     return {
       meta: [
