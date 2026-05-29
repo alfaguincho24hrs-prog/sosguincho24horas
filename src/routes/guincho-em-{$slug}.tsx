@@ -535,7 +535,7 @@ function CityPage() {
             </span>
           ))} — recebem atendimento prioritário em qualquer horário do dia ou da noite.
         </p>
-        <h3 className="text-xl font-bold pt-2">Quando acionar um guincho em {city.name}?</h3>
+        <h3 className="text-xl font-bold pt-2 text-accent/90">Quando acionar um guincho em {city.name}?</h3>
         <p className="text-muted-foreground leading-relaxed">
           Acidentes de trânsito, colisões, capotamentos, panes elétricas, problemas no câmbio,
           superaquecimento de motor, pneu furado sem estepe, falta de combustível, bateria
@@ -545,7 +545,7 @@ function CityPage() {
           imediatamente. Tentar empurrar ou rebocar de forma improvisada pode causar acidentes
           graves, multas de trânsito e danos ainda maiores ao seu veículo.
         </p>
-        <h3 className="text-xl font-bold pt-2">Por que escolher nossa rede em {city.name}/{city.uf}?</h3>
+        <h3 className="text-xl font-bold pt-2 text-accent/90">Por que escolher nossa rede em {city.name}/{city.uf}?</h3>
         <ul className="space-y-2 text-muted-foreground leading-relaxed">
           <li>✅ <strong>Atendimento 24h, 7 dias por semana</strong>, inclusive feriados e madrugada.</li>
           <li>✅ <strong>Empresas verificadas</strong> com CNPJ ativo, ANTT regularizada e seguro.</li>
