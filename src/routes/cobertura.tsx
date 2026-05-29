@@ -76,7 +76,7 @@ function CoveragePage() {
       <div className="container mx-auto px-4 py-20">
         <div className="mx-auto max-w-3xl text-center">
           <Badge variant="secondary" className="mb-3">Cobertura</Badge>
-          <h1 className="text-4xl font-bold tracking-tight md:text-5xl">Atendimento em todo o Brasil</h1>
+          <h1 className="text-4xl font-bold tracking-tight md:text-5xl text-accent">Atendimento em todo o Brasil</h1>
           <p className="mt-4 text-muted-foreground">
             Operamos com uma rede consolidada de empresas de guincho parceiras em todas as capitais e principais regiões metropolitanas, garantindo socorro rápido onde quer que você esteja.
           </p>

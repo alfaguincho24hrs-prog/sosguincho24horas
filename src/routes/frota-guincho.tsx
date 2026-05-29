@@ -38,7 +38,7 @@ export const Route = createFileRoute("/frota-guincho")({
 function FrotaPage() {
   return (
     <div className="container mx-auto px-4 py-16">
-      <h1 className="text-4xl font-bold mb-6">Nossa Frota de Guincho 24 Horas</h1>
+      <h1 className="text-4xl font-bold mb-6 text-accent">Nossa Frota de Guincho 24 Horas</h1>
       <p className="text-lg text-muted-foreground mb-10">
         Dispomos de equipamentos modernos para garantir a segurança e integridade do seu veículo, do pequeno carro de passeio ao pesado caminhão.
       </p>
