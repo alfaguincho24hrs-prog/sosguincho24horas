@@ -162,8 +162,13 @@ export function TestimonialsCarousel({ citySeed }: { citySeed?: string } = {}) {
         <div className="mx-auto mb-10 max-w-3xl text-center">
           <Badge variant="secondary" className="mb-3">Avaliações reais — guincho 24h</Badge>
           <h2 id="depoimentos-heading" className="text-3xl font-bold tracking-tight md:text-4xl text-accent/90">
-            Avaliações de clientes satisfeitos com nosso serviço de guincho e reboque 24h
+            {citySeed ? `Avaliações reais em ${citySeed.split(' - ')[0]}` : "Avaliações de clientes satisfeitos com nosso serviço de guincho e reboque 24h"}
           </h2>
+          <div className="mt-4 flex items-center justify-center gap-1">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} className="h-5 w-5 fill-yellow-500 text-yellow-500" />
+            ))}
+          </div>
           <p className="mt-3 text-muted-foreground">
             Confira depoimentos reais de quem precisou de auto socorro, reboque na rodovia, guincho de moto e
             remoção veicular em São Paulo, Vale do Paraíba, Litoral Norte, Grande SP e em todo o Brasil.
