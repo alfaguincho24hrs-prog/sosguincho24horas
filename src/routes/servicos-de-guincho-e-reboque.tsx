@@ -105,7 +105,7 @@ function CitiesIndexPage() {
         <Badge variant="secondary" className="mb-3">
           Cobertura nacional
         </Badge>
-        <h1 className="text-4xl font-bold tracking-tight md:text-5xl">
+        <h1 className="text-4xl font-bold tracking-tight md:text-5xl text-accent">
           Serviços de guincho e reboque 24h em todo o Brasil
         </h1>
         <p className="mt-4 text-muted-foreground">

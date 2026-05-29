@@ -35,7 +35,7 @@ function ContactPage() {
       <div className="container mx-auto px-4 py-20">
         <div className="mx-auto max-w-3xl text-center">
           <Badge variant="secondary" className="mb-3">Contato</Badge>
-          <h1 className="text-4xl font-bold tracking-tight md:text-5xl">Fale com nossa central</h1>
+          <h1 className="text-4xl font-bold tracking-tight md:text-5xl text-accent">Fale com nossa central</h1>
           <p className="mt-4 text-muted-foreground">Estamos disponíveis 24 horas para emergências, dúvidas e parcerias.</p>
         </div>
 

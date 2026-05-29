@@ -34,7 +34,7 @@ function BlogPage() {
       <BreadcrumbJsonLd items={[{ name: "Início", url: "/" }, { name: "Blog", url: "/blog" }]} />
       <section className="border-b border-border/60 bg-muted/30 py-16">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl font-bold tracking-tight md:text-5xl">Blog SOS Guincho 24 horas</h1>
+          <h1 className="text-4xl font-bold tracking-tight md:text-5xl text-accent">Blog SOS Guincho 24 horas</h1>
           <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
             Dicas, guias e novidades sobre guincho, reboque, auto socorro e segurança nas rodovias.
           </p>

@@ -40,7 +40,7 @@ function AnunciePage() {
       <section className="bg-[image:var(--gradient-hero)] py-20 text-primary-foreground">
         <div className="container mx-auto max-w-3xl px-4 text-center">
           <Badge className="mb-3 border-accent/40 bg-accent/15 text-accent">Para empresas</Badge>
-          <h1 className="text-4xl font-bold tracking-tight md:text-5xl">Anuncie e receba mais chamados de guincho</h1>
+          <h1 className="text-4xl font-bold tracking-tight md:text-5xl text-accent">Anuncie e receba mais chamados de guincho</h1>
           <p className="mt-4 text-primary-foreground/85">
             Posicione sua empresa em destaque no maior portal de guinchos do Brasil e alcance motoristas no momento exato em que eles precisam de socorro.
           </p>

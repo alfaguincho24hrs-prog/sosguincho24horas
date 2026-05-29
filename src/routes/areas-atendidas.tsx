@@ -38,7 +38,7 @@ export const Route = createFileRoute("/areas-atendidas")({
 function AreasAtendidasPage() {
   return (
     <div className="container mx-auto px-4 py-16">
-      <h1 className="text-4xl font-bold mb-6">Áreas Atendidas</h1>
+      <h1 className="text-4xl font-bold mb-6 text-accent">Áreas Atendidas</h1>
       <p className="text-lg text-muted-foreground mb-10">
         Atendemos com exclusividade em todo o território nacional, com bases distribuídas estrategicamente para garantir socorro em menos de 45 minutos.
       </p>

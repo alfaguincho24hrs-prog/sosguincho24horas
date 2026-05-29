@@ -92,7 +92,7 @@ function RodoviasVPPage() {
       <section className="bg-gradient-to-br from-primary/10 via-background to-background py-16 border-b">
         <div className="container max-w-5xl">
           <Badge className="mb-4">Vale do Paraíba — SP</Badge>
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-accent">
             Guincho 24h nas Rodovias do Vale do Paraíba
           </h1>
           <p className="text-lg text-muted-foreground mb-6 max-w-3xl">

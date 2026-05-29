@@ -31,7 +31,7 @@ function ServicesPage() {
       <div className="container mx-auto px-4 py-20">
         <div className="mx-auto max-w-3xl text-center">
           <Badge variant="secondary" className="mb-3">Serviços</Badge>
-          <h1 className="text-4xl font-bold tracking-tight md:text-5xl">Serviços de guincho 24 horas para qualquer emergência</h1>
+          <h1 className="text-4xl font-bold tracking-tight md:text-5xl text-accent">Serviços de guincho 24 horas para qualquer emergência</h1>
           <p className="mt-4 text-muted-foreground">
             Oferecemos uma estrutura completa para resgatar seu veículo, seja na cidade, na estrada ou em locais de difícil acesso. Atendimento rápido, ético e seguro.
           </p>
