@@ -62,7 +62,7 @@ function BlogPostPage() {
           <span className="flex items-center gap-1"><Calendar className="h-3 w-3" />{post.date}</span>
         </div>
 
-        <h1 className="text-3xl font-bold leading-tight md:text-4xl">{post.title}</h1>
+        <h1 className="text-3xl font-bold leading-tight md:text-4xl text-accent">{post.title}</h1>
         <p className="mt-4 text-lg text-muted-foreground">{post.excerpt}</p>
 
         <div className="mt-8 space-y-5 text-base leading-relaxed text-foreground article-content">
