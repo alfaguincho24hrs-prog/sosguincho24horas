@@ -109,7 +109,7 @@ export function TestimonialsCarousel({ citySeed }: { citySeed?: string } = {}) {
       const citySlug = citySeed.toLowerCase().replace(/\s+/g, '-');
       const localData = CITY_LOCAL[citySlug];
       const neighborhoods = localData?.neighborhoods || [];
-      const highways = ["Dutra", "Castello Branco", "Anhanguera", "Bandeirantes", "Imigrantes", "Anchieta", "Ayrton Senna", "Fernão Dias", "Régis Bittencourt", "Rodoanel", "Tamoios"];
+      const highways = ["Dutra", "Castello Branco", "Anhanguera", "Bandeirantes", "Imigrantes", "Anchieta", "Ayrton Senna", "Fernão Dias", "Régis Bittencourt", "Rodoanel", "Tamoios", "Carvalho Pinto", "Dom Pedro I", "Via Lagos", "Oswaldo Cruz", "Rio-Santos"];
 
       baseItems = baseItems.map((item, idx) => {
         const newItem = { ...item };
@@ -118,18 +118,19 @@ export function TestimonialsCarousel({ citySeed }: { citySeed?: string } = {}) {
         
         // Se a cidade do depoimento for a mesma da página, injeta bairro/rodovia
         if (citySeed.toLowerCase().startsWith(cityMatch)) {
-          const useHighway = seedVal % 3 === 0;
+          const useHighway = seedVal % 2 === 0; // Mais frequente
           if (useHighway) {
             const highway = highways[seedVal % highways.length];
-            newItem.text = newItem.text.replace(/na (Marginal|rodovia|estrada|rua|Dutra)[^.]*/i, `na ${highway}`);
+            newItem.text = newItem.text.replace(/na (Marginal|rodovia|estrada|rua|Dutra)[^.]*/i, `na rodovia ${highway}`);
             if (!newItem.text.includes(highway)) {
-              newItem.text = `Estava na ${highway} e precisei de ajuda. ` + newItem.text;
+              newItem.text = `Estava na rodovia ${highway} e precisei de ajuda urgente. ` + newItem.text;
             }
           } else if (neighborhoods.length > 0) {
             const neighborhood = neighborhoods[seedVal % neighborhoods.length];
+            newItem.text = newItem.text.replace(/no bairro [^.]*/i, `no bairro ${neighborhood}`);
             newItem.text = newItem.text.replace(/na (Marginal|rodovia|estrada|rua)[^.]*/i, `no bairro ${neighborhood}`);
             if (!newItem.text.includes(neighborhood)) {
-              newItem.text = `Estava no ${neighborhood} e ` + newItem.text.charAt(0).toLowerCase() + newItem.text.slice(1);
+              newItem.text = `O serviço no bairro ${neighborhood} foi excelente. ` + newItem.text;
             }
           }
         }
