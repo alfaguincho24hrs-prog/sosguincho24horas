@@ -7,7 +7,7 @@ export const Route = createFileRoute("/frota-guincho")({
   head: () => ({
     meta: [
       { title: "Nossa Frota de Guinchos 24h | SOS Guincho 24 horas" },
-      { name: "description", content: "Conheça nossa frota de guinchos plataformas, pesados e auto socorro. Equipamentos modernos para transporte seguro de veículos em todo o Brasil." },
+      { name: "description", content: "Conheça nossa frota completa de guinchos plataforma, reboques pesados e auto socorro 24h. Dispomos de equipamentos modernos e seguros para o transporte de veículos em todo o território nacional." },
     ],
     scripts: [
       {

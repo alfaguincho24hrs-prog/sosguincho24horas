@@ -16,9 +16,9 @@ export const Route = createFileRoute("/contato")({
   head: () => ({
     meta: [
       { title: "Contato | SOS Guincho 24 horas - Atendimento 24 Horas" },
-      { name: "description", content: "Fale com a central do SOS Guincho 24 horas. Atendimento por telefone, WhatsApp e e-mail, 24 horas por dia, em todo o Brasil." },
+      { name: "description", content: "Entre em contato com a central do SOS Guincho 24 horas. Oferecemos atendimento humanizado via telefone, WhatsApp e e-mail, 24 horas por dia, para socorro veicular imediato em todo o Brasil." },
       { property: "og:title", content: "Contato | SOS Guincho 24 horas" },
-      { property: "og:description", content: "Atendimento 24h por telefone, WhatsApp e e-mail." },
+      { property: "og:description", content: "Fale com nossa central 24h via telefone, WhatsApp e e-mail para serviços de guincho e reboque em todo o Brasil." },
       { property: "og:image", content: "https://sosguincho24horas.com.br/og-image.webp" },
       { property: "og:url", content: "https://sosguincho24horas.com.br/contato" },
       { name: "twitter:image", content: "https://sosguincho24horas.com.br/og-image.webp" },

@@ -7,7 +7,7 @@ export const Route = createFileRoute("/areas-atendidas")({
   head: () => ({
     meta: [
       { title: "Áreas Atendidas — Cobertura Nacional SOS Guincho 24h" },
-      { name: "description", content: "Confira as cidades, rodovias e regiões atendidas pela nossa rede de guincho 24 horas. Atendimento prioritário no Vale do Paraíba e todo o Brasil." },
+      { name: "description", content: "Confira as cidades, rodovias e regiões atendidas pela nossa rede de guincho 24 horas. Oferecemos atendimento prioritário no Vale do Paraíba, São Paulo e cobertura em todo o território nacional." },
     ],
     scripts: [
       {

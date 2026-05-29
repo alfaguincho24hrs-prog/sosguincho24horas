@@ -10,9 +10,9 @@ export const Route = createFileRoute("/blog")({
   head: () => ({
     meta: [
       { title: "Blog — Dicas de Guincho, Reboque e Auto Socorro | SOS Guincho 24 horas" },
-      { name: "description", content: "Artigos e guias sobre guincho 24h, reboque, auto socorro, segurança nas rodovias e cuidados com seu veículo em emergências." },
+      { name: "description", content: "Confira nosso blog com artigos exclusivos e guias sobre guincho 24h, reboque, auto socorro, segurança nas rodovias e cuidados essenciais com seu veículo em situações de emergência." },
       { property: "og:title", content: "Blog — SOS Guincho 24 horas" },
-      { property: "og:description", content: "Dicas, guias e novidades sobre guincho, reboque e auto socorro em todo o Brasil." },
+      { property: "og:description", content: "Dicas úteis, guias detalhados e novidades sobre guincho, reboque e auto socorro em todo o território nacional." },
       { property: "og:image", content: "https://sosguincho24horas.com.br/og-image.webp" },
       { property: "og:url", content: "https://sosguincho24horas.com.br/blog" },
       { name: "twitter:image", content: "https://sosguincho24horas.com.br/og-image.webp" },

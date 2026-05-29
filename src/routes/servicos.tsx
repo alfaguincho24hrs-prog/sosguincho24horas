@@ -12,9 +12,9 @@ export const Route = createFileRoute("/servicos")({
   head: () => ({
     meta: [
       { title: "Serviços de Guincho e Reboque 24h | SOS Guincho 24 horas" },
-      { name: "description", content: "Conheça todos os serviços de guincho 24 horas: reboque leve, pesado, motos, auto socorro mecânico, pane seca e remoção veicular em todo o Brasil." },
+      { name: "description", content: "Conheça todos os nossos serviços de guincho 24 horas: reboque leve, pesado, motos, auto socorro mecânico, pane seca e remoção veicular. Atendimento especializado e rápido em todo o Brasil." },
       { property: "og:title", content: "Serviços de Guincho e Reboque 24h" },
-      { property: "og:description", content: "Reboque leve, pesado, motos, auto socorro, pane seca e remoção." },
+      { property: "og:description", content: "Conheça todos os nossos serviços de guincho 24 horas: reboque leve, pesado, motos, auto socorro mecânico, pane seca e remoção veicular em todo o Brasil." },
       { property: "og:image", content: "https://sosguincho24horas.com.br/og-image.webp" },
       { property: "og:url", content: "https://sosguincho24horas.com.br/servicos" },
       { name: "twitter:image", content: "https://sosguincho24horas.com.br/og-image.webp" },
