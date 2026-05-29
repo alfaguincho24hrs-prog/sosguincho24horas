@@ -109,7 +109,7 @@ export function CitySocialProof({ cityName, neighborhoods, uf }: Props) {
   };
 
   return (
-    <section className="mt-14">
+    <section className="mt-14" id="testimonials">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewsJsonLd) }}
@@ -117,7 +117,7 @@ export function CitySocialProof({ cityName, neighborhoods, uf }: Props) {
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h2 className="text-2xl font-bold md:text-3xl text-accent/90">
-            Avaliações de clientes em {cityName}
+            Avaliações reais em {cityName}
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
             Nota média <strong>4.9/5</strong> com base em atendimentos recentes.
