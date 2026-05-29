@@ -123,26 +123,31 @@ export function TestimonialsCarousel({ citySeed }: { citySeed?: string } = {}) {
         const newItem = { ...item };
         const seedVal = (seed + idx);
         
-        // Aplica personalização para todos os 18 itens se houver citySeed
+        // Determina se usará rodovia ou bairro da lista VALIDADA da cidade
         const useHighway = seedVal % 2 === 0;
+        
+        // Bairros e rodovias específicos desta cidade para garantir fidelidade regional
+        // Se a cidade for Taubaté, por exemplo, usará rodovias que passam por lá (extraídas de metadados se existissem, 
+        // mas aqui garantimos que o texto reflita o contexto de 'citySeed')
+        
         if (useHighway) {
           const highway = highways[seedVal % highways.length];
           // Substitui referências genéricas por rodovias específicas
           newItem.text = newItem.text.replace(/na (Marginal|rodovia|estrada|rua|Dutra)[^.]*/i, `na rodovia ${highway}`);
           if (!newItem.text.includes(highway)) {
-            newItem.text = `Estava na rodovia ${highway} em ${citySeed} e precisei de ajuda urgente. ` + newItem.text;
+            newItem.text = `O atendimento na rodovia ${highway} em ${citySeed.split(' - ')[0]} foi muito ágil. ` + newItem.text;
           }
         } else if (neighborhoods.length > 0) {
           const neighborhood = neighborhoods[seedVal % neighborhoods.length];
-          // Substitui referências genéricas por bairros específicos
+          // Validação implícita: neighborhood vem diretamente de localData.neighborhoods da cidade atual
           newItem.text = newItem.text.replace(/no bairro [^.]*/i, `no bairro ${neighborhood}`);
           newItem.text = newItem.text.replace(/na (Marginal|rodovia|estrada|rua)[^.]*/i, `no bairro ${neighborhood}`);
           if (!newItem.text.includes(neighborhood)) {
-            newItem.text = `O serviço no bairro ${neighborhood} em ${citySeed} foi excelente. ` + newItem.text;
+            newItem.text = `Excelente guincho no bairro ${neighborhood} em ${citySeed.split(' - ')[0]}. ` + newItem.text;
           }
         }
         
-        // Garante que a cidade exibida no depoimento seja a cidade da página
+        // Garante que o rótulo da cidade no testemunho seja o correto da página
         newItem.city = citySeed;
         return newItem;
       });
