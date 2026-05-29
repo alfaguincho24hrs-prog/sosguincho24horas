@@ -106,8 +106,13 @@ export function TestimonialsCarousel({ citySeed }: { citySeed?: string } = {}) {
       return [...TESTIMONIALS].slice(0, 18);
     }
 
-    const citySlug = citySeed.toLowerCase().replace(/\s+/g, '-').normalize("NFD").replace(/[\u0300-\u036f]/g, "").split('---')[0]; // Remove prefixos se houver
+    let citySlug = citySeed.toLowerCase().replace(/\s+/g, '-').normalize("NFD").replace(/[\u0300-\u036f]/g, "").split('---')[0]; 
     
+    // Fallback: se o slug termina com -sp ou similar e não achou, tenta sem o UF
+    if (!CITY_LOCAL[citySlug] && citySlug.match(/-[a-z]{2}$/)) {
+      citySlug = citySlug.slice(0, -3);
+    }
+
     // Tentativa de encontrar no CITY_LOCAL
     let localData = CITY_LOCAL[citySlug];
     if (!localData) {
