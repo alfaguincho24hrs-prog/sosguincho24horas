@@ -13,9 +13,9 @@ export const Route = createFileRoute("/cobertura")({
   head: () => ({
     meta: [
       { title: "Cobertura Nacional de Guincho | Cidades Atendidas em Todo o Brasil" },
-      { name: "description", content: "Veja todas as capitais e cidades com atendimento de guincho e reboque 24h. Cobertura nacional com empresas parceiras qualificadas em cada região." },
+      { name: "description", content: "Veja a lista completa de capitais e cidades com atendimento de guincho e reboque 24h. Oferecemos cobertura nacional com empresas parceiras qualificadas para socorro veicular rápido." },
       { property: "og:title", content: "Cobertura Nacional de Guincho 24h" },
-      { property: "og:description", content: "Capitais e cidades atendidas em todo o Brasil." },
+      { property: "og:description", content: "Confira todas as capitais e cidades atendidas pela nossa rede de guincho e reboque 24h em todo o Brasil." },
       { property: "og:image", content: "https://sosguincho24horas.com.br/og-image.webp" },
       { property: "og:url", content: "https://sosguincho24horas.com.br/cobertura" },
       { name: "twitter:image", content: "https://sosguincho24horas.com.br/og-image.webp" },

@@ -15,9 +15,9 @@ export const Route = createFileRoute("/anuncie")({
   head: () => ({
     meta: [
       { title: "Anuncie sua Empresa de Guincho | Receba Mais Chamados" },
-      { name: "description", content: "Cadastre sua empresa de guincho e reboque no maior portal nacional. Apareça nos primeiros resultados e conquiste mais clientes na sua região." },
+      { name: "description", content: "Cadastre sua empresa de guincho e reboque no maior portal nacional de socorro veicular. Aumente sua visibilidade, apareça nos primeiros resultados e conquiste mais clientes na sua região hoje mesmo!" },
       { property: "og:title", content: "Anuncie sua Empresa de Guincho" },
-      { property: "og:description", content: "Mais visibilidade, mais clientes, mais chamados para sua empresa de reboque." },
+      { property: "og:description", content: "Mais visibilidade, mais clientes e mais chamados para sua empresa de reboque no maior portal de guinchos do Brasil." },
       { property: "og:image", content: "https://sosguincho24horas.com.br/og-image.webp" },
       { property: "og:url", content: "https://sosguincho24horas.com.br/anuncie" },
       { name: "twitter:image", content: "https://sosguincho24horas.com.br/og-image.webp" },
