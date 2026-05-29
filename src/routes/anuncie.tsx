@@ -97,7 +97,7 @@ function AnunciePage() {
               </div>
               <div className="space-y-1.5"><Label htmlFor="email">E-mail</Label><Input id="email" type="email" required /></div>
               <div className="space-y-1.5"><Label htmlFor="msg">Conte sobre sua frota e serviços</Label><Textarea id="msg" rows={4} /></div>
-              <Button type="submit" className="w-full bg-[image:var(--gradient-cta)] text-primary hover:opacity-95">Enviar cadastro</Button>
+              <Button type="submit" className="w-full bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">Enviar cadastro</Button>
             </form>
           </CardContent>
         </Card>
