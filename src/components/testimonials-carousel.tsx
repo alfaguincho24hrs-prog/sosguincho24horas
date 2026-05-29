@@ -129,39 +129,52 @@ export function TestimonialsCarousel({ citySeed }: { citySeed?: string } = {}) {
     const highways = ["Dutra", "Castello Branco", "Anhanguera", "Bandeirantes", "Imigrantes", "Anchieta", "Ayrton Senna", "Fernão Dias", "Régis Bittencourt", "Rodoanel", "Tamoios", "Carvalho Pinto", "Dom Pedro I", "Rio-Santos"];
 
     // Gerar 18 itens específicos para a cidade usando os depoimentos base como inspiração
-    return Array.from({ length: 18 }, (_, idx) => {
-      const baseIdx = (seed + idx) % TESTIMONIALS.length;
-      const baseItem = TESTIMONIALS[baseIdx];
+    // Usamos uma chave composta (cidade + local) para garantir que a geração seja determinística e única
+    const generatedItems: Testimonial[] = [];
+    const usedLocations = new Set<string>();
+    
+    // Tentamos gerar até 18 itens únicos
+    for (let idx = 0; idx < 100 && generatedItems.length < 18; idx++) {
       const seedVal = seed + idx;
+      const baseIdx = seedVal % TESTIMONIALS.length;
+      const baseItem = TESTIMONIALS[baseIdx];
       
+      const useHighway = (seedVal % 3 === 0) || neighborhoods.length === 0;
+      const cityNameOnly = citySeed.split(' - ')[0];
+      const location = useHighway 
+        ? highways[seedVal % highways.length] 
+        : neighborhoods[seedVal % neighborhoods.length];
+      
+      const uniqueKey = `${cityNameOnly}-${location}`;
+      
+      // Se já usamos esse local para esta cidade nesta rodada, pulamos para o próximo
+      if (usedLocations.has(uniqueKey)) continue;
+      usedLocations.add(uniqueKey);
+
       const newItem = { ...baseItem };
       newItem.city = citySeed;
 
-      // Decide se usa bairro ou rodovia (prioriza bairros se houver muitos)
-      const useHighway = (seedVal % 3 === 0) || neighborhoods.length === 0;
-      const cityNameOnly = citySeed.split(' - ')[0];
-      
       if (useHighway) {
-        const highway = highways[seedVal % highways.length];
         const templates = [
-          `Precisei de guincho na rodovia ${highway} em ${cityNameOnly} e o atendimento foi nota 10.`,
-          `O reboque chegou rápido na ${highway}. Serviço de guincho 24h muito confiável.`,
-          `Fiquei parado na ${highway} e em menos de 30 minutos o guincho plataforma já estava lá.`
+          `Precisei de guincho na rodovia ${location} em ${cityNameOnly} e o atendimento foi nota 10.`,
+          `O reboque chegou rápido na ${location}. Serviço de guincho 24h muito confiável.`,
+          `Fiquei parado na ${location} e em menos de 30 minutos o guincho plataforma já estava lá.`
         ];
-        // Mantém parte do texto original para variedade mas garante o local correto no início
         newItem.text = templates[seedVal % templates.length] + " " + baseItem.text.split('. ').slice(1).join('. ');
       } else {
-        const neighborhood = neighborhoods[seedVal % neighborhoods.length];
         const templates = [
-          `Estava no bairro ${neighborhood} em ${cityNameOnly} quando meu carro pifou. O guincho chegou voando!`,
-          `Melhor serviço de guincho em ${cityNameOnly}. Atendimento rápido aqui no ${neighborhood}.`,
-          `Recomendo o guincho 24h. Me socorreram no ${neighborhood} com muita agilidade e preço justo.`
+          `Estava no bairro ${location} em ${cityNameOnly} quando meu carro pifou. O guincho chegou voando!`,
+          `Melhor serviço de guincho em ${cityNameOnly}. Atendimento rápido aqui no ${location}.`,
+          `Recomendo o guincho 24h. Me socorreram no ${location} com muita agilidade e preço justo.`
         ];
         newItem.text = templates[seedVal % templates.length] + " " + baseItem.text.split('. ').slice(1).join('. ');
       }
+      
+      generatedItems.push(newItem);
+    }
 
-      return newItem;
-    });
+    return generatedItems;
+
   }, [citySeed]);
 
   return (
