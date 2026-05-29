@@ -243,7 +243,7 @@ function HomePage() {
             leilões e mudanças interestaduais. Toda a frota é equipada com plataformas hidráulicas modernas, asas
             deltas, munk e prancha rebaixada para transporte seguro de qualquer tipo de veículo.
           </p>
-          <h3 className="text-2xl font-bold pt-4">Por que escolher o {SITE.name}?</h3>
+          <h3 className="text-2xl font-bold pt-4 text-accent/90">Por que escolher o {SITE.name}?</h3>
           <ul className="space-y-3 text-muted-foreground leading-relaxed">
             <li>✅ <strong>Atendimento 24 horas, 7 dias por semana</strong>, inclusive feriados, madrugada e finais de semana.</li>
             <li>✅ <strong>Tempo médio de chegada inferior a 40 minutos</strong> em áreas urbanas e até 60 minutos em rodovias.</li>
@@ -252,7 +252,7 @@ function HomePage() {
             <li>✅ <strong>Pagamento facilitado</strong>: dinheiro, PIX, débito, crédito e principais aplicativos de assistência.</li>
             <li>✅ <strong>Cobertura em mais de 1.000 cidades</strong> de todos os estados, com foco em São Paulo, Vale do Paraíba, Litoral Norte, Serra da Mantiqueira, Grande SP e ABC.</li>
           </ul>
-          <h3 className="text-2xl font-bold pt-4">Quando acionar um guincho 24 horas?</h3>
+          <h3 className="text-2xl font-bold pt-4 text-accent/90">Quando acionar um guincho 24 horas?</h3>
           <p className="text-muted-foreground leading-relaxed">
             Acidentes de trânsito, colisões traseiras, capotamentos, panes elétricas, problemas no câmbio,
             superaquecimento de motor, pneus furados sem estepe, falta de combustível, bateria descarregada,
@@ -262,7 +262,7 @@ function HomePage() {
             empurrar ou rebocar um veículo de forma improvisada pode causar acidentes graves, multas de trânsito e
             danos ainda maiores ao automóvel.
           </p>
-          <h3 className="text-2xl font-bold pt-4">Cobertura em rodovias estratégicas</h3>
+          <h3 className="text-2xl font-bold pt-4 text-accent/90">Cobertura em rodovias estratégicas</h3>
           <p className="text-muted-foreground leading-relaxed">
             Atendemos com prioridade as principais rodovias do estado de São Paulo:{" "}
             <strong>Rodovia Presidente Dutra (BR-116)</strong>,{" "}
