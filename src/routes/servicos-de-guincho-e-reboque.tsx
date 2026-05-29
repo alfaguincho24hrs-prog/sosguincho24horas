@@ -115,10 +115,10 @@ function CitiesIndexPage() {
           qualquer hora do dia ou da noite.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
-          <Button asChild className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
-            <a href={`tel:${SITE.phone}`}>
+          <Button asChild className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95 cursor-default">
+            <span>
               <Phone className="h-4 w-4" /> {SITE.phone}
-            </a>
+            </span>
           </Button>
           <Button asChild variant="outline">
             <Link to="/cobertura">Ver empresas parceiras</Link>
@@ -195,10 +195,10 @@ function CitiesIndexPage() {
           nacional. Fale conosco e localizaremos o guincho mais próximo de você.
         </p>
         <div className="mt-5 flex flex-wrap justify-center gap-3">
-          <Button asChild className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
-            <a href={`tel:${SITE.phone}`}>
+          <Button asChild className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95 cursor-default">
+            <span>
               <Phone className="h-4 w-4" /> Ligar agora
-            </a>
+            </span>
           </Button>
           <Button asChild variant="outline">
             <Link to="/contato">Enviar mensagem</Link>

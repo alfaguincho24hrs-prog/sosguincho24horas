@@ -41,9 +41,9 @@ export function PartnersCarousel() {
                   <MapPin className="h-4 w-4" /> {p.city}
                 </p>
                 <Button asChild className="w-full bg-[image:var(--gradient-cta)] text-primary hover:opacity-95 shadow-sm">
-                  <a href={`tel:${p.phone.replace(/\D/g, "")}`}>
+                  <span className="cursor-default">
                     <Phone className="h-4 w-4" /> {p.phone}
-                  </a>
+                  </span>
                 </Button>
               </CardContent>
             </Card>
