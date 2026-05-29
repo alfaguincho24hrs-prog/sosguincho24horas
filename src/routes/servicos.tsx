@@ -45,7 +45,7 @@ function ServicesPage() {
                 <p className="text-sm text-muted-foreground">{s.desc}</p>
                 <Button
                   asChild
-                  className="w-full animate-button-pulse bg-orange-600 font-bold text-white shadow-lg shadow-orange-600/40 hover:animate-none hover:bg-orange-700 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 focus-visible:ring-offset-2 transition-all duration-300"
+                  className="w-full animate-button-pulse bg-[image:var(--gradient-cta)] font-bold text-primary shadow-lg shadow-accent/40 hover:animate-none hover:opacity-90 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 transition-all duration-300"
                 >
                   <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noreferrer">
                     <MessageCircle className="h-4 w-4" /> CHAMAR GUINCHO

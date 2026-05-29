@@ -66,7 +66,7 @@ export function SeoBlock({ badge, title, paragraphs, bullets, faqs, whatsappMess
         )}
 
         <div className="flex flex-wrap gap-3 pt-4">
-          <Button asChild size="lg">
+          <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
             <a href={`tel:${SITE.phone}`}>
               <Phone className="h-5 w-5" /> Ligar agora — {SITE.phone}
             </a>

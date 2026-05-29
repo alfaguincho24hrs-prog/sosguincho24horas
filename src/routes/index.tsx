@@ -121,7 +121,7 @@ function HomePage() {
               <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
                 <a href={`tel:${SITE.phone}`}><Phone className="h-5 w-5" /> Solicitar guincho agora</a>
               </Button>
-              <Button asChild size="lg" className="bg-orange-600 text-white hover:bg-orange-700 border-none ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 focus-visible:ring-offset-2">
+              <Button asChild size="lg" variant="secondary">
                 <Link to="/cobertura">Ver cidades atendidas <ArrowRight className="h-4 w-4" /></Link>
               </Button>
             </div>
@@ -152,7 +152,7 @@ function HomePage() {
                 <p className="text-sm text-muted-foreground">{s.desc}</p>
                 <Button
                   asChild
-                  className="mt-auto w-full animate-button-pulse bg-orange-600 font-bold text-white shadow-lg shadow-orange-600/40 hover:animate-none hover:bg-orange-700 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 focus-visible:ring-offset-2 transition-all duration-300"
+                  className="mt-auto w-full animate-button-pulse bg-[image:var(--gradient-cta)] font-bold text-primary shadow-lg shadow-accent/40 hover:animate-none hover:opacity-90 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 transition-all duration-300"
                 >
                   <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noreferrer">
                     <MessageCircle className="h-4 w-4" /> CHAMAR GUINCHO
