@@ -24,11 +24,11 @@ export function PartnersCarousel() {
             <Card className="h-full border-border/60 transition-all hover:border-accent/60 hover:shadow-[var(--shadow-elegant)]">
               <CardContent className="space-y-3 p-6">
                 <div className="flex items-start justify-between">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[image:var(--gradient-cta)] text-primary">
                     <img 
                       src="/icon-192.png" 
                       alt={`Logotipo da empresa de guincho ${p.name}`} 
-                      className="h-7 w-7 object-contain brightness-0 invert" 
+                      className="h-7 w-7 object-contain" 
                       loading="lazy"
                     />
                   </div>
