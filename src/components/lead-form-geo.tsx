@@ -137,7 +137,7 @@ export function LeadFormGeo({ defaultCity = "" }: Props) {
             type="submit"
             size="lg"
             disabled={submitting}
-            className="bg-[image:var(--gradient-cta)] text-primary"
+            className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95"
           >
             <Send className="h-4 w-4" /> Enviar pelo WhatsApp
           </Button>
