@@ -326,7 +326,7 @@ function CityPage() {
 
       {/* Serviços na cidade */}
       <section className="mt-14">
-        <h2 className="text-2xl font-bold md:text-3xl">{copy.servicesTitle}</h2>
+        <h2 className="text-2xl font-bold md:text-3xl text-accent/90">{copy.servicesTitle}</h2>
         <p className="mt-2 max-w-3xl text-muted-foreground">{copy.servicesIntro}</p>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICE_ITEMS.map((s) => (
@@ -347,7 +347,7 @@ function CityPage() {
 
       {/* Bairros e CEPs - SEO local hiper-segmentado */}
       <section className="mt-14">
-        <h2 className="text-2xl font-bold md:text-3xl">{copy.neighborhoodsTitle}</h2>
+        <h2 className="text-2xl font-bold md:text-3xl text-accent/90">{copy.neighborhoodsTitle}</h2>
         <p className="mt-2 max-w-3xl text-muted-foreground">
           Nosso serviço de guincho 24h cobre todos os bairros de {city.name}/{city.uf},
           incluindo região central, zona industrial, bairros residenciais e
@@ -388,7 +388,7 @@ function CityPage() {
       {/* Por que escolher */}
       <section className="mt-14 grid gap-8 md:grid-cols-2">
         <div>
-          <h2 className="text-2xl font-bold md:text-3xl">{copy.whyTitle}</h2>
+          <h2 className="text-2xl font-bold md:text-3xl text-accent/90">{copy.whyTitle}</h2>
           <ul className="mt-4 space-y-3 text-muted-foreground">
             <li className="flex gap-3">
               <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
@@ -427,7 +427,7 @@ function CityPage() {
 
       {/* FAQ */}
       <section className="mt-14">
-        <h2 className="text-2xl font-bold md:text-3xl">{copy.faqTitle}</h2>
+        <h2 className="text-2xl font-bold md:text-3xl text-accent/90">{copy.faqTitle}</h2>
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           {copy.faqs.map((f) => (
             <Card key={f.q} className="border-border/60">
@@ -443,7 +443,7 @@ function CityPage() {
       {/* Cidades vizinhas + serviços relacionados — interlinking semântico regional */}
       <section className="mt-14 grid gap-8 md:grid-cols-2">
         <div>
-          <h2 className="text-2xl font-bold">Atendimento Regional em {city.uf}</h2>
+          <h2 className="text-2xl font-bold text-accent/90">Atendimento Regional em {city.uf}</h2>
           <p className="mt-2 text-sm text-muted-foreground">
             Operamos com uma rede logística que permite interligar o socorro entre {city.name} e cidades vizinhas com rapidez.
           </p>
@@ -496,7 +496,7 @@ function CityPage() {
         </div>
 
         <div>
-          <h2 className="text-2xl font-bold">Serviços em {city.name}</h2>
+          <h2 className="text-2xl font-bold text-accent/90">Serviços em {city.name}</h2>
           <div className="mt-4 flex flex-wrap gap-2">
             {[
               { to: "/guincho-leve" as const, label: `Guincho leve em ${city.name}` },
@@ -520,7 +520,7 @@ function CityPage() {
 
       {/* SEO LONGO — autoridade local */}
       <section className="mt-14 max-w-4xl space-y-5">
-        <h2 className="text-2xl font-bold md:text-3xl">{copy.longTitle}</h2>
+        <h2 className="text-2xl font-bold md:text-3xl text-accent/90">{copy.longTitle}</h2>
         <p className="text-muted-foreground leading-relaxed">{copy.longIntro}</p>
         <p className="text-muted-foreground leading-relaxed">
           Nossa central despacha o socorro mais próximo da sua localização em{" "}
@@ -568,7 +568,7 @@ function CityPage() {
 
       {/* CTA final */}
       <section className="mt-14 rounded-2xl bg-secondary/50 p-10 text-center">
-        <h2 className="text-2xl font-bold md:text-3xl">{copy.ctaTitle}</h2>
+        <h2 className="text-2xl font-bold md:text-3xl text-accent/90">{copy.ctaTitle}</h2>
         <p className="mt-2 text-muted-foreground">
           Não fique parado na estrada. Acione agora e resolva sua emergência com
           rapidez e segurança em {city.name}/{city.uf}.
