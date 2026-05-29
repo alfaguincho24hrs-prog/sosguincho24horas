@@ -156,7 +156,7 @@ export function ServicePage(p: ServicePageProps) {
           </h1>
           <p className="mt-4 text-primary-foreground/85">{p.heroSubtitle}</p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary">
+            <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
               <a href={`tel:${SITE.phone}`} aria-label={`Ligar para ${SITE.name} agora`}><Phone className="h-5 w-5" aria-hidden="true" /> {SITE.phone}</a>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10">
@@ -172,21 +172,21 @@ export function ServicePage(p: ServicePageProps) {
           <p key={i} className="text-muted-foreground leading-relaxed" dangerouslySetInnerHTML={{ __html: t }} />
         ))}
 
-        <h2 className="text-2xl font-bold pt-4">O que está incluso no serviço de {p.serviceName.toLowerCase()}</h2>
+        <h2 className="text-2xl font-bold pt-4 text-accent/90">O que está incluso no serviço de {p.serviceName.toLowerCase()}</h2>
         <ul className="grid gap-3 sm:grid-cols-2">
           {p.features.map((f) => (
             <li key={f} className="flex gap-3"><Check className="mt-0.5 h-5 w-5 shrink-0 text-accent" /><span dangerouslySetInnerHTML={{ __html: f }} /></li>
           ))}
         </ul>
 
-        <h2 className="text-2xl font-bold pt-4">Quando acionar nosso {p.serviceName.toLowerCase()}?</h2>
+        <h2 className="text-2xl font-bold pt-4 text-accent/90">Quando acionar nosso {p.serviceName.toLowerCase()}?</h2>
         <ul className="space-y-2 text-muted-foreground">
           {p.whenToUse.map((w) => (
             <li key={w}>• {w}</li>
           ))}
         </ul>
 
-        <h2 className="text-2xl font-bold pt-4">Veículos atendidos</h2>
+        <h2 className="text-2xl font-bold pt-4 text-accent/90">Veículos atendidos</h2>
         <div className="flex flex-wrap gap-2">
           {p.vehicles.map((v) => (
             <span key={v} className="rounded-full border bg-secondary/40 px-3 py-1.5 text-sm">{v}</span>
@@ -196,11 +196,11 @@ export function ServicePage(p: ServicePageProps) {
         <Card className="border-border/60 bg-secondary/40 mt-8">
           <CardContent className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-                <h2 className="text-xl font-bold">Precisa de {p.serviceName.toLowerCase()} agora?</h2>
+                <h2 className="text-xl font-bold text-accent/90">Precisa de {p.serviceName.toLowerCase()} agora?</h2>
                 <p className="text-muted-foreground text-sm">Atendimento 24 horas em todo o Brasil.</p>
               </div>
             <div className="flex flex-wrap gap-3">
-              <Button asChild><a href={`tel:${SITE.phone}`} aria-label={`Ligar para ${SITE.name}`}><Phone className="h-4 w-4" aria-hidden="true" /> {SITE.phone}</a></Button>
+              <Button asChild className="bg-[image:var(--gradient-cta)] text-primary hover:opacity-95 shadow-sm"><a href={`tel:${SITE.phone}`} aria-label={`Ligar para ${SITE.name}`}><Phone className="h-4 w-4" aria-hidden="true" /> {SITE.phone}</a></Button>
               <Button asChild variant="outline"><a href={wppHref} target="_blank" rel="noreferrer" aria-label="Falar no WhatsApp">WhatsApp</a></Button>
               <Button asChild variant="secondary"><Link to="/servicos-de-guincho-e-reboque" aria-label="Ver todas as cidades atendidas">Ver cidades</Link></Button>
             </div>
