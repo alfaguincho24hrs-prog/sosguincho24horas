@@ -287,7 +287,7 @@ function CityPage() {
           <EtaBadge cityName={city.name} />
         </div>
         <div className="mt-6 flex flex-wrap gap-3">
-          <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary">
+          <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
             <a href={telHref}>
               <Phone className="h-4 w-4" /> Ligar para {SITE.phone}
             </a>
