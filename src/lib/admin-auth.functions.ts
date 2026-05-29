@@ -40,15 +40,21 @@ export const loginAdmin = createServerFn({ method: "POST" })
     return { password: d.password };
   })
   .handler(async ({ data }) => {
-    const adminPass = process.env.ADMIN_PASSWORD;
+    const adminPass = process.env.ADMIN_PASSWORD?.trim();
     if (!adminPass) {
+      console.error("ADMIN_PASSWORD env var is missing or empty");
       throw new Error(
         "Admin password not configured. Set the ADMIN_PASSWORD environment variable on the server.",
       );
     }
-    const a = Buffer.from(data.password);
+    const a = Buffer.from(data.password.trim());
     const b = Buffer.from(adminPass);
-    const ok = a.length === b.length && timingSafeEqual(a, b);
+    
+    if (a.length !== b.length) {
+      throw new Error("Invalid credentials");
+    }
+    
+    const ok = timingSafeEqual(a, b);
     if (!ok) throw new Error("Invalid credentials");
 
     const expiresAt = Date.now() + SESSION_TTL_MS;
