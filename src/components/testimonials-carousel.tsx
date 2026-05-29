@@ -107,42 +107,52 @@ export function TestimonialsCarousel({ citySeed }: { citySeed?: string } = {}) {
     if (citySeed) {
       const seed = hashSeed(citySeed);
       const citySlug = citySeed.toLowerCase().replace(/\s+/g, '-');
-      const localData = CITY_LOCAL[citySlug];
+      // Tentativa de encontrar no CITY_LOCAL, senão busca correspondência parcial
+      let localData = CITY_LOCAL[citySlug];
+      if (!localData) {
+        // Fallback para encontrar por nome de cidade se o slug não bater perfeitamente
+        const entries = Object.entries(CITY_LOCAL);
+        const match = entries.find(([key]) => citySlug.includes(key) || key.includes(citySlug));
+        if (match) localData = match[1];
+      }
+
       const neighborhoods = localData?.neighborhoods || [];
       const highways = ["Dutra", "Castello Branco", "Anhanguera", "Bandeirantes", "Imigrantes", "Anchieta", "Ayrton Senna", "Fernão Dias", "Régis Bittencourt", "Rodoanel", "Tamoios", "Carvalho Pinto", "Dom Pedro I", "Via Lagos", "Oswaldo Cruz", "Rio-Santos"];
 
       baseItems = baseItems.map((item, idx) => {
         const newItem = { ...item };
-        const cityMatch = item.city.split(" - ")[0].toLowerCase();
         const seedVal = (seed + idx);
         
-        // Se a cidade do depoimento for a mesma da página, injeta bairro/rodovia
-        if (citySeed.toLowerCase().startsWith(cityMatch)) {
-          const useHighway = seedVal % 2 === 0; // Mais frequente
-          if (useHighway) {
-            const highway = highways[seedVal % highways.length];
-            newItem.text = newItem.text.replace(/na (Marginal|rodovia|estrada|rua|Dutra)[^.]*/i, `na rodovia ${highway}`);
-            if (!newItem.text.includes(highway)) {
-              newItem.text = `Estava na rodovia ${highway} e precisei de ajuda urgente. ` + newItem.text;
-            }
-          } else if (neighborhoods.length > 0) {
-            const neighborhood = neighborhoods[seedVal % neighborhoods.length];
-            newItem.text = newItem.text.replace(/no bairro [^.]*/i, `no bairro ${neighborhood}`);
-            newItem.text = newItem.text.replace(/na (Marginal|rodovia|estrada|rua)[^.]*/i, `no bairro ${neighborhood}`);
-            if (!newItem.text.includes(neighborhood)) {
-              newItem.text = `O serviço no bairro ${neighborhood} foi excelente. ` + newItem.text;
-            }
+        // Aplica personalização para todos os 18 itens se houver citySeed
+        const useHighway = seedVal % 2 === 0;
+        if (useHighway) {
+          const highway = highways[seedVal % highways.length];
+          // Substitui referências genéricas por rodovias específicas
+          newItem.text = newItem.text.replace(/na (Marginal|rodovia|estrada|rua|Dutra)[^.]*/i, `na rodovia ${highway}`);
+          if (!newItem.text.includes(highway)) {
+            newItem.text = `Estava na rodovia ${highway} em ${citySeed} e precisei de ajuda urgente. ` + newItem.text;
+          }
+        } else if (neighborhoods.length > 0) {
+          const neighborhood = neighborhoods[seedVal % neighborhoods.length];
+          // Substitui referências genéricas por bairros específicos
+          newItem.text = newItem.text.replace(/no bairro [^.]*/i, `no bairro ${neighborhood}`);
+          newItem.text = newItem.text.replace(/na (Marginal|rodovia|estrada|rua)[^.]*/i, `no bairro ${neighborhood}`);
+          if (!newItem.text.includes(neighborhood)) {
+            newItem.text = `O serviço no bairro ${neighborhood} em ${citySeed} foi excelente. ` + newItem.text;
           }
         }
+        
+        // Garante que a cidade exibida no depoimento seja a cidade da página
+        newItem.city = citySeed;
         return newItem;
       });
 
-      // Rotação determinística
+      // Rotação determinística baseada na cidade
       const offset = seed % baseItems.length;
       baseItems = [...baseItems.slice(offset), ...baseItems.slice(0, offset)];
     }
     
-    // Limita a 18 testemunhos
+    // Limita a exatamente 18 testemunhos como solicitado
     return baseItems.slice(0, 18);
   }, [citySeed]);
 
