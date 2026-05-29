@@ -130,8 +130,8 @@ export function CitySocialProof({ cityName, neighborhoods, uf }: Props) {
         </div>
       </div>
 
-      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {items.map((it, idx) => (
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {items.slice(0, 18).map((it, idx) => (
           <Card key={idx} className="border-border/60">
             <CardContent className="p-5">
               <div className="flex items-center gap-1" aria-label="5 estrelas">
