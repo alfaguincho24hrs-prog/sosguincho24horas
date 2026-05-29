@@ -41,7 +41,7 @@ function ServicesPage() {
             <Card key={s.slug} className="border-border/60 transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-elegant)]">
               <CardContent className="space-y-3 p-6">
                 <div className="text-4xl">{s.icon}</div>
-                <h2 className="text-xl font-semibold">{s.title}</h2>
+                <h2 className="text-xl font-semibold text-accent/90">{s.title}</h2>
                 <p className="text-sm text-muted-foreground">{s.desc}</p>
                 <Button
                   asChild
@@ -56,7 +56,7 @@ function ServicesPage() {
           ))}
         </div>
         <div className="mt-16 rounded-2xl bg-secondary/50 p-10 text-center">
-          <h2 className="text-2xl font-bold">Não encontrou o serviço que precisa?</h2>
+          <h2 className="text-2xl font-bold text-accent/90">Não encontrou o serviço que precisa?</h2>
           <p className="mt-2 text-muted-foreground">Fale com nossa central e encontraremos a melhor solução para o seu caso.</p>
           <div className="mt-5 flex flex-wrap justify-center gap-3">
             <Button asChild className="bg-[image:var(--gradient-cta)] text-primary"><a href={`tel:${SITE.phone}`}><Phone className="h-4 w-4" /> {SITE.phone}</a></Button>
