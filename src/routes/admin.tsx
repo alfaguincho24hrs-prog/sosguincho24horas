@@ -104,9 +104,9 @@ function AdminPage() {
                   setAuthed(true);
                   setPwd("");
                   toast.success("Login realizado");
-                } catch (err) {
-                  const msg = err instanceof Error ? err.message : "Falha ao autenticar";
-                  toast.error(msg.includes("not configured") ? msg : "Senha incorreta");
+                } catch (err: any) {
+                  const msg = err?.message || "Falha ao autenticar";
+                  toast.error(msg.includes("not configured") ? msg : msg || "Senha incorreta");
                 } finally {
                   setSubmitting(false);
                 }
