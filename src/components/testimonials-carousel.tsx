@@ -106,13 +106,14 @@ export function TestimonialsCarousel({ citySeed }: { citySeed?: string } = {}) {
       return [...TESTIMONIALS].slice(0, 18);
     }
 
-    const citySlug = citySeed.toLowerCase().replace(/\s+/g, '-').normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const citySlug = citySeed.toLowerCase().replace(/\s+/g, '-').normalize("NFD").replace(/[\u0300-\u036f]/g, "").split('---')[0]; // Remove prefixos se houver
     
     // Tentativa de encontrar no CITY_LOCAL
     let localData = CITY_LOCAL[citySlug];
     if (!localData) {
       const entries = Object.entries(CITY_LOCAL);
-      const match = entries.find(([key]) => citySlug.includes(key) || key.includes(citySlug));
+      // Busca exata primeiro, depois por inclusão de slug
+      const match = entries.find(([key]) => citySlug === key || citySlug.includes(key) || key.includes(citySlug));
       if (match) localData = match[1];
     }
 
