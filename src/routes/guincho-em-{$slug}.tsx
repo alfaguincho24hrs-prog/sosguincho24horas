@@ -324,13 +324,6 @@ function CityPage() {
         cityUf={city.uf}
       />
 
-      {/* Testemunhos dinâmicos no topo para maior conversão */}
-      <section className="mt-14">
-        <h2 className="text-2xl font-bold md:text-3xl text-accent/90 mb-6 text-center">
-          O que dizem quem já usou nosso guincho em {city.name}
-        </h2>
-        <LazyTestimonialsCarousel citySeed={`${city.name} - ${city.uf}`} />
-      </section>
 
       {/* Serviços na cidade */}
       <section className="mt-14">
