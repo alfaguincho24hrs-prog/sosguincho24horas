@@ -45,11 +45,12 @@ function ServicesPage() {
                 <p className="text-sm text-muted-foreground">{s.desc}</p>
                 <Button
                   asChild
-                  className="w-full animate-button-pulse bg-[image:var(--gradient-cta)] font-bold text-primary shadow-lg shadow-accent/40 hover:animate-none hover:opacity-90 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 transition-all duration-300"
+                  className="w-full animate-button-pulse bg-[image:var(--gradient-cta)] font-bold text-primary shadow-lg shadow-accent/40 hover:animate-none hover:opacity-90 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 transition-all duration-300 cursor-pointer"
+                  onClick={() => window.open(`https://wa.me/${SITE.whatsapp}`, '_blank')}
                 >
-                  <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noreferrer">
+                  <div>
                     <MessageCircle className="h-4 w-4" /> CHAMAR GUINCHO
-                  </a>
+                  </div>
                 </Button>
               </CardContent>
             </Card>
@@ -59,7 +60,9 @@ function ServicesPage() {
           <h2 className="text-2xl font-bold text-accent/90">Não encontrou o serviço que precisa?</h2>
           <p className="mt-2 text-muted-foreground">Fale com nossa central e encontraremos a melhor solução para o seu caso.</p>
           <div className="mt-5 flex flex-wrap justify-center gap-3">
-            <Button asChild className="bg-[image:var(--gradient-cta)] text-primary"><a href={`tel:${SITE.phone}`}><Phone className="h-4 w-4" /> {SITE.phone}</a></Button>
+            <Button asChild className="bg-[image:var(--gradient-cta)] text-primary cursor-default">
+              <span><Phone className="h-4 w-4" /> {SITE.phone}</span>
+            </Button>
             <Button asChild variant="outline"><Link to="/contato">Enviar mensagem</Link></Button>
           </div>
         </div>

@@ -41,16 +41,16 @@ export function SiteFooter() {
           <h4 className="mb-3 text-sm font-semibold uppercase tracking-wider text-accent">Contato</h4>
           <ul className="space-y-2 text-sm text-primary-foreground/80">
             <li className="flex items-center gap-2">
-              <a href={`tel:${SITE.phone}`} className="flex items-center gap-2 hover:text-accent transition-colors" aria-label={`Ligar para ${SITE.phone}`}>
+              <span className="flex items-center gap-2 hover:text-accent transition-colors">
                 <Phone className="h-4 w-4" aria-hidden="true" />
                 {SITE.phone}
-              </a>
+              </span>
             </li>
             <li className="flex items-center gap-2">
-              <a href={`mailto:${SITE.email}`} className="flex items-center gap-2 hover:text-accent transition-colors" aria-label={`Enviar e-mail para ${SITE.email}`}>
+              <span className="flex items-center gap-2 hover:text-accent transition-colors">
                 <Mail className="h-4 w-4" aria-hidden="true" />
                 {SITE.email}
-              </a>
+              </span>
             </li>
             <li className="flex items-center gap-2"><MapPin className="h-4 w-4" />Atendimento em todo o Brasil</li>
           </ul>
