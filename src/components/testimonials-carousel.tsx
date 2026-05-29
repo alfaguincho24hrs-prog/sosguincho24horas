@@ -100,65 +100,62 @@ function hashSeed(s: string): number {
 
 export function TestimonialsCarousel({ citySeed }: { citySeed?: string } = {}) {
   const plugin = React.useRef(Autoplay({ delay: 4500, stopOnInteraction: true }));
-  // Reordena depoimentos por cidade — mesma cidade = mesma ordem (estável p/ SEO).
   const items = React.useMemo(() => {
-    let baseItems = [...TESTIMONIALS];
+    // Se não houver citySeed, retorna os depoimentos base limitados a 18
+    if (!citySeed) {
+      return [...TESTIMONIALS].slice(0, 18);
+    }
+
+    const citySlug = citySeed.toLowerCase().replace(/\s+/g, '-').normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     
-    if (citySeed) {
-      const seed = hashSeed(citySeed);
-      const citySlug = citySeed.toLowerCase().replace(/\s+/g, '-');
-      // Tentativa de encontrar no CITY_LOCAL, senão busca correspondência parcial
-      let localData = CITY_LOCAL[citySlug];
-      if (!localData) {
-        // Fallback para encontrar por nome de cidade se o slug não bater perfeitamente
-        const entries = Object.entries(CITY_LOCAL);
-        const match = entries.find(([key]) => citySlug.includes(key) || key.includes(citySlug));
-        if (match) localData = match[1];
+    // Tentativa de encontrar no CITY_LOCAL
+    let localData = CITY_LOCAL[citySlug];
+    if (!localData) {
+      const entries = Object.entries(CITY_LOCAL);
+      const match = entries.find(([key]) => citySlug.includes(key) || key.includes(citySlug));
+      if (match) localData = match[1];
+    }
+
+    const neighborhoods = localData?.neighborhoods || [];
+    const seed = hashSeed(citySeed);
+    
+    // Rodovias (usadas como fallback se a cidade for pequena ou para variar)
+    const highways = ["Dutra", "Castello Branco", "Anhanguera", "Bandeirantes", "Imigrantes", "Anchieta", "Ayrton Senna", "Fernão Dias", "Régis Bittencourt", "Rodoanel", "Tamoios", "Carvalho Pinto", "Dom Pedro I", "Rio-Santos"];
+
+    // Gerar 18 itens específicos para a cidade usando os depoimentos base como inspiração
+    return Array.from({ length: 18 }, (_, idx) => {
+      const baseIdx = (seed + idx) % TESTIMONIALS.length;
+      const baseItem = TESTIMONIALS[baseIdx];
+      const seedVal = seed + idx;
+      
+      const newItem = { ...baseItem };
+      newItem.city = citySeed;
+
+      // Decide se usa bairro ou rodovia (prioriza bairros se houver muitos)
+      const useHighway = (seedVal % 3 === 0) || neighborhoods.length === 0;
+      const cityNameOnly = citySeed.split(' - ')[0];
+      
+      if (useHighway) {
+        const highway = highways[seedVal % highways.length];
+        const templates = [
+          `Precisei de guincho na rodovia ${highway} em ${cityNameOnly} e o atendimento foi nota 10.`,
+          `O reboque chegou rápido na ${highway}. Serviço de guincho 24h muito confiável.`,
+          `Fiquei parado na ${highway} e em menos de 30 minutos o guincho plataforma já estava lá.`
+        ];
+        // Mantém parte do texto original para variedade mas garante o local correto no início
+        newItem.text = templates[seedVal % templates.length] + " " + baseItem.text.split('. ').slice(1).join('. ');
+      } else {
+        const neighborhood = neighborhoods[seedVal % neighborhoods.length];
+        const templates = [
+          `Estava no bairro ${neighborhood} em ${cityNameOnly} quando meu carro pifou. O guincho chegou voando!`,
+          `Melhor serviço de guincho em ${cityNameOnly}. Atendimento rápido aqui no ${neighborhood}.`,
+          `Recomendo o guincho 24h. Me socorreram no ${neighborhood} com muita agilidade e preço justo.`
+        ];
+        newItem.text = templates[seedVal % templates.length] + " " + baseItem.text.split('. ').slice(1).join('. ');
       }
 
-      const neighborhoods = localData?.neighborhoods || [];
-      const highways = ["Dutra", "Castello Branco", "Anhanguera", "Bandeirantes", "Imigrantes", "Anchieta", "Ayrton Senna", "Fernão Dias", "Régis Bittencourt", "Rodoanel", "Tamoios", "Carvalho Pinto", "Dom Pedro I", "Via Lagos", "Oswaldo Cruz", "Rio-Santos"];
-
-      baseItems = baseItems.map((item, idx) => {
-        const newItem = { ...item };
-        const seedVal = (seed + idx);
-        
-        // Determina se usará rodovia ou bairro da lista VALIDADA da cidade
-        const useHighway = seedVal % 2 === 0;
-        
-        // Bairros e rodovias específicos desta cidade para garantir fidelidade regional
-        // Se a cidade for Taubaté, por exemplo, usará rodovias que passam por lá (extraídas de metadados se existissem, 
-        // mas aqui garantimos que o texto reflita o contexto de 'citySeed')
-        
-        if (useHighway) {
-          const highway = highways[seedVal % highways.length];
-          // Substitui referências genéricas por rodovias específicas
-          newItem.text = newItem.text.replace(/na (Marginal|rodovia|estrada|rua|Dutra)[^.]*/i, `na rodovia ${highway}`);
-          if (!newItem.text.includes(highway)) {
-            newItem.text = `O atendimento na rodovia ${highway} em ${citySeed.split(' - ')[0]} foi muito ágil. ` + newItem.text;
-          }
-        } else if (neighborhoods.length > 0) {
-          const neighborhood = neighborhoods[seedVal % neighborhoods.length];
-          // Validação implícita: neighborhood vem diretamente de localData.neighborhoods da cidade atual
-          newItem.text = newItem.text.replace(/no bairro [^.]*/i, `no bairro ${neighborhood}`);
-          newItem.text = newItem.text.replace(/na (Marginal|rodovia|estrada|rua)[^.]*/i, `no bairro ${neighborhood}`);
-          if (!newItem.text.includes(neighborhood)) {
-            newItem.text = `Excelente guincho no bairro ${neighborhood} em ${citySeed.split(' - ')[0]}. ` + newItem.text;
-          }
-        }
-        
-        // Garante que o rótulo da cidade no testemunho seja o correto da página
-        newItem.city = citySeed;
-        return newItem;
-      });
-
-      // Rotação determinística baseada na cidade
-      const offset = seed % baseItems.length;
-      baseItems = [...baseItems.slice(offset), ...baseItems.slice(0, offset)];
-    }
-    
-    // Limita a exatamente 18 testemunhos como solicitado
-    return baseItems.slice(0, 18);
+      return newItem;
+    });
   }, [citySeed]);
 
   return (
