@@ -43,7 +43,7 @@ function AreasAtendidasPage() {
         Atendemos com exclusividade em todo o território nacional, com bases distribuídas estrategicamente para garantir socorro em menos de 45 minutos.
       </p>
 
-      <h2 className="text-2xl font-bold mb-6">Cidades em destaque</h2>
+      <h2 className="text-2xl font-bold mb-6 text-accent/90">Cidades em destaque</h2>
       <div className="flex flex-wrap gap-3 mb-12">
         {CITIES.map((c) => (
           <div key={c} className="px-4 py-2 bg-secondary rounded-full flex items-center gap-2 text-sm border">

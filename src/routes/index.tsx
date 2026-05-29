@@ -121,7 +121,7 @@ function HomePage() {
               <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
                 <a href={`tel:${SITE.phone}`}><Phone className="h-5 w-5" /> Solicitar guincho agora</a>
               </Button>
-              <Button asChild size="lg" className="bg-orange-600 text-white hover:bg-orange-700 border-none ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 focus-visible:ring-offset-2">
+              <Button asChild size="lg" variant="secondary">
                 <Link to="/cobertura">Ver cidades atendidas <ArrowRight className="h-4 w-4" /></Link>
               </Button>
             </div>
@@ -138,7 +138,7 @@ function HomePage() {
       <section className="container mx-auto px-4 py-20">
         <div className="mb-12 max-w-2xl">
           <Badge variant="secondary" className="mb-3">Nossos serviços</Badge>
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Soluções completas em reboque e auto socorro</h2>
+          <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-accent/90">Soluções completas em reboque e auto socorro</h2>
           <p className="mt-3 text-muted-foreground">
             Da pane simples ao resgate de veículos pesados, encontre o serviço ideal para a sua emergência com profissionais experientes.
           </p>
@@ -152,7 +152,7 @@ function HomePage() {
                 <p className="text-sm text-muted-foreground">{s.desc}</p>
                 <Button
                   asChild
-                  className="mt-auto w-full animate-button-pulse bg-orange-600 font-bold text-white shadow-lg shadow-orange-600/40 hover:animate-none hover:bg-orange-700 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 focus-visible:ring-offset-2 transition-all duration-300"
+                  className="mt-auto w-full animate-button-pulse bg-[image:var(--gradient-cta)] font-bold text-primary shadow-lg shadow-accent/40 hover:animate-none hover:opacity-90 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 transition-all duration-300"
                 >
                   <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noreferrer">
                     <MessageCircle className="h-4 w-4" /> CHAMAR GUINCHO
@@ -190,7 +190,7 @@ function HomePage() {
         <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
           <div className="max-w-2xl">
             <Badge variant="secondary" className="mb-3">Empresas em destaque</Badge>
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Parceiros qualificados próximos a você</h2>
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-accent/90">Parceiros qualificados próximos a você</h2>
             <p className="mt-3 text-muted-foreground">
               Selecionamos empresas com tradição, frota completa e excelente reputação em cada região do país.
             </p>
@@ -206,7 +206,7 @@ function HomePage() {
       <section className="bg-primary py-20 text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
           <Badge className="mb-4 border-accent/40 bg-accent/15 text-accent">Cobertura nacional</Badge>
-          <h2 className="mx-auto max-w-2xl text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mx-auto max-w-2xl text-3xl font-bold tracking-tight md:text-4xl text-accent-foreground">
             Atendemos as principais capitais e regiões metropolitanas do Brasil
           </h2>
           <div className="mx-auto mt-10 flex max-w-4xl flex-wrap justify-center gap-2">
@@ -223,7 +223,7 @@ function HomePage() {
       <section className="container mx-auto px-4 py-20">
         <div className="mx-auto max-w-4xl space-y-6">
           <Badge variant="secondary">Guincho 24 horas perto de você</Badge>
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-accent/90">
             A maior rede de guincho e reboque 24h do Brasil — atendimento rápido em rodovias e cidades
           </h2>
           <p className="text-muted-foreground leading-relaxed">
@@ -243,7 +243,7 @@ function HomePage() {
             leilões e mudanças interestaduais. Toda a frota é equipada com plataformas hidráulicas modernas, asas
             deltas, munk e prancha rebaixada para transporte seguro de qualquer tipo de veículo.
           </p>
-          <h3 className="text-2xl font-bold pt-4">Por que escolher o {SITE.name}?</h3>
+          <h3 className="text-2xl font-bold pt-4 text-accent/90">Por que escolher o {SITE.name}?</h3>
           <ul className="space-y-3 text-muted-foreground leading-relaxed">
             <li>✅ <strong>Atendimento 24 horas, 7 dias por semana</strong>, inclusive feriados, madrugada e finais de semana.</li>
             <li>✅ <strong>Tempo médio de chegada inferior a 40 minutos</strong> em áreas urbanas e até 60 minutos em rodovias.</li>
@@ -252,7 +252,7 @@ function HomePage() {
             <li>✅ <strong>Pagamento facilitado</strong>: dinheiro, PIX, débito, crédito e principais aplicativos de assistência.</li>
             <li>✅ <strong>Cobertura em mais de 1.000 cidades</strong> de todos os estados, com foco em São Paulo, Vale do Paraíba, Litoral Norte, Serra da Mantiqueira, Grande SP e ABC.</li>
           </ul>
-          <h3 className="text-2xl font-bold pt-4">Quando acionar um guincho 24 horas?</h3>
+          <h3 className="text-2xl font-bold pt-4 text-accent/90">Quando acionar um guincho 24 horas?</h3>
           <p className="text-muted-foreground leading-relaxed">
             Acidentes de trânsito, colisões traseiras, capotamentos, panes elétricas, problemas no câmbio,
             superaquecimento de motor, pneus furados sem estepe, falta de combustível, bateria descarregada,
@@ -262,7 +262,7 @@ function HomePage() {
             empurrar ou rebocar um veículo de forma improvisada pode causar acidentes graves, multas de trânsito e
             danos ainda maiores ao automóvel.
           </p>
-          <h3 className="text-2xl font-bold pt-4">Cobertura em rodovias estratégicas</h3>
+          <h3 className="text-2xl font-bold pt-4 text-accent/90">Cobertura em rodovias estratégicas</h3>
           <p className="text-muted-foreground leading-relaxed">
             Atendemos com prioridade as principais rodovias do estado de São Paulo:{" "}
             <strong>Rodovia Presidente Dutra (BR-116)</strong>,{" "}
@@ -275,7 +275,7 @@ function HomePage() {
             dedicada às <Link to="/rodovias-vale-do-paraiba" className="underline font-semibold">rodovias do Vale do Paraíba</Link>.
           </p>
           <div className="flex flex-wrap gap-3 pt-4">
-            <Button asChild size="lg">
+            <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
               <a href={`tel:${SITE.phone}`}><Phone className="h-5 w-5" /> Ligar agora — {SITE.phone}</a>
             </Button>
             <Button asChild size="lg" variant="outline">
@@ -292,7 +292,7 @@ function HomePage() {
       <section className="bg-secondary/40 py-20">
         <div className="container mx-auto max-w-4xl px-4 space-y-6">
           <Badge variant="secondary">Perguntas frequentes</Badge>
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Dúvidas comuns sobre guincho 24h</h2>
+          <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-accent/90">Dúvidas comuns sobre guincho 24h</h2>
           <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="item-1">
               <AccordionTrigger className="text-lg font-semibold hover:no-underline text-left">
@@ -362,7 +362,7 @@ function HomePage() {
           <div className="grid gap-8 md:grid-cols-[1.5fr_1fr] md:items-center">
             <div className="space-y-4">
               <Badge className="border-accent/40 bg-accent/15 text-accent">Para empresas de guincho</Badge>
-              <h2 className="text-3xl font-bold md:text-4xl">Anuncie sua empresa e receba mais chamados</h2>
+              <h2 className="text-3xl font-bold md:text-4xl text-accent/90">Anuncie sua empresa e receba mais chamados</h2>
               <p className="text-primary-foreground/85">
                 Apareça na primeira página dos buscadores, conquiste novos clientes da sua região e amplie sua base de atendimentos com a maior plataforma de guinchos do país.
               </p>

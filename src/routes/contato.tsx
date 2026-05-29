@@ -75,7 +75,7 @@ function ContactPage() {
               </div>
               <div className="space-y-1.5"><Label htmlFor="email">E-mail</Label><Input id="email" type="email" required /></div>
               <div className="space-y-1.5"><Label htmlFor="msg">Mensagem</Label><Textarea id="msg" rows={5} required /></div>
-              <Button type="submit" className="w-full bg-[image:var(--gradient-cta)] text-primary hover:opacity-95">Enviar mensagem</Button>
+              <Button type="submit" className="w-full bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">Enviar mensagem</Button>
             </form>
           </CardContent>
         </Card>

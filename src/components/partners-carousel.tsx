@@ -24,11 +24,11 @@ export function PartnersCarousel() {
             <Card className="h-full border-border/60 transition-all hover:border-accent/60 hover:shadow-[var(--shadow-elegant)]">
               <CardContent className="space-y-3 p-6">
                 <div className="flex items-start justify-between">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[image:var(--gradient-cta)] text-primary">
                     <img 
                       src="/icon-192.png" 
                       alt={`Logotipo da empresa de guincho ${p.name}`} 
-                      className="h-7 w-7 object-contain brightness-0 invert" 
+                      className="h-7 w-7 object-contain" 
                       loading="lazy"
                     />
                   </div>
@@ -40,7 +40,7 @@ export function PartnersCarousel() {
                 <p className="flex items-center gap-2 text-sm text-muted-foreground">
                   <MapPin className="h-4 w-4" /> {p.city}
                 </p>
-                <Button asChild className="w-full" variant="secondary">
+                <Button asChild className="w-full bg-[image:var(--gradient-cta)] text-primary hover:opacity-95 shadow-sm">
                   <a href={`tel:${p.phone.replace(/\D/g, "")}`}>
                     <Phone className="h-4 w-4" /> {p.phone}
                   </a>

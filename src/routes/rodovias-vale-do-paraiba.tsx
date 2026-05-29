@@ -101,7 +101,7 @@ function RodoviasVPPage() {
             Cobertura completa entre São Paulo, Litoral Norte e Sul de Minas.
           </p>
           <div className="flex flex-wrap gap-3">
-            <Button asChild size="lg">
+            <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
               <a href={telHref}><Phone className="mr-2 h-4 w-4" />Ligar agora — {SITE.phone}</a>
             </Button>
             <Button asChild size="lg" variant="outline">
@@ -123,7 +123,7 @@ function RodoviasVPPage() {
                     <CardTitle className="text-2xl">{r.nome}</CardTitle>
                     <p className="text-sm text-muted-foreground mt-1">Extensão: {r.extensao}</p>
                   </div>
-                  <Button asChild size="sm">
+                  <Button asChild size="sm" className="bg-[image:var(--gradient-cta)] text-primary hover:opacity-95">
                     <a href={telHref}><Phone className="mr-2 h-4 w-4" />Acionar guincho</a>
                   </Button>
                 </div>
@@ -219,7 +219,7 @@ function RodoviasVPPage() {
             densa, pista molhada e em situações de geada — comuns no inverno da Serra da Mantiqueira.
           </p>
           <div className="flex flex-wrap gap-3 pt-4">
-            <Button asChild size="lg">
+            <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
               <a href={telHref}><Phone className="h-5 w-5" /> Ligar agora — {SITE.phone}</a>
             </Button>
             <Button asChild size="lg" variant="outline">
@@ -236,7 +236,7 @@ function RodoviasVPPage() {
           <p className="text-muted-foreground mb-6">
             Equipes de guincho leve, médio e pesado prontas para atender qualquer trecho do Vale do Paraíba 24 horas.
           </p>
-          <Button asChild size="lg">
+          <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
             <a href={telHref}><Phone className="mr-2 h-4 w-4" />{SITE.phone}</a>
           </Button>
         </div>
