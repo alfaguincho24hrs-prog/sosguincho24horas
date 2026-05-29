@@ -138,7 +138,7 @@ function HomePage() {
       <section className="container mx-auto px-4 py-20">
         <div className="mb-12 max-w-2xl">
           <Badge variant="secondary" className="mb-3">Nossos serviços</Badge>
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Soluções completas em reboque e auto socorro</h2>
+          <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-accent/90">Soluções completas em reboque e auto socorro</h2>
           <p className="mt-3 text-muted-foreground">
             Da pane simples ao resgate de veículos pesados, encontre o serviço ideal para a sua emergência com profissionais experientes.
           </p>
@@ -190,7 +190,7 @@ function HomePage() {
         <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
           <div className="max-w-2xl">
             <Badge variant="secondary" className="mb-3">Empresas em destaque</Badge>
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Parceiros qualificados próximos a você</h2>
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-accent/90">Parceiros qualificados próximos a você</h2>
             <p className="mt-3 text-muted-foreground">
               Selecionamos empresas com tradição, frota completa e excelente reputação em cada região do país.
             </p>
@@ -206,7 +206,7 @@ function HomePage() {
       <section className="bg-primary py-20 text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
           <Badge className="mb-4 border-accent/40 bg-accent/15 text-accent">Cobertura nacional</Badge>
-          <h2 className="mx-auto max-w-2xl text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mx-auto max-w-2xl text-3xl font-bold tracking-tight md:text-4xl text-accent-foreground">
             Atendemos as principais capitais e regiões metropolitanas do Brasil
           </h2>
           <div className="mx-auto mt-10 flex max-w-4xl flex-wrap justify-center gap-2">
@@ -223,7 +223,7 @@ function HomePage() {
       <section className="container mx-auto px-4 py-20">
         <div className="mx-auto max-w-4xl space-y-6">
           <Badge variant="secondary">Guincho 24 horas perto de você</Badge>
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-accent/90">
             A maior rede de guincho e reboque 24h do Brasil — atendimento rápido em rodovias e cidades
           </h2>
           <p className="text-muted-foreground leading-relaxed">
@@ -292,7 +292,7 @@ function HomePage() {
       <section className="bg-secondary/40 py-20">
         <div className="container mx-auto max-w-4xl px-4 space-y-6">
           <Badge variant="secondary">Perguntas frequentes</Badge>
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Dúvidas comuns sobre guincho 24h</h2>
+          <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-accent/90">Dúvidas comuns sobre guincho 24h</h2>
           <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="item-1">
               <AccordionTrigger className="text-lg font-semibold hover:no-underline text-left">
@@ -362,7 +362,7 @@ function HomePage() {
           <div className="grid gap-8 md:grid-cols-[1.5fr_1fr] md:items-center">
             <div className="space-y-4">
               <Badge className="border-accent/40 bg-accent/15 text-accent">Para empresas de guincho</Badge>
-              <h2 className="text-3xl font-bold md:text-4xl">Anuncie sua empresa e receba mais chamados</h2>
+              <h2 className="text-3xl font-bold md:text-4xl text-accent/90">Anuncie sua empresa e receba mais chamados</h2>
               <p className="text-primary-foreground/85">
                 Apareça na primeira página dos buscadores, conquiste novos clientes da sua região e amplie sua base de atendimentos com a maior plataforma de guinchos do país.
               </p>
