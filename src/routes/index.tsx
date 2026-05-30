@@ -15,13 +15,13 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Guincho 24 Horas em Todo o Brasil | Reboque e Auto Socorro" },
-      { name: "description", content: "Precisa de guincho 24 horas? SOS Guincho 24h oferece reboque rápido para carros, motos e pesados em todo o Brasil. Atendimento imediato em SP e Vale do Paraíba com preço justo e segurança garantida!" },
+      { name: "description", content: "Seu carro quebrou? Atendimento em até 30 min via WhatsApp. SOS guincho 24 horas para Carros, motos e pesados. Orçamento grátis!" },
       { property: "og:title", content: "Guincho 24 Horas no Brasil | Reboque e Auto Socorro" },
-      { property: "og:description", content: "Precisa de guincho 24 horas? SOS Guincho 24h oferece reboque rápido para carros, motos e pesados em todo o Brasil. Atendimento imediato em SP e Vale do Paraíba com preço justo e segurança garantida!" },
+      { property: "og:description", content: "Seu carro quebrou? Atendimento em até 30 min via WhatsApp. SOS guincho 24 horas para Carros, motos e pesados. Orçamento grátis!" },
       { property: "og:image", content: "https://sosguincho24horas.com.br/og-image.webp" },
       { property: "og:url", content: "https://sosguincho24horas.com.br/" },
       { name: "twitter:title", content: "Guincho 24 Horas no Brasil | Reboque e Auto Socorro" },
-      { name: "twitter:description", content: "Precisa de guincho 24 horas? SOS Guincho 24h oferece reboque rápido para carros, motos e pesados em todo o Brasil. Atendimento imediato em SP e Vale do Paraíba com preço justo e segurança garantida!" },
+      { name: "twitter:description", content: "Seu carro quebrou? Atendimento em até 30 min via WhatsApp. SOS guincho 24 horas para Carros, motos e pesados. Orçamento grátis!" },
     ],
     scripts: [
       {
