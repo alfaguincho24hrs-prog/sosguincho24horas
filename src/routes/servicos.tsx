@@ -49,7 +49,7 @@ export const Route = createFileRoute("/servicos")({
 
     return {
       meta: [
-        { title },
+        { title: title },
         { name: "description", content: description },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
@@ -63,7 +63,7 @@ export const Route = createFileRoute("/servicos")({
           children: JSON.stringify(serviceSchema)
         }
       ],
-      links: [{ rel: "canonical", href: url }],
+      links: [{ rel: "canonical", href: "https://sosguincho24horas.com.br/servicos" }],
     };
   },
   component: ServicesPage,
