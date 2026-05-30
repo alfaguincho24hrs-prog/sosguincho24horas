@@ -96,8 +96,8 @@ function HomePage() {
             src={heroImg}
             alt="Serviço de guincho 24 horas e reboque plataforma para carros e motos em rodovias"
             className="h-full w-full object-cover"
-            width={1920}
-            height={1280}
+            width={1200}
+            height={800}
             fetchPriority="high"
             loading="eager"
             decoding="async"
