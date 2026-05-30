@@ -9,18 +9,63 @@ import { LazyTestimonialsCarousel } from "@/components/lazy-testimonials";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 
 export const Route = createFileRoute("/servicos")({
-  head: () => ({
-    meta: [
-      { title: "Serviços de Guincho e Reboque 24h | SOS Guincho 24 horas" },
-      { name: "description", content: "Conheça todos os nossos serviços de guincho 24 horas: reboque leve, pesado, motos, auto socorro mecânico, pane seca e remoção veicular. Atendimento especializado e rápido em todo o Brasil." },
-      { property: "og:title", content: "Serviços de Guincho e Reboque 24h" },
-      { property: "og:description", content: "Conheça todos os nossos serviços de guincho 24 horas: reboque leve, pesado, motos, auto socorro mecânico, pane seca e remoção veicular em todo o Brasil." },
-      { property: "og:image", content: "https://sosguincho24horas.com.br/og-image.webp" },
-      { property: "og:url", content: "https://sosguincho24horas.com.br/servicos" },
-      { name: "twitter:image", content: "https://sosguincho24horas.com.br/og-image.webp" },
-    ],
-    links: [{ rel: "canonical", href: "https://sosguincho24horas.com.br/servicos" }],
-  }),
+  head: () => {
+    const title = "Serviços de Guincho e Reboque 24h | SOS Guincho 24 horas";
+    const description = "Conheça todos os nossos serviços de guincho 24 horas: reboque leve, pesado, motos, auto socorro mecânico, pane seca e remoção veicular. Atendimento especializado e rápido em todo o Brasil.";
+    const url = "https://sosguincho24horas.com.br/servicos";
+    
+    const serviceSchema = {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "serviceType": "Guincho e Reboque 24 horas",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": SITE.name,
+        "image": "https://sosguincho24horas.com.br/og-image.webp",
+        "telephone": SITE.phone,
+        "priceRange": "$$",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Taubaté",
+          "addressRegion": "SP",
+          "addressCountry": "BR"
+        }
+      },
+      "areaServed": "Brasil",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Catálogo de Serviços de Reboque",
+        "itemListElement": SERVICES.map((s, i) => ({
+          "@type": "Offer",
+          "position": i + 1,
+          "itemOffered": {
+            "@type": "Service",
+            "name": s.title,
+            "description": s.desc
+          }
+        }))
+      }
+    };
+
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:image", content: "https://sosguincho24horas.com.br/og-image.webp" },
+        { property: "og:url", content: url },
+        { name: "twitter:image", content: "https://sosguincho24horas.com.br/og-image.webp" },
+      ],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(serviceSchema)
+        }
+      ],
+      links: [{ rel: "canonical", href: url }],
+    };
+  },
   component: ServicesPage,
 });
 

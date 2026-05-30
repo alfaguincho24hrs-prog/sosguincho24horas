@@ -121,7 +121,6 @@ const SERVICE_ITEMS = [
 function CityPage() {
   const { city } = Route.useLoaderData();
   const telHref = `tel:${SITE.phone.replace(/\D/g, "")}`;
-  const url = `${SITE_URL}/guincho-em-${city.slug}-${city.uf.toLowerCase()}`;
   const local = getCityLocalData(`${city.slug}-${city.uf.toLowerCase()}`, city.uf);
   const copy = getCityCopy(city.name, city.uf, city.slug);
 
@@ -134,7 +133,7 @@ function CityPage() {
     "name": `SOS Guincho 24 horas - ${city.name}`,
     "image": "https://sosguincho24horas.com.br/assets/imagem-do-guincho.webp",
     "@id": `https://sosguincho24horas.com.br/guincho-em-${city.slug}-${city.uf.toLowerCase()}.html`,
-    "url": `https://sosguincho24horas.com.br/guincho-em-${city.slug}-${city.uf.toLowerCase()}.html`,
+    "url": `https://sosguincho24horas.com.br/guincho-em-${city.slug}-${city.uf.toLowerCase()}`,
     "telephone": [
       "+5511996451510",
       "+5512992184913"
@@ -160,79 +159,28 @@ function CityPage() {
       "addressRegion": city.uf,
       "addressCountry": "BR"
     },
-    "description": "Serviço de guincho 24 horas, reboque de carros e motos, auto socorro mecânico, remoção de veículos pesados, transporte de vans, empilhadeiras e embarcações. Atendimento rápido e preço justo.",
+    "description": `Serviço de guincho 24 horas em ${city.name}, reboque de carros e motos, auto socorro mecânico, remoção de veículos pesados em toda a região. Atendimento rápido e preço justo.`,
     "areaServed": {
       "@type": "City",
       "name": city.name
     },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "64"
+    },
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
-      "name": "Serviços de Reboque, Auto Socorro e Transporte",
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Guincho 24 Horas"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Guincho Plataforma Leve e Pesado"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Guincho para carros"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Guincho para Motos"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Transporte de Carros de Colecionador e Veículos Antigos"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Transporte de Embarcações (Jet Ski, Lancha, Barco)"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Transporte de Máquinas (Empilhadeira, Trator, Bobcat)"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Remoção de Veículo em Subsolo"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Auto Socorro Mecânico e Pane Seca"
-          }
+      "name": `Serviços de Reboque em ${city.name}`,
+      "itemListElement": SERVICE_ITEMS.map((s, i) => ({
+        "@type": "Offer",
+        "position": i + 1,
+        "itemOffered": {
+          "@type": "Service",
+          "name": `${s.title} em ${city.name}`,
+          "description": s.desc
         }
-      ]
+      }))
     }
   };
 

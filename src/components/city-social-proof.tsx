@@ -78,6 +78,8 @@ export function CitySocialProof({ cityName, neighborhoods, uf }: Props) {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": `${SITE.name} - ${cityName}`,
+    "image": "https://sosguincho24horas.com.br/assets/imagem-do-guincho.webp",
+    "url": `https://sosguincho24horas.com.br/guincho-em-${cityName.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-")}-${uf?.toLowerCase() || 'sp'}`,
     "address": {
       "@type": "PostalAddress",
       "addressLocality": cityName,
@@ -99,11 +101,8 @@ export function CitySocialProof({ cityName, neighborhoods, uf }: Props) {
       "reviewBody": it.text,
       "reviewRating": {
         "@type": "Rating",
-        "ratingValue": "5"
-      },
-      "contentLocation": {
-        "@type": "Place",
-        "name": `${it.hood}, ${cityName}`
+        "ratingValue": "5",
+        "bestRating": "5"
       }
     }))
   };
