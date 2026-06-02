@@ -7,11 +7,11 @@ type Props = {
 
 export function MobileStickyCTA({ whatsappMsg = "Olá! Preciso de guincho 24h agora." }: Props) {
   const tel = SITE.phone.replace(/\D/g, "");
-  const wpp = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(whatsappMsg)}`;
+  const wpp = "https://w.app/guincho24horas";
   return (
     <div className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-2 border-t border-border/60 bg-background/95 shadow-[0_-4px_20px_rgba(0,0,0,0.15)] backdrop-blur md:hidden">
       <a
-        href={`tel:${tel}`}
+        href={wpp}
         aria-label="Ligar agora"
         className="flex items-center justify-center gap-2 bg-[image:var(--gradient-cta)] py-3.5 text-sm font-semibold text-primary"
       >
