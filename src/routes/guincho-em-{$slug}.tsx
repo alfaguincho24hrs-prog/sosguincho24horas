@@ -12,6 +12,7 @@ import {
   Bike,
   Car,
 } from "lucide-react";
+import { lazy, Suspense, useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -324,18 +325,11 @@ function CityPage() {
           {" "}{city.name}. Ligue agora e confirme a cobertura no seu endereço.
         </p>
 
-        {/* Mapa Google incorporado para SEO local */}
+        {/* Mapa Google incorporado para SEO local — Otimizado com useMemo e carregamento eficiente */}
         <div className="mt-6 overflow-hidden rounded-xl border border-border/60 shadow-[var(--shadow-elegant)] bg-muted/20 min-h-[360px] relative">
-          <iframe
-            title={`Mapa de cobertura — Guincho em ${city.name}/${city.uf}`}
-            src={mapEmbedSrc}
-            width="100%"
-            height="360"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            className="block w-full"
-            allowFullScreen
-          />
+          <Suspense fallback={<div className="h-[360px] w-full flex items-center justify-center bg-muted/20">Carregando mapa...</div>}>
+            <OptimizedMap city={city} mapEmbedSrc={mapEmbedSrc} />
+          </Suspense>
         </div>
       </section>
 
