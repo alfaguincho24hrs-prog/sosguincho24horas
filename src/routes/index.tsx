@@ -282,10 +282,10 @@ function HomePage() {
           </p>
           <div className="flex flex-wrap gap-3 pt-4">
             <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
-              <a href={`tel:${SITE.phone}`}><Phone className="h-5 w-5" /> Ligar agora — {SITE.phone}</a>
+              <a href="https://w.app/guincho24horas"><Phone className="h-5 w-5" /> Ligar agora — (11) 99645-1510</a>
             </Button>
             <Button asChild size="lg" variant="outline">
-              <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noreferrer">WhatsApp 24h</a>
+              <a href="https://w.app/guincho24horas" target="_blank" rel="noreferrer">WhatsApp 24h</a>
             </Button>
             <Button asChild size="lg" variant="secondary">
               <Link to="/servicos-de-guincho-e-reboque">Ver todas as cidades</Link>
