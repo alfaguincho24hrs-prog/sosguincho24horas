@@ -7,9 +7,8 @@ import { getPostBySlug, type BlogPost } from "@/components/blog-data";
 export const Route = createFileRoute("/blog/$slug")({
   head: ({ params }) => {
     const post = getPostBySlug(params.slug);
-    const title = `${post?.title || params.slug} | Blog SOS Guincho 24 horas`;
-    const description = post?.excerpt || "Leia dicas sobre guincho, reboque e auto socorro no blog SOS Guincho 24 horas.";
     const url = `https://sosguincho24horas.com.br/blog/${params.slug}`;
+    const title = `${post?.title || params.slug} | Blog SOS Guincho 24 horas`;
     const image = post?.coverUrl || "https://sosguincho24horas.com.br/og-image.webp";
 
     return {
