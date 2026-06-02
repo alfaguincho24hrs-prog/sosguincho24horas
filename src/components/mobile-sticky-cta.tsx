@@ -1,5 +1,4 @@
 import { Phone, MessageCircle } from "lucide-react";
-import { SITE } from "./site-data";
 
 type Props = {
   whatsappMsg?: string;
