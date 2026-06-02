@@ -160,7 +160,7 @@ function HomePage() {
                   asChild
                   className="mt-auto w-full animate-button-pulse bg-[image:var(--gradient-cta)] font-bold text-primary shadow-lg shadow-accent/40 hover:animate-none hover:opacity-90 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 transition-all duration-300"
                 >
-                  <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noreferrer">
+                  <a href="https://w.app/guincho24horas" target="_blank" rel="noreferrer">
                     <MessageCircle className="h-4 w-4" /> CHAMAR GUINCHO
                   </a>
                 </Button>
