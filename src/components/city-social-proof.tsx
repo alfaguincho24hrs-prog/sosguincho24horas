@@ -131,14 +131,14 @@ export function CitySocialProof({ cityName, neighborhoods, uf }: Props) {
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 min-h-[400px]">
         {items.slice(0, 6).map((it, idx) => (
-          <Card key={idx} className="border-border/60">
-            <CardContent className="p-5">
+          <Card key={idx} className="border-border/60 flex flex-col h-full">
+            <CardContent className="p-5 flex flex-col h-full">
               <div className="flex items-center gap-1" aria-label="5 estrelas">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star key={i} className="h-4 w-4 fill-yellow-500 text-yellow-500" />
                 ))}
               </div>
-              <p className="mt-3 text-sm text-muted-foreground">"{it.text}"</p>
+              <p className="mt-3 text-sm text-muted-foreground flex-grow">"{it.text}"</p>
               <div className="mt-4 border-t border-border/60 pt-3 text-xs text-muted-foreground">
                 <h4 className="inline text-foreground font-bold">{it.name}</h4> · <h5 className="inline">{it.hood}</h5>
                 <br />
