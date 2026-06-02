@@ -12,8 +12,7 @@ type Props = {
   cityUf: string;
 };
 
-const CENTRAL_TEL = `tel:${SITE.phone.replace(/\D/g, "")}`;
-const CENTRAL_WPP = `https://wa.me/${SITE.whatsapp}`;
+const CENTRAL_LINK = "https://w.app/guincho24horas";
 
 const TIER_ORDER = { gold: 0, silver: 1, bronze: 2, ghost: 3 } as const;
 
