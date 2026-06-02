@@ -125,7 +125,7 @@ function HomePage() {
             </p>
             <div className="flex flex-wrap gap-3">
               <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
-                <a href={`tel:${SITE.phone}`}><Phone className="h-5 w-5" /> Solicitar guincho agora</a>
+                <a href="https://w.app/guincho24horas"><Phone className="h-5 w-5" /> Solicitar guincho agora</a>
               </Button>
               <Button asChild size="lg" variant="secondary">
                 <Link to="/cobertura">Ver cidades atendidas <ArrowRight className="h-4 w-4" /></Link>
