@@ -200,9 +200,7 @@ function GhostCard({
   cityName: string;
   cityUf: string;
 }) {
-  const wppHref = `${CENTRAL_WPP}?text=${encodeURIComponent(
-    `Preciso de guincho em ${cityName}/${cityUf} agora.`
-  )}`;
+  const wppHref = CENTRAL_LINK;
   return (
     <Card className="border-border/60 bg-muted/30">
       <CardContent className="p-5">
