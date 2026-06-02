@@ -541,3 +541,21 @@ function CityPage() {
     </div>
   );
 }
+
+function OptimizedMap({ city, mapEmbedSrc }: { city: City; mapEmbedSrc: string }) {
+  const mapElement = useMemo(() => (
+    <iframe
+      title={`Mapa de cobertura — Guincho em ${city.name}/${city.uf}`}
+      src={mapEmbedSrc}
+      width="100%"
+      height="360"
+      loading="lazy"
+      referrerPolicy="no-referrer-when-downgrade"
+      className="block w-full"
+      allowFullScreen
+      style={{ border: 0 }}
+    />
+  ), [city.name, city.uf, mapEmbedSrc]);
+
+  return mapElement;
+}
