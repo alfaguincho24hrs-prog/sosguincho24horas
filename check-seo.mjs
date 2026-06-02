@@ -22,7 +22,7 @@ const checkRoutes = () => {
     const routePath = slug === '' ? '/' : `/${slug}`;
     const expectedCanonical = `${SITE_URL}${routePath === '/' ? '' : routePath}`;
 
-    const hasTitle = content.includes('title:') || content.includes('title,');
+    const hasTitle = content.includes('title:') || content.includes('title,') || content.includes('{ title }');
     const hasDescription = content.includes('name: "description"');
     const hasCanonical = content.includes('rel: "canonical"');
     
