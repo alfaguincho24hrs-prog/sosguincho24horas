@@ -502,10 +502,10 @@ function CityPage() {
         </ul>
         <div className="flex flex-wrap gap-3 pt-4">
           <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary">
-            <a href={telHref}><Phone className="h-5 w-5" /> Ligar agora — {SITE.phone}</a>
+            <a href="https://w.app/guincho24horas"><Phone className="h-5 w-5" /> Ligar agora — (11) 99645-1510</a>
           </Button>
           <Button asChild size="lg" variant="outline">
-            <a href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(`Preciso de guincho em ${city.name}/${city.uf}`)}`} target="_blank" rel="noreferrer">
+            <a href="https://w.app/guincho24horas" target="_blank" rel="noreferrer">
               WhatsApp 24h
             </a>
           </Button>
