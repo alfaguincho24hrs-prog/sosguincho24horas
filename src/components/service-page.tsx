@@ -157,10 +157,10 @@ export function ServicePage(p: ServicePageProps) {
           <p className="mt-4 text-primary-foreground/85">{p.heroSubtitle}</p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
-              <a href={`tel:${SITE.phone}`} aria-label={`Ligar para ${SITE.name} agora`}><Phone className="h-5 w-5" aria-hidden="true" /> {SITE.phone}</a>
+              <a href="https://w.app/guincho24horas" aria-label={`Ligar para ${SITE.name} agora`}><Phone className="h-5 w-5" aria-hidden="true" /> (11) 99645-1510</a>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10">
-              <a href={wppHref} target="_blank" rel="noreferrer" aria-label={`Falar no WhatsApp para ${p.serviceName}`}><MessageCircle className="h-5 w-5" aria-hidden="true" /> WhatsApp 24h</a>
+              <a href="https://w.app/guincho24horas" target="_blank" rel="noreferrer" aria-label={`Falar no WhatsApp para ${p.serviceName}`}><MessageCircle className="h-5 w-5" aria-hidden="true" /> WhatsApp 24h</a>
             </Button>
           </div>
         </div>
