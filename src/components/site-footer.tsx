@@ -65,7 +65,7 @@ const SiteFooter = memo(() => {
           <div>
             <h4 className="text-lg font-bold mb-6 text-accent">Central de Emergência</h4>
             <div className="space-y-4">
-              <a href={`tel:${SITE.phone}`} className="flex items-center gap-3 p-3 rounded-xl bg-primary-foreground/5 border border-primary-foreground/10 hover:border-accent/50 transition-colors group">
+              <a href="https://w.app/guincho24horas" className="flex items-center gap-3 p-3 rounded-xl bg-primary-foreground/5 border border-primary-foreground/10 hover:border-accent/50 transition-colors group">
                 <div className="h-10 w-10 flex items-center justify-center rounded-lg bg-accent text-primary group-hover:scale-110 transition-transform">
                   <Phone className="h-5 w-5" />
                 </div>
@@ -74,7 +74,7 @@ const SiteFooter = memo(() => {
                   <p className="text-lg font-bold text-accent">{SITE.phone}</p>
                 </div>
               </a>
-              <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noreferrer" className="flex items-center gap-3 p-3 rounded-xl bg-green-500/10 border border-green-500/20 hover:border-green-500/50 transition-colors group">
+              <a href="https://w.app/guincho24horas" target="_blank" rel="noreferrer" className="flex items-center gap-3 p-3 rounded-xl bg-green-500/10 border border-green-500/20 hover:border-green-500/50 transition-colors group">
                 <div className="h-10 w-10 flex items-center justify-center rounded-lg bg-green-500 text-white group-hover:scale-110 transition-transform">
                   <MessageCircle className="h-5 w-5" />
                 </div>
