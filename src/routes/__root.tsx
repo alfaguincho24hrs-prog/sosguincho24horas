@@ -19,7 +19,12 @@ const SITE_JSONLD = {
       "@id": `${SITE_URL}/#organization`,
       "name": SITE.name,
       "url": `${SITE_URL}/`,
-      "logo": `${SITE_URL}/icon-512.png`,
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${SITE_URL}/icon-512.png`,
+        "width": "512",
+        "height": "512"
+      },
       "email": SITE.email,
       "telephone": SITE.phone,
       "address": {
@@ -29,7 +34,11 @@ const SITE_JSONLD = {
         "addressRegion": SITE.address.region,
         "postalCode": SITE.address.postalCode,
         "addressCountry": "BR"
-      }
+      },
+      "sameAs": [
+        "https://www.facebook.com/sosguincho24horas",
+        "https://www.instagram.com/sosguincho24horas"
+      ]
     },
     {
       "@type": "WebSite",
@@ -48,7 +57,12 @@ const SITE_JSONLD = {
       "telephone": SITE.phone,
       "email": SITE.email,
       "priceRange": "$$",
-      "image": `${SITE_URL}/og-image.webp`,
+      "image": {
+        "@type": "ImageObject",
+        "url": `${SITE_URL}/og-image.webp`,
+        "width": "1200",
+        "height": "630"
+      },
       "areaServed": { "@type": "Country", "name": "Brasil" },
       "address": {
         "@type": "PostalAddress",
