@@ -7,13 +7,54 @@ import { getPostBySlug, type BlogPost } from "@/components/blog-data";
 export const Route = createFileRoute("/blog/$slug")({
   head: ({ params }) => {
     const post = getPostBySlug(params.slug);
+    const title = `${post?.title || params.slug} | Blog SOS Guincho 24 horas`;
+    const description = post?.excerpt || "Leia dicas sobre guincho, reboque e auto socorro no blog SOS Guincho 24 horas.";
     const url = `https://sosguincho24horas.com.br/blog/${params.slug}`;
+    const image = post?.coverUrl || "https://sosguincho24horas.com.br/og-image.webp";
+
     return {
       meta: [
-        { title: `${post?.title || params.slug} | Blog SOS Guincho 24 horas` },
-        { name: "description", content: post?.excerpt || "Leia dicas sobre guincho, reboque e auto socorro no blog SOS Guincho 24 horas." },
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:url", content: url },
+        { property: "og:image", content: image },
+        { property: "og:type", content: "article" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
+        { name: "twitter:image", content: image },
       ],
       links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": post?.title,
+            "description": post?.excerpt,
+            "image": image,
+            "datePublished": post?.date,
+            "author": {
+              "@type": "Organization",
+              "name": "SOS Guincho 24 horas"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "SOS Guincho 24 horas",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://sosguincho24horas.com.br/icon-512.png"
+              }
+            },
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": url
+            }
+          })
+        }
+      ]
     };
   },
   component: BlogPostPage,
