@@ -521,7 +521,7 @@ function CityPage() {
         </p>
         <div className="mt-5 flex flex-wrap justify-center gap-3">
           <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary">
-            <a href={telHref}>
+            <a href="https://w.app/guincho24horas">
               <Phone className="h-4 w-4" /> Ligar agora
             </a>
           </Button>
