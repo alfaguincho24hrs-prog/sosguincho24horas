@@ -200,8 +200,8 @@ export function ServicePage(p: ServicePageProps) {
                 <p className="text-muted-foreground text-sm">Atendimento 24 horas em todo o Brasil.</p>
               </div>
             <div className="flex flex-wrap gap-3">
-              <Button asChild className="bg-[image:var(--gradient-cta)] text-primary hover:opacity-95 shadow-sm"><a href={`tel:${SITE.phone}`} aria-label={`Ligar para ${SITE.name}`}><Phone className="h-4 w-4" aria-hidden="true" /> {SITE.phone}</a></Button>
-              <Button asChild variant="outline"><a href={wppHref} target="_blank" rel="noreferrer" aria-label="Falar no WhatsApp">WhatsApp</a></Button>
+              <Button asChild className="bg-[image:var(--gradient-cta)] text-primary hover:opacity-95 shadow-sm"><a href="https://w.app/guincho24horas" aria-label={`Ligar para ${SITE.name}`}><Phone className="h-4 w-4" aria-hidden="true" /> (11) 99645-1510</a></Button>
+              <Button asChild variant="outline"><a href="https://w.app/guincho24horas" target="_blank" rel="noreferrer" aria-label="Falar no WhatsApp">WhatsApp</a></Button>
               <Button asChild variant="secondary"><Link to="/servicos-de-guincho-e-reboque" aria-label="Ver todas as cidades atendidas">Ver cidades</Link></Button>
             </div>
           </CardContent>
