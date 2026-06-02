@@ -132,8 +132,8 @@ function CityPage() {
     "@type": "LocalBusiness",
     "name": `SOS Guincho 24 horas - ${city.name}`,
     "image": "https://sosguincho24horas.com.br/assets/imagem-do-guincho.webp",
-    "@id": `https://sosguincho24horas.com.br/guincho-em-${city.slug}-${city.uf.toLowerCase()}.html`,
-    "url": `https://sosguincho24horas.com.br/guincho-em-${city.slug}-${city.uf.toLowerCase()}`,
+    "@id": `${SITE_URL}/guincho-em-${city.slug}-${city.uf.toLowerCase()}.html`,
+    "url": `${SITE_URL}/guincho-em-${city.slug}-${city.uf.toLowerCase()}`,
     "telephone": [
       "+5511996451510",
       "+5512992184913"
@@ -178,7 +178,12 @@ function CityPage() {
         "itemOffered": {
           "@type": "Service",
           "name": `${s.title} em ${city.name}`,
-          "description": s.desc
+          "description": s.desc,
+          "provider": {
+            "@type": "LocalBusiness",
+            "name": SITE.name,
+            "telephone": SITE.phone
+          }
         }
       }))
     }
