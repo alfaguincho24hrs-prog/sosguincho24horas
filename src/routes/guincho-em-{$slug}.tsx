@@ -325,7 +325,7 @@ function CityPage() {
         </p>
 
         {/* Mapa Google incorporado para SEO local */}
-        <div className="mt-6 overflow-hidden rounded-xl border border-border/60 shadow-[var(--shadow-elegant)]">
+        <div className="mt-6 overflow-hidden rounded-xl border border-border/60 shadow-[var(--shadow-elegant)] bg-muted/20 min-h-[360px]">
           <iframe
             title={`Mapa de cobertura — Guincho em ${city.name}/${city.uf}`}
             src={mapEmbedSrc}
