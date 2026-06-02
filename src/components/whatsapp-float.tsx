@@ -1,10 +1,9 @@
 import { MessageCircle } from "lucide-react";
 
-const WHATSAPP_NUMBER = "5511996451510";
-const DEFAULT_MSG = "Olá! Preciso de um guincho 24h agora, podem me ajudar com reboque urgente?";
+const WHATSAPP_LINK = "https://w.app/guincho24horas";
 
 export function WhatsAppFloat() {
-  const href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(DEFAULT_MSG)}`;
+  const href = WHATSAPP_LINK;
   return (
     <a
       href={href}
