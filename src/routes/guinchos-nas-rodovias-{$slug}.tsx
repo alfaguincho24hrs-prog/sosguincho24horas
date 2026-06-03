@@ -358,6 +358,35 @@ function HighwayPage() {
               </CardContent>
             </Card>
 
+            {/* Map Section */}
+            <section className="space-y-6">
+              <h2 className="text-2xl font-bold flex items-center gap-2">
+                <MapPin className="h-6 w-6 text-primary" /> Cobertura na {data.name}
+              </h2>
+              <div className="overflow-hidden rounded-2xl border border-border/60 shadow-lg bg-muted/20 relative group">
+                <iframe
+                  title={`Mapa de cobertura na ${data.name}`}
+                  src={`https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d200000!2d-46.6!3d-23.5!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sguincho+24h+${encodeURIComponent(data.name)}!5e0!3m2!1spt-BR!2sbr!4v1717430400000!5m2!1spt-BR!2sbr`}
+                  width="100%"
+                  height="400"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="w-full"
+                />
+                <div className="absolute top-4 right-4">
+                  <Badge className="bg-background/95 backdrop-blur-sm text-foreground border shadow-sm px-3 py-1.5 flex items-center gap-2">
+                    <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
+                    Unidades de prontidão nesta rota
+                  </Badge>
+                </div>
+              </div>
+              <p className="text-sm text-muted-foreground text-center italic">
+                * Mapa ilustrativo. Nossas bases móveis circulam constantemente pela {data.name} para garantir o menor tempo de espera.
+              </p>
+            </section>
+
             {/* FAQ */}
             <section>
                <SeoBlock 
