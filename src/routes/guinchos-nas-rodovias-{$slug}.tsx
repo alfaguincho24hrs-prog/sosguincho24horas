@@ -37,6 +37,7 @@ type HighwayInfo = {
   features: string[];
   faq: { q: string; a: string }[];
   cities: string[];
+  connections?: string[]; // Novos links para rodovias conectadas
 };
 
 const HIGHWAYS_DATA: Record<string, HighwayInfo> = {
@@ -206,7 +207,8 @@ const HIGHWAYS_DATA: Record<string, HighwayInfo> = {
       { q: "Atendem próximo à Ponte Estaiada?", a: "Sim, temos equipes baseadas na região do Brooklin e Itaim para socorro rápido." },
       { q: "Qual o tempo de chegada no horário de pico?", a: "Mesmo com trânsito, utilizamos rotas alternativas para chegar em até 30 minutos." }
     ],
-    cities: ["sao-paulo-sp", "santo-amaro-sp", "itaim-bibi-sp", "morumbi-sp"]
+    cities: ["sao-paulo-sp", "santo-amaro-sp", "itaim-bibi-sp", "morumbi-sp"],
+    connections: ["marginal-tiete", "rodovia-castelo-branco", "rodovia-dos-imigrantes", "rodovia-anchieta", "rodovia-raposo-tavares"]
   }
 };
 
