@@ -5,14 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "npm run generate-sitemap && npm run check-seo && npm run audit-testimonials && vite build",
+    "build": "npm run check-links && npm run generate-sitemap && npm run check-seo && npm run audit-testimonials && vite build",
     "audit-testimonials": "node check-testimonials.mjs",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
     "check-seo": "node check-seo.mjs",
-    "generate-sitemap": "node generate-sitemap.mjs"
+    "generate-sitemap": "node generate-sitemap.mjs",
+    "check-links": "node check-links.mjs"
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.25.5",

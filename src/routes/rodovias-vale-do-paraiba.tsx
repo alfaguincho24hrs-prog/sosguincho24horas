@@ -83,8 +83,8 @@ const RODOVIAS = [
 ];
 
 function RodoviasVPPage() {
-  const telHref = `tel:+55${SITE.phone.replace(/\D/g, "")}`;
-  const wppHref = `https://wa.me/55${SITE.whatsapp.replace(/\D/g, "")}?text=Preciso%20de%20guincho%20em%20rodovia%20do%20Vale%20do%20Para%C3%ADba`;
+  const telHref = "https://w.app/guincho24horas";
+  const wppHref = "https://w.app/guincho24horas";
 
   return (
     <div className="min-h-screen bg-background">
