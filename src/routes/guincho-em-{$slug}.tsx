@@ -70,8 +70,21 @@ export const Route = createFileRoute("/guincho-em-{$slug}")({
   head: ({ loaderData }) => {
     if (!loaderData) return { meta: [] };
     const { city } = loaderData;
-    const title = `Guincho em ${city.name} - ${city.uf} | Reboque 24 Horas | ${SITE.name}`;
-    const description = `Precisa de guincho em ${city.name}/${city.uf}? Oferecemos reboque 24 horas rápido e seguro para carros, motos e pesados em toda a região de ${city.name}. Auto socorro imediato com o melhor preço!`;
+    const copy = getCityCopy(city.name, city.uf, city.slug);
+    
+    // SEO Titles and Descriptions optimized for highways
+    let title = `Guincho em ${city.name} - ${city.uf} | Reboque 24 Horas | ${SITE.name}`;
+    let description = `Precisa de guincho em ${city.name}/${city.uf}? Oferecemos reboque 24 horas rápido e seguro para carros, motos e pesados em toda a região de ${city.name}. Auto socorro imediato com o melhor preço!`;
+    
+    if (city.slug === 'sao-paulo' || city.slug === 'sao-paulo-sp') {
+      title = `Guincho 24h SP: Marginal, Dutra, Castelo Branco | Reboque Rápido`;
+      description = `Socorro e guincho 24h em São Paulo/SP. Atendimento imediato nas Marginais, Bandeirantes, Anhanguera, Imigrantes e Dutra. Chegada rápida em todas as zonas de SP!`;
+    } else if (copy.regionalContext?.highways?.length) {
+      const mainHighway = copy.regionalContext.highways[0];
+      title = `Guincho em ${city.name} - ${mainHighway} | Reboque 24h`;
+      description = `Precisa de guincho na ${mainHighway} em ${city.name}? Atendimento 24 horas para carros e motos com chegada rápida. Ligue agora!`;
+    }
+
     const url = `${SITE_URL}/guincho-em-${city.slug}-${city.uf.toLowerCase()}`;
     return {
       meta: [
@@ -79,7 +92,7 @@ export const Route = createFileRoute("/guincho-em-{$slug}")({
         { name: "description", content: description },
         {
           name: "keywords",
-          content: `guincho ${city.name}, reboque ${city.name}, guincho 24 horas ${city.name} ${city.uf}, auto socorro ${city.name}, pane seca ${city.name}, guincho perto de mim ${city.name}`,
+          content: `guincho ${city.name}, reboque ${city.name}, guincho 24 horas ${city.name} ${city.uf}, auto socorro ${city.name}, pane seca ${city.name}, guincho perto de mim ${city.name}${copy.regionalContext?.highways?.length ? `, guincho ${copy.regionalContext.highways[0]}` : ""}`,
         },
         { name: "robots", content: "index, follow" },
         { name: "geo.region", content: `BR-${city.uf}` },
