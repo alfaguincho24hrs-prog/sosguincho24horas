@@ -279,8 +279,8 @@ export const Route = createFileRoute("/guinchos-nas-rodovias-{$slug}")({
   head: ({ loaderData }) => {
     if (!loaderData) return { meta: [] };
     const { data } = loaderData;
-    const title = `${data.name}: Guincho 24h e Auto Socorro Rápido | SOS Guincho 24h`;
-    const description = `Precisando de guincho na ${data.name}? Atendimento 24h especializado para carros, motos e veículos pesados. Socorro mecânico imediato, guincho plataforma e transporte seguro. Chame agora!`;
+    const title = `${data.name}: Guincho 24h e Auto Socorro Rápido`;
+    const description = `Guincho 24h na ${data.name}. Atendimento especializado para carros, motos e pesados. Socorro mecânico imediato e transporte seguro. Chame agora!`;
     const url = `https://sosguincho24horas.com.br/guinchos-nas-rodovias-${data.slug}`;
     
     return {
