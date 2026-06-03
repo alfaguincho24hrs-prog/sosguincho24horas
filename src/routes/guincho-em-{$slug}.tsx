@@ -264,7 +264,7 @@ function CityPage() {
             "text": f.a
           }
         })),
-        ...(city.slug === 'sao-paulo' ? [
+        ...(city.slug === 'sao-paulo' || city.slug === 'sao-paulo-sp' ? [
           {
             "@type": "Question",
             "name": "Vocês atendem guincho nas marginais Tietê e Pinheiros?",
@@ -272,7 +272,15 @@ function CityPage() {
               "@type": "Answer",
               "text": "Sim, temos unidades de prontidão em pontos estratégicos das Marginais Tietê e Pinheiros para atendimento imediato em qualquer horário."
             }
-          }
+          },
+          ...SP_REGIONAL_FAQS.flatMap(reg => reg.faqs).map(f => ({
+            "@type": "Question",
+            "name": f.q,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": f.a
+            }
+          }))
         ] : [])
       ]
     }
