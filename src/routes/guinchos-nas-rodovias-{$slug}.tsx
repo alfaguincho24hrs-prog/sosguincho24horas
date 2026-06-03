@@ -434,9 +434,9 @@ function HighwayPage() {
                   </Button>
                 </div>
                 <div className="border-t pt-6">
-                  <h4 className="font-bold mb-4">Outras Rodovias</h4>
+                  <h4 className="font-bold mb-4">Principais Rodovias</h4>
                   <ul className="space-y-2 text-left">
-                    {Object.values(HIGHWAYS_DATA).filter(h => h.slug !== data.slug).slice(0, 6).map((h: HighwayInfo) => (
+                    {Object.values(HIGHWAYS_DATA).filter(h => h.slug !== data.slug).map((h: HighwayInfo) => (
                       <li key={h.slug}>
                         <Link to="/guinchos-nas-rodovias-{$slug}" params={{ slug: h.slug }} className="text-sm hover:text-primary flex items-center gap-1 group">
                           <ChevronRight className="h-3 w-3 text-muted-foreground group-hover:text-primary" />
@@ -446,8 +446,29 @@ function HighwayPage() {
                     ))}
                   </ul>
                   <Link to="/rodovias-vale-do-paraiba" className="block text-primary text-sm font-bold mt-4 hover:underline">
-                    Ver todas as rodovias →
+                    Rodovias Vale do Paraíba →
                   </Link>
+                  <Link to="/servicos-de-guincho-e-reboque" className="block text-primary text-sm font-bold mt-2 hover:underline">
+                    Ver cidades atendidas →
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-border/40 shadow-sm">
+              <CardContent className="p-6">
+                <h4 className="font-bold mb-4">Cidades Estratégicas</h4>
+                <div className="flex flex-wrap gap-2">
+                   {["sao-paulo-sp", "guarulhos-sp", "campinas-sp", "sao-jose-dos-campos-sp", "santos-sp"].map(city => (
+                     <Link 
+                       key={city} 
+                       to="/guincho-em-{$slug}" 
+                       params={{ slug: city }}
+                       className="text-xs font-medium bg-muted hover:bg-primary hover:text-white px-2 py-1 rounded transition-colors"
+                     >
+                       Guincho em {city.split('-').slice(0, -1).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
+                     </Link>
+                   ))}
                 </div>
               </CardContent>
             </Card>
