@@ -121,6 +121,7 @@ export function getCityCopy(cityName: string, uf: string, slug: string): CityCop
     longTitle: `Guincho 24 Horas em ${c} — Socorro rápido e profissional`,
     longIntro: `Com foco na mobilidade de ${c}, nosso serviço de reboque entende o contexto das vias ${regional.mainAvenues.join(", ")} e a importância da rapidez para liberar o fluxo após qualquer imprevisto.`,
     faqs,
-    ctaTitle: `Guincho em ${c}: Acione agora`
+    ctaTitle: `Guincho em ${c}: Acione agora`,
+    regionalContext: regional
   };
 }
