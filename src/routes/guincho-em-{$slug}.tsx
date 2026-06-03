@@ -440,19 +440,21 @@ function CityPage() {
               <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Presidente Dutra</span>
               <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Carvalho Pinto</span>
               {city.slug === 'sao-paulo' && (
-                <>
-                  <span className="text-xs bg-muted px-2 py-1 rounded">Marginal Tietê</span>
-                  <span className="text-xs bg-muted px-2 py-1 rounded">Marginal Pinheiros</span>
-                  <span className="text-xs bg-muted px-2 py-1 rounded">Rod. dos Bandeirantes</span>
-                  <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Anhanguera</span>
-                  <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Castelo Branco</span>
-                  <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Imigrantes</span>
-                  <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Anchieta</span>
-                  <span className="text-xs bg-muted px-2 py-1 rounded">Rodoanel</span>
-                </>
+                <div className="w-full mt-4 space-y-4">
+                  {copy.regionalContext?.zones && Object.entries(copy.regionalContext.zones).map(([zone, roads]) => (
+                    <div key={zone} className="space-y-2">
+                      <h5 className="text-sm font-bold text-accent/80">{zone}</h5>
+                      <div className="flex flex-wrap gap-2">
+                        {roads.map(road => (
+                          <span key={road} className="text-xs bg-muted px-2 py-1 rounded">{road}</span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               )}
-              {city.slug === 'sao-jose-dos-campos' && <span className="text-xs bg-muted px-2 py-1 rounded">Rod. dos Tamoios</span>}
-              {city.slug === 'taubate' && <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Oswaldo Cruz</span>}
+              {city.slug !== 'sao-paulo' && city.slug === 'sao-jose-dos-campos' && <span className="text-xs bg-muted px-2 py-1 rounded">Rod. dos Tamoios</span>}
+              {city.slug !== 'sao-paulo' && city.slug === 'taubate' && <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Oswaldo Cruz</span>}
             </div>
           </div>
           <div className="mt-4">
