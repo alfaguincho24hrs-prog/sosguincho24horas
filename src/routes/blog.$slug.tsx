@@ -29,30 +29,62 @@ export const Route = createFileRoute("/blog/$slug")({
       scripts: [
         {
           type: "application/ld+json",
-          children: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BlogPosting",
-            "headline": post?.title,
-            "description": post?.excerpt,
-            "image": image,
-            "datePublished": post?.date,
-            "author": {
-              "@type": "Organization",
-              "name": "SOS Guincho 24 horas"
-            },
-            "publisher": {
-              "@type": "Organization",
-              "name": "SOS Guincho 24 horas",
-              "logo": {
-                "@type": "ImageObject",
-                "url": "https://sosguincho24horas.com.br/icon-512.png"
+          children: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "BlogPosting",
+              "headline": post?.title,
+              "description": post?.excerpt,
+              "image": image,
+              "datePublished": post?.date,
+              "author": {
+                "@type": "Organization",
+                "name": "SOS Guincho 24 horas"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "SOS Guincho 24 horas",
+                "logo": {
+                  "@type": "ImageObject",
+                  "url": "https://sosguincho24horas.com.br/icon-512.png"
+                }
+              },
+              "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": url
               }
             },
-            "mainEntityOfPage": {
-              "@type": "WebPage",
-              "@id": url
+            post?.faq ? {
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": post.faq.map(item => ({
+                "@type": "Question",
+                "name": item.q,
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": item.a
+                }
+              }))
+            } : null,
+            {
+              "@context": "https://schema.org",
+              "@type": "Service",
+              "serviceType": "Guincho 24h e Auto Socorro",
+              "provider": {
+                "@type": "LocalBusiness",
+                "name": "SOS Guincho 24 horas",
+                "telephone": "+5511999999999",
+                "image": "https://sosguincho24horas.com.br/og-image.webp",
+                "priceRange": "$$",
+                "address": {
+                  "@type": "PostalAddress",
+                  "addressLocality": "São Paulo",
+                  "addressRegion": "SP",
+                  "addressCountry": "BR"
+                }
+              }
             }
-          })
+          ].filter(Boolean))
         }
       ]
     };
