@@ -210,7 +210,33 @@ const HIGHWAYS_DATA: Record<string, HighwayInfo> = {
       { q: "Qual o tempo de chegada no horário de pico?", a: "Mesmo com trânsito, utilizamos rotas alternativas para chegar em até 30 minutos." }
     ],
     cities: ["sao-paulo-sp", "santo-amaro-sp", "itaim-bibi-sp", "morumbi-sp"],
-    connections: ["marginal-tiete", "rodovia-castelo-branco", "rodovia-dos-imigrantes", "rodovia-anchieta", "rodovia-raposo-tavares"]
+    connections: ["marginal-pinheiros-sul", "marginal-pinheiros-oeste", "marginal-tiete", "rodovia-castelo-branco", "rodovia-dos-imigrantes", "rodovia-anchieta", "rodovia-raposo-tavares"]
+  },
+  "marginal-pinheiros-sul": {
+    name: "Marginal Pinheiros (Trecho Sul)",
+    slug: "marginal-pinheiros-sul",
+    region: "São Paulo, SP",
+    description: "Atendimento de guincho na região de Santo Amaro, Interlagos e conexões com Imigrantes e Anchieta.",
+    features: ["Próximo a Santo Amaro", "Conexão com o Litoral", "Atendimento 24h"],
+    faq: [
+      { q: "Atendem guincho em Interlagos?", a: "Sim, cobrimos toda a Marginal Pinheiros até a região de Interlagos e Autódromo." },
+      { q: "Qual o tempo para a Ponte Estaiada?", a: "Temos unidades baseadas no Brooklin para chegada em 15 minutos." }
+    ],
+    cities: ["sao-paulo-sp"],
+    connections: ["marginal-pinheiros", "rodovia-dos-imigrantes", "rodovia-anchieta"]
+  },
+  "marginal-pinheiros-oeste": {
+    name: "Marginal Pinheiros (Trecho Oeste)",
+    slug: "marginal-pinheiros-oeste",
+    region: "São Paulo, SP",
+    description: "Trecho da Marginal que atende Butantã, Pinheiros e conexão com a Rodovia Castello Branco.",
+    features: ["Acesso à Castello Branco", "Atendimento no Butantã", "Socorro rápido 24h"],
+    faq: [
+      { q: "Atendem próximo à USP / Butantã?", a: "Sim, temos prontidão na região da Ponte do Jaguaré e Eusébio Matoso." },
+      { q: "Fazem reboque para a Raposo Tavares?", a: "Sim, realizamos o transporte entre a Marginal e a Rodovia Raposo Tavares." }
+    ],
+    cities: ["sao-paulo-sp"],
+    connections: ["marginal-pinheiros", "rodovia-castelo-branco", "rodovia-raposo-tavares"]
   }
 };
 
