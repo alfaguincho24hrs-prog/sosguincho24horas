@@ -35,8 +35,8 @@ function runAudit() {
         const name = nameMatch ? nameMatch[1] : slug;
         
         // Simular lógica de SEO do componente
-        const title = `${name}: Guincho 24h e Auto Socorro Rápido | SOS Guincho 24h`;
-        const description = `Precisando de guincho na ${name}? Atendimento 24h especializado para carros, motos e veículos pesados. Socorro mecânico imediato, guincho plataforma e transporte seguro. Chame agora!`;
+        const title = `${name}: Guincho 24h e Auto Socorro Rápido`;
+        const description = `Guincho 24h na ${name}. Atendimento especializado para carros, motos e pesados. Socorro mecânico imediato e transporte seguro. Chame agora!`;
         
         const issues = [];
         
