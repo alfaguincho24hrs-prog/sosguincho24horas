@@ -96,7 +96,11 @@ function HomePage() {
       <section className="relative overflow-hidden min-h-[500px]">
         <div className="absolute inset-0">
           <picture>
-            <source srcSet={heroImgWebp} type="image/webp" />
+            <source 
+              srcSet={`${heroImgWebp} 1200w, ${heroImgWebp} 800w, ${heroImgWebp} 400w`} 
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 1200px"
+              type="image/webp" 
+            />
             <img
               src={heroImg}
               alt="Serviço de guincho 24 horas e reboque plataforma para carros e motos em rodovias"
