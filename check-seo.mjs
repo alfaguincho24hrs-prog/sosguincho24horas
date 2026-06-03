@@ -132,7 +132,8 @@ const checkRoutes = () => {
       schemaValid: schemaValid && !hasPlaceholders,
       headingsValid: headingCheck,
       h1Count,
-      status: (hasTitle && hasDescription && hasCanonical && canonicalCorrect && schemaValid && !hasPlaceholders && headingCheck) ? '✅ OK' : '❌ ERROR'
+      status: (hasTitle && hasDescription && hasCanonical && canonicalCorrect && schemaValid && !hasPlaceholders && headingCheck && seoIssues.length === 0) ? '✅ OK' : '❌ ERROR',
+      seoIssues
     });
   });
 
