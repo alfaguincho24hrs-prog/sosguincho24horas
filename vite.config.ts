@@ -35,11 +35,12 @@ function generateSeoFiles(): Plugin {
     
     // Add dynamic highway routes
     const HIGHWAY_SLUGS = [
-      "marginal-tiete", "rodovia-castelo-branco", "rodovia-fernao-dias",
+      "marginal-tiete", "marginal-tiete-norte", "marginal-tiete-leste",
+      "rodovia-castelo-branco", "rodovia-fernao-dias",
       "rodovia-presidente-dutra", "rodovia-carvalho-pinto", "rodovia-dos-imigrantes",
       "rodovia-anchieta", "rodovia-anhanguera", "rodoanel-mario-covas",
       "rodovia-ayrton-senna", "rodovia-raposo-tavares", "rodovia-dos-bandeirantes",
-      "marginal-pinheiros"
+      "marginal-pinheiros", "marginal-pinheiros-sul", "marginal-pinheiros-oeste"
     ];
 
     const urls: string[] = [];
