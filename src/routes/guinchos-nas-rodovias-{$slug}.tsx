@@ -326,6 +326,11 @@ function HighwayPage() {
                 "@type": "Service",
                 "name": `Guincho 24h na ${data.name}`,
                 "description": `Serviço de guincho e reboque 24 horas para carros, motos e veículos pesados na ${data.name}.`,
+                "serviceType": "Towing Service",
+                "areaServed": data.cities.map(city => ({
+                  "@type": "City",
+                  "name": city.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+                })),
                 "provider": {
                   "@type": "LocalBusiness",
                   "name": SITE.name,
