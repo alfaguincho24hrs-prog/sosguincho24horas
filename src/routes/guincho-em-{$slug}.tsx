@@ -576,6 +576,19 @@ function CityPage() {
                       <MapPin className="h-3 w-3" /> Localizar unidade mais próxima
                     </Button>
                   </div>
+                    <div className="bg-primary/5 p-4 rounded-xl border border-primary/10">
+                       <h6 className="text-xs font-bold mb-2 flex items-center gap-2">
+                          <Clock className="h-3 w-3 text-primary" /> 
+                          Tempo estimado de resposta em rodovias
+                       </h6>
+                       <ul className="text-[11px] space-y-1.5 text-muted-foreground">
+                          <li className="flex justify-between"><span>Marginal Tietê/Pinheiros:</span> <span className="font-bold text-foreground">15-25 min</span></li>
+                          <li className="flex justify-between"><span>Rod. Castello Branco:</span> <span className="font-bold text-foreground">20-30 min</span></li>
+                          <li className="flex justify-between"><span>Rod. dos Bandeirantes:</span> <span className="font-bold text-foreground">25-35 min</span></li>
+                          <li className="flex justify-between"><span>Rod. Raposo Tavares:</span> <span className="font-bold text-foreground">20-35 min</span></li>
+                       </ul>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
