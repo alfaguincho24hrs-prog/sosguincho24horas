@@ -37,6 +37,7 @@ type HighwayInfo = {
   features: string[];
   faq: { q: string; a: string }[];
   cities: string[];
+  connections?: string[]; // Novos links para rodovias conectadas
 };
 
 const HIGHWAYS_DATA: Record<string, HighwayInfo> = {
@@ -51,7 +52,34 @@ const HIGHWAYS_DATA: Record<string, HighwayInfo> = {
       { q: "Qual o tempo de chegada na Marginal Tietê?", a: "Pela nossa presença estratégica, o tempo médio de chegada é de 15 a 25 minutos em qualquer trecho da Marginal." },
       { q: "Atendem veículos pesados na Marginal?", a: "Sim, possuímos guinchos de grande porte para caminhões e ônibus, respeitando os horários de restrição da via." }
     ],
-    cities: ["sao-paulo-sp", "guarulhos-sp", "osasco-sp"]
+    cities: ["sao-paulo-sp", "guarulhos-sp", "osasco-sp"],
+    connections: ["marginal-tiete-norte", "marginal-tiete-leste", "marginal-pinheiros", "rodovia-presidente-dutra", "rodovia-fernao-dias", "rodovia-castelo-branco", "rodovia-anhanguera", "rodovia-dos-bandeirantes", "rodovia-ayrton-senna"]
+  },
+  "marginal-tiete-norte": {
+    name: "Marginal Tietê (Trecho Norte)",
+    slug: "marginal-tiete-norte",
+    region: "São Paulo, SP",
+    description: "Trecho da Marginal Tietê que atende as regiões de Santana, Casa Verde e conexões com a Rodovia Fernão Dias e Dutra.",
+    features: ["Próximo à Ponte das Bandeiras", "Acesso à Rodoviária Tietê", "Guincho 24h para emergências"],
+    faq: [
+      { q: "Atendem na região da Ponte da Casa Verde?", a: "Sim, temos bases móveis que circulam entre a Ponte da Vila Maria e Ponte da Casa Verde 24h." },
+      { q: "Qual o tempo de chegada no trecho norte?", a: "Nossa base na Zona Norte permite chegar em até 20 minutos." }
+    ],
+    cities: ["sao-paulo-sp", "guarulhos-sp"],
+    connections: ["marginal-tiete", "rodovia-fernao-dias", "rodovia-presidente-dutra"]
+  },
+  "marginal-tiete-leste": {
+    name: "Marginal Tietê (Trecho Leste)",
+    slug: "marginal-tiete-leste",
+    region: "São Paulo, SP",
+    description: "Trecho da Marginal Tietê que atende Tatuapé, Penha e conexão com a Rodovia Ayrton Senna.",
+    features: ["Acesso à Rodovia Ayrton Senna", "Atendimento na região do Tatuapé", "Guincho leve e pesado"],
+    faq: [
+      { q: "Atendem guincho próximo ao Tatuapé?", a: "Sim, cobrimos toda a extensão leste da Marginal com prontidão no Tatuapé." },
+      { q: "Fazem reboque até a Ayrton Senna?", a: "Sim, realizamos o transporte seguro entre a Marginal e as rodovias do leste." }
+    ],
+    cities: ["sao-paulo-sp"],
+    connections: ["marginal-tiete", "rodovia-ayrton-senna", "rodovia-presidente-dutra"]
   },
   "rodovia-castelo-branco": {
     name: "Rodovia Castelo Branco",
@@ -64,7 +92,8 @@ const HIGHWAYS_DATA: Record<string, HighwayInfo> = {
       { q: "Atendem próximo ao pedágio de Barueri?", a: "Sim, temos bases próximas a Alphaville e Barueri para atendimento imediato na Castello Branco." },
       { q: "Fazem transporte interestadual a partir da Castello?", a: "Sim, realizamos remoções para qualquer lugar do Brasil com agendamento ou emergência." }
     ],
-    cities: ["sao-paulo-sp", "barueri-sp", "osasco-sp", "itapevi-sp", "sorocaba-sp"]
+    cities: ["sao-paulo-sp", "barueri-sp", "osasco-sp", "itapevi-sp", "sorocaba-sp"],
+    connections: ["marginal-tiete", "marginal-pinheiros", "rodovia-raposo-tavares", "rodoanel-mario-covas"]
   },
   "rodovia-fernao-dias": {
     name: "Rodovia Fernão Dias",
@@ -77,7 +106,8 @@ const HIGHWAYS_DATA: Record<string, HighwayInfo> = {
       { q: "Atendem na Serra da Cantareira / Fernão Dias?", a: "Sim, nossa equipe conhece bem os trechos sinuosos da Fernão Dias e opera com segurança máxima." },
       { q: "O guincho atende até Atibaia?", a: "Sim, cobrimos toda a extensão da Fernão Dias de São Paulo até a divisa com Minas Gerais." }
     ],
-    cities: ["sao-paulo-sp", "guarulhos-sp", "mairipora-sp", "atibaia-sp", "braganca-paulista-sp"]
+    cities: ["sao-paulo-sp", "guarulhos-sp", "mairipora-sp", "atibaia-sp", "braganca-paulista-sp"],
+    connections: ["marginal-tiete-norte", "rodoanel-mario-covas", "rodovia-presidente-dutra"]
   },
   "rodovia-presidente-dutra": {
     name: "Rodovia Presidente Dutra",
@@ -90,7 +120,8 @@ const HIGHWAYS_DATA: Record<string, HighwayInfo> = {
       { q: "Qual a cobertura na Dutra?", a: "Atendemos de São Paulo a Aparecida, passando por todas as cidades do Vale do Paraíba." },
       { q: "Atendem pane seca na Dutra?", a: "Sim, levamos combustível ou rebocamos até o posto mais próximo com rapidez." }
     ],
-    cities: ["sao-paulo-sp", "guarulhos-sp", "aruja-sp", "sao-jose-dos-campos-sp", "taubate-sp"]
+    cities: ["sao-paulo-sp", "guarulhos-sp", "aruja-sp", "sao-jose-dos-campos-sp", "taubate-sp"],
+    connections: ["marginal-tiete-norte", "marginal-tiete-leste", "rodovia-fernao-dias", "rodoanel-mario-covas"]
   },
   "rodovia-carvalho-pinto": {
     name: "Rodovia Carvalho Pinto",
@@ -155,7 +186,8 @@ const HIGHWAYS_DATA: Record<string, HighwayInfo> = {
       { q: "Atendem no Rodoanel Sul?", a: "Sim, cobrimos toda a extensão Sul conectando o ABC à região da Imigrantes." },
       { q: "O guincho chega rápido nas alças de acesso?", a: "Nossas equipes conhecem todos os acessos do Rodoanel para chegada rápida." }
     ],
-    cities: ["sao-paulo-sp", "guarulhos-sp", "sao-bernardo-do-campo-sp", "barueri-sp", "maua-sp"]
+    cities: ["sao-paulo-sp", "guarulhos-sp", "sao-bernardo-do-campo-sp", "barueri-sp", "maua-sp"],
+    connections: ["rodovia-presidente-dutra", "rodovia-fernao-dias", "rodovia-castelo-branco", "rodovia-raposo-tavares", "rodovia-dos-imigrantes", "rodovia-anchieta", "rodovia-dos-bandeirantes", "rodovia-anhanguera"]
   },
   "rodovia-ayrton-senna": {
     name: "Rodovia Ayrton Senna",
@@ -168,7 +200,8 @@ const HIGHWAYS_DATA: Record<string, HighwayInfo> = {
       { q: "Atendem guincho perto do Aeroporto?", a: "Sim, temos unidades fixas na região para socorro imediato na Ayrton Senna." },
       { q: "Fazem reboque até o Vale do Paraíba?", a: "Sim, realizamos o transporte completo pela Ayrton Senna e Carvalho Pinto." }
     ],
-    cities: ["sao-paulo-sp", "guarulhos-sp", "itaco-sp", "jacarei-sp"]
+    cities: ["sao-paulo-sp", "guarulhos-sp", "itaco-sp", "jacarei-sp"],
+    connections: ["marginal-tiete-leste", "rodovia-carvalho-pinto", "rodoanel-mario-covas"]
   },
   "rodovia-raposo-tavares": {
     name: "Rodovia Raposo Tavares",
@@ -206,7 +239,34 @@ const HIGHWAYS_DATA: Record<string, HighwayInfo> = {
       { q: "Atendem próximo à Ponte Estaiada?", a: "Sim, temos equipes baseadas na região do Brooklin e Itaim para socorro rápido." },
       { q: "Qual o tempo de chegada no horário de pico?", a: "Mesmo com trânsito, utilizamos rotas alternativas para chegar em até 30 minutos." }
     ],
-    cities: ["sao-paulo-sp", "santo-amaro-sp", "itaim-bibi-sp", "morumbi-sp"]
+    cities: ["sao-paulo-sp", "santo-amaro-sp", "itaim-bibi-sp", "morumbi-sp"],
+    connections: ["marginal-pinheiros-sul", "marginal-pinheiros-oeste", "marginal-tiete", "rodovia-castelo-branco", "rodovia-dos-imigrantes", "rodovia-anchieta", "rodovia-raposo-tavares"]
+  },
+  "marginal-pinheiros-sul": {
+    name: "Marginal Pinheiros (Trecho Sul)",
+    slug: "marginal-pinheiros-sul",
+    region: "São Paulo, SP",
+    description: "Atendimento de guincho na região de Santo Amaro, Interlagos e conexões com Imigrantes e Anchieta.",
+    features: ["Próximo a Santo Amaro", "Conexão com o Litoral", "Atendimento 24h"],
+    faq: [
+      { q: "Atendem guincho em Interlagos?", a: "Sim, cobrimos toda a Marginal Pinheiros até a região de Interlagos e Autódromo." },
+      { q: "Qual o tempo para a Ponte Estaiada?", a: "Temos unidades baseadas no Brooklin para chegada em 15 minutos." }
+    ],
+    cities: ["sao-paulo-sp"],
+    connections: ["marginal-pinheiros", "rodovia-dos-imigrantes", "rodovia-anchieta"]
+  },
+  "marginal-pinheiros-oeste": {
+    name: "Marginal Pinheiros (Trecho Oeste)",
+    slug: "marginal-pinheiros-oeste",
+    region: "São Paulo, SP",
+    description: "Trecho da Marginal que atende Butantã, Pinheiros e conexão com a Rodovia Castello Branco.",
+    features: ["Acesso à Castello Branco", "Atendimento no Butantã", "Socorro rápido 24h"],
+    faq: [
+      { q: "Atendem próximo à USP / Butantã?", a: "Sim, temos prontidão na região da Ponte do Jaguaré e Eusébio Matoso." },
+      { q: "Fazem reboque para a Raposo Tavares?", a: "Sim, realizamos o transporte entre a Marginal e a Rodovia Raposo Tavares." }
+    ],
+    cities: ["sao-paulo-sp"],
+    connections: ["marginal-pinheiros", "rodovia-castelo-branco", "rodovia-raposo-tavares"]
   }
 };
 
@@ -404,6 +464,32 @@ function HighwayPage() {
                 ))}
               </div>
             </section>
+
+            {/* Conexões e Trechos Próximos */}
+            {data.connections && data.connections.length > 0 && (
+              <section className="bg-primary/5 p-6 rounded-3xl border border-primary/10">
+                <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+                  <ChevronRight className="h-5 w-5 text-primary" /> Conexões e Trechos Próximos
+                </h2>
+                <div className="grid sm:grid-cols-2 gap-3">
+                  {data.connections.map((connSlug: string) => {
+                    const conn = HIGHWAYS_DATA[connSlug];
+                    if (!conn) return null;
+                    return (
+                      <Link
+                        key={connSlug}
+                        to="/guinchos-nas-rodovias-{$slug}"
+                        params={{ slug: connSlug }}
+                        className="flex items-center justify-between p-3 bg-background rounded-xl border border-border/60 hover:border-primary transition-all group"
+                      >
+                        <span className="text-sm font-semibold">{conn.name}</span>
+                        <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-transform group-hover:translate-x-1" />
+                      </Link>
+                    );
+                  })}
+                </div>
+              </section>
+            )}
 
             {/* Information Card */}
             <Card className="border-border/40 shadow-sm overflow-hidden">
