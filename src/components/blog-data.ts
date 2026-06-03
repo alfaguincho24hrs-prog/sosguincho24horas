@@ -13,6 +13,15 @@ export type BlogPost = {
 const STORAGE_KEY = "blog_posts_v1";
 
 export const DEFAULT_POSTS: BlogPost[] = [
+  // NOVO: Post consolidado das Rodovias (Marginais e Principais)
+  {
+    slug: "guincho-24h-marginais-e-principais-rodovias-sp",
+    title: "Guincho 24h nas Marginais e Principais Rodovias de SP: O Guia Completo",
+    excerpt: "Precisa de guincho na Marginal Tietê, Pinheiros, Castelo Branco, Dutra ou Imigrantes? Saiba como funciona o socorro rápido 24h nas principais vias de São Paulo.",
+    date: "03 de junho de 2026",
+    category: "Rodovias",
+    content: "Circular pelas grandes rodovias e marginais de São Paulo exige atenção constante. Quando ocorre uma pane mecânica ou acidente, a agilidade no resgate é fundamental para a sua segurança e para a fluidez do trânsito.\n\n### Atendimento nas Marginais Tietê e Pinheiros\nAs Marginais são as veias artérias de São Paulo. Atendemos todos os trechos:\n- **Marginal Tietê:** Cobertura completa nos trechos Norte (Santana/Casa Verde) e Leste (Tatuapé/Penha).\n- **Marginal Pinheiros:** Socorro imediato nos trechos Sul (Santo Amaro/Interlagos) e Oeste (Butantã/Pinheiros).\nNossas equipes estão posicionadas em pontos estratégicos para chegar em até 20 minutos, mesmo em horários de pico.\n\n### Principais Rodovias: Conexão Capital e Interior\nSeja para o interior ou para o litoral, garantimos reboque 24h com plataforma hidráulica nas seguintes vias:\n- **Rodovia Presidente Dutra (BR-116):** Atendimento especializado em todo o Vale do Paraíba.\n- **Rodovia Fernão Dias (BR-381):** Especialistas em trechos de serra e áreas urbanas de Guarulhos e Mairiporã.\n- **Rodovia Castelo Branco (SP-280):** Ligação rápida para Barueri, Sorocaba e região oeste.\n- **Rodovia Ayrton Senna e Carvalho Pinto:** Alternativa segura para o Litoral Norte e Vale.\n- **Rodovias Anchieta e Imigrantes:** Descida e subida da serra com equipamentos de alta performance.\n- **Rodovias Anhanguera e Bandeirantes:** Eixo econômico para Jundiaí e Campinas.\n- **Rodoanel Mario Covas:** Conexão entre todas as rodovias com suporte em todas as alças de acesso.\n- **Rodovia Raposo Tavares:** Atendimento na Zona Oeste, Cotia e Sorocaba.\n\n### Por que escolher o SOS Guincho 24h?\nContamos com frotas modernas de guinchos leves e pesados, prontos para qualquer situação. Se o seu veículo apresentou problemas na Rodovia dos Bandeirantes ou no Rodoanel, nossa central está disponível agora para enviar o socorro mais próximo.\n\n**Chame agora no WhatsApp ou Telefone para um orçamento rápido!**",
+  },
   // SILO 1 – Rodovias
   {
     slug: "o-que-fazer-se-o-carro-quebrar-na-dutra",
