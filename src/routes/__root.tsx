@@ -115,6 +115,8 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { rel: "dns-prefetch", href: "https://wa.me" },
+      { rel: "preconnect", href: "https://wa.me", crossOrigin: "anonymous" },
       { title: "SOS Guincho 24 horas |  Guincho em Todo o Brasil" },
       { name: "description", content: "Seu carro parou? SOS Guincho 24h na sua cidade para motos, leves e pesados. Resgate rápido em SP e Vale do Paraíba!" },
       { name: "theme-color", content: "#ef2b2b" },
