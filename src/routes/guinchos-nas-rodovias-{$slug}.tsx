@@ -65,7 +65,8 @@ const HIGHWAYS_DATA: Record<string, HighwayInfo> = {
       { q: "Atendem próximo ao pedágio de Barueri?", a: "Sim, temos bases próximas a Alphaville e Barueri para atendimento imediato na Castello Branco." },
       { q: "Fazem transporte interestadual a partir da Castello?", a: "Sim, realizamos remoções para qualquer lugar do Brasil com agendamento ou emergência." }
     ],
-    cities: ["sao-paulo-sp", "barueri-sp", "osasco-sp", "itapevi-sp", "sorocaba-sp"]
+    cities: ["sao-paulo-sp", "barueri-sp", "osasco-sp", "itapevi-sp", "sorocaba-sp"],
+    connections: ["marginal-tiete", "marginal-pinheiros", "rodovia-raposo-tavares", "rodoanel-mario-covas"]
   },
   "rodovia-fernao-dias": {
     name: "Rodovia Fernão Dias",
@@ -156,7 +157,8 @@ const HIGHWAYS_DATA: Record<string, HighwayInfo> = {
       { q: "Atendem no Rodoanel Sul?", a: "Sim, cobrimos toda a extensão Sul conectando o ABC à região da Imigrantes." },
       { q: "O guincho chega rápido nas alças de acesso?", a: "Nossas equipes conhecem todos os acessos do Rodoanel para chegada rápida." }
     ],
-    cities: ["sao-paulo-sp", "guarulhos-sp", "sao-bernardo-do-campo-sp", "barueri-sp", "maua-sp"]
+    cities: ["sao-paulo-sp", "guarulhos-sp", "sao-bernardo-do-campo-sp", "barueri-sp", "maua-sp"],
+    connections: ["rodovia-presidente-dutra", "rodovia-fernao-dias", "rodovia-castelo-branco", "rodovia-raposo-tavares", "rodovia-dos-imigrantes", "rodovia-anchieta", "rodovia-dos-bandeirantes", "rodovia-anhanguera"]
   },
   "rodovia-ayrton-senna": {
     name: "Rodovia Ayrton Senna",
@@ -406,6 +408,32 @@ function HighwayPage() {
                 ))}
               </div>
             </section>
+
+            {/* Conexões e Trechos Próximos */}
+            {data.connections && data.connections.length > 0 && (
+              <section className="bg-primary/5 p-6 rounded-3xl border border-primary/10">
+                <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+                  <ChevronRight className="h-5 w-5 text-primary" /> Conexões e Trechos Próximos
+                </h2>
+                <div className="grid sm:grid-cols-2 gap-3">
+                  {data.connections.map((connSlug: string) => {
+                    const conn = HIGHWAYS_DATA[connSlug];
+                    if (!conn) return null;
+                    return (
+                      <Link
+                        key={connSlug}
+                        to="/guinchos-nas-rodovias-{$slug}"
+                        params={{ slug: connSlug }}
+                        className="flex items-center justify-between p-3 bg-background rounded-xl border border-border/60 hover:border-primary transition-all group"
+                      >
+                        <span className="text-sm font-semibold">{conn.name}</span>
+                        <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-transform group-hover:translate-x-1" />
+                      </Link>
+                    );
+                  })}
+                </div>
+              </section>
+            )}
 
             {/* Information Card */}
             <Card className="border-border/40 shadow-sm overflow-hidden">
