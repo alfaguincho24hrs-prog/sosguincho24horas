@@ -396,6 +396,22 @@ function CityPage() {
               </CardContent>
             </Card>
           ))}
+          {(city.slug === 'sao-paulo' || city.slug === 'sao-paulo-sp') && (
+            <>
+              <Card className="border-border/60">
+                <CardContent className="p-5">
+                  <h4 className="font-semibold">Vocês atendem guincho nas marginais Tietê e Pinheiros?</h4>
+                  <p className="mt-2 text-sm text-muted-foreground">Sim, temos unidades de prontidão em pontos estratégicos das Marginais Tietê e Pinheiros para atendimento imediato em qualquer horário, garantindo a retirada rápida do veículo.</p>
+                </CardContent>
+              </Card>
+              <Card className="border-border/60">
+                <CardContent className="p-5">
+                  <h4 className="font-semibold">Quanto tempo demora o guincho para chegar na Rodovia dos Bandeirantes?</h4>
+                  <p className="mt-2 text-sm text-muted-foreground">Nosso tempo médio de chegada na Rodovia dos Bandeirantes, trecho capital, é de 30 a 45 minutos, dependendo das condições do trânsito no momento do chamado.</p>
+                </CardContent>
+              </Card>
+            </>
+          )}
         </div>
       </section>
 
