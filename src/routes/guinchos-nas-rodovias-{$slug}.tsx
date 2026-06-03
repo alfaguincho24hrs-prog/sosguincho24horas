@@ -279,15 +279,15 @@ export const Route = createFileRoute("/guinchos-nas-rodovias-{$slug}")({
   head: ({ loaderData }) => {
     if (!loaderData) return { meta: [] };
     const { data } = loaderData;
-    const title = `Guincho 24h na ${data.name}${data.sigla ? ` (${data.sigla})` : ""} | Reboque Rápido`;
-    const description = `Precisa de guincho na ${data.name}? Atendimento 24 horas para carros, motos e pesados. Chegada rápida, preço justo e profissionais qualificados na ${data.region}.`;
+    const title = `${data.name}: Guincho 24h e Auto Socorro Rápido | SOS Guincho 24h`;
+    const description = `Precisando de guincho na ${data.name}? Atendimento 24h especializado para carros, motos e veículos pesados. Socorro mecânico imediato, guincho plataforma e transporte seguro. Chame agora!`;
     const url = `https://sosguincho24horas.com.br/guinchos-nas-rodovias-${data.slug}`;
     
     return {
       meta: [
         { title },
         { name: "description", content: description },
-        { name: "keywords", content: `guincho ${data.name}, reboque ${data.name}, auto socorro ${data.name}, guincho 24h ${data.sigla || data.name}, guincho em ${data.region}` },
+        { name: "keywords", content: `guincho ${data.name}, socorro ${data.name}, reboque ${data.name}, guincho 24 horas ${data.name}, guincho ${data.sigla || data.name}, socorro mecânico ${data.name}, guincho pesado ${data.name}, reboque rápido ${data.name}` },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
         { property: "og:url", content: url },
