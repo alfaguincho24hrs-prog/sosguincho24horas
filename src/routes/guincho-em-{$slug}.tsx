@@ -499,6 +499,47 @@ function CityPage() {
         </div>
       </section>
 
+      {/* FAQ Regional por Zona (Apenas SP) */}
+      {(city.slug === 'sao-paulo' || city.slug === 'sao-paulo-sp') && (
+        <section className="mt-14">
+          <h2 className="text-2xl font-bold md:text-3xl text-accent/90 mb-6">FAQ por Região de São Paulo</h2>
+          <div className="grid gap-6 md:grid-cols-2">
+            {SP_REGIONAL_FAQS.map((reg) => (
+              <Card key={reg.zone} className="border-border/60 bg-muted/5 shadow-sm">
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-bold text-primary mb-4 flex items-center gap-2">
+                    <MapPin className="h-5 w-5" /> {reg.zone}
+                  </h3>
+                  <div className="space-y-4">
+                    {reg.faqs.map((f, idx) => (
+                      <div key={idx} className="border-b border-border/40 pb-3 last:border-0">
+                        <h4 className="font-semibold text-sm mb-1">{f.q}</h4>
+                        <p className="text-xs text-muted-foreground">{f.a}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-4 pt-4 border-t border-border/40">
+                    <p className="text-[10px] uppercase font-bold text-muted-foreground mb-2">Socorro nas Rodovias da região:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {reg.links.map((link) => (
+                        <Link 
+                          key={link.slug} 
+                          to="/guinchos-nas-rodovias-{$slug}" 
+                          params={{ slug: link.slug }}
+                          className="text-[11px] bg-secondary px-2 py-1 rounded hover:bg-primary hover:text-white transition-colors flex items-center gap-1"
+                        >
+                          <Truck className="h-3 w-3" /> {link.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Cidades vizinhas + serviços relacionados — interlinking semântico regional */}
       <section className="mt-14 grid gap-8 md:grid-cols-2">
         <div>
