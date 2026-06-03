@@ -6,22 +6,59 @@ import { Phone, MapPin, AlertTriangle, Truck } from "lucide-react";
 import { SITE } from "@/components/site-data";
 
 export const Route = createFileRoute("/rodovias-vale-do-paraiba")({
-  head: () => ({
-    meta: [
-      { title: "Guincho 24h nas Rodovias do Vale do Paraíba — Dutra, Carvalho Pinto, Tamoios" },
-      {
-        name: "description",
-        content:
-          "Atendimento de guincho e reboque 24 horas nas principais rodovias do Vale do Paraíba: Dutra (BR-116), Carvalho Pinto (SP-070), Tamoios (SP-099), Oswaldo Cruz (SP-125) e Floriano Rodrigues Pinheiro (SP-123).",
-      },
-      { name: "keywords", content: "guincho dutra, guincho carvalho pinto, guincho tamoios, guincho oswaldo cruz, reboque vale do paraíba, br-116, sp-070, sp-099" },
-      { property: "og:title", content: "Guincho 24h nas Rodovias do Vale do Paraíba" },
-      { property: "og:description", content: "Reboque rápido em toda extensão de Dutra, Carvalho Pinto, Tamoios e serra." },
-      { property: "og:type", content: "website" },
-      { name: "robots", content: "index,follow" },
-    ],
-    links: [{ rel: "canonical", href: "https://sosguincho24horas.com.br/rodovias-vale-do-paraiba" }],
-  }),
+  head: () => {
+    const title = "Guincho 24h nas Rodovias do Vale do Paraíba — Dutra, Carvalho Pinto, Tamoios";
+    const description = "Atendimento de guincho e reboque 24 horas nas principais rodovias do Vale do Paraíba: Dutra (BR-116), Carvalho Pinto (SP-070), Tamoios (SP-099), Oswaldo Cruz (SP-125) e Floriano Rodrigues Pinheiro (SP-123).";
+    const url = "https://sosguincho24horas.com.br/rodovias-vale-do-paraiba";
+    
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { name: "keywords", content: "guincho dutra, guincho carvalho pinto, guincho tamoios, guincho oswaldo cruz, reboque vale do paraíba, br-116, sp-070, sp-099" },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "website" },
+        { name: "robots", content: "index,follow" },
+      ],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": `${SITE.name} - Rodovias`,
+            "telephone": SITE.phone,
+            "url": url,
+            "description": description,
+            "mainEntity": {
+              "@type": "FAQPage",
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "Como solicitar guincho na Rodovia Presidente Dutra?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Você pode solicitar guincho na Dutra 24 horas ligando para nossa central ou via WhatsApp. Atendemos toda a extensão do Vale do Paraíba."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Qual o tempo de chegada do guincho na Rodovia dos Tamoios?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "O tempo médio de chegada na Rodovia dos Tamoios é de 30 a 50 minutos, com bases de prontidão em São José dos Campos e Paraibuna."
+                  }
+                }
+              ]
+            }
+          })
+        }
+      ],
+      links: [{ rel: "canonical", href: url }],
+    };
+  },
   component: RodoviasVPPage,
 });
 
