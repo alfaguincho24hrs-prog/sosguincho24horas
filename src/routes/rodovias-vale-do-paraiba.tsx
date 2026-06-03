@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Phone, MapPin, AlertTriangle, Truck } from "lucide-react";
+import { Phone, MapPin, AlertTriangle, Truck, ChevronRight } from "lucide-react";
 import { SITE } from "@/components/site-data";
 
 export const Route = createFileRoute("/rodovias-vale-do-paraiba")({
@@ -213,9 +213,9 @@ function RodoviasVPPage() {
         <div className="container max-w-5xl">
           <h2 className="text-3xl font-bold mb-6 flex items-center gap-2">
             <Truck className="h-7 w-7 text-primary" />
-            Cidades cobertas no Vale do Paraíba
+            Cidades e Rodovias no Vale do Paraíba
           </h2>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 mb-8">
             {[
               ["sao-jose-dos-campos-sp", "São José dos Campos"],
               ["taubate-sp", "Taubaté"],
@@ -241,6 +241,30 @@ function RodoviasVPPage() {
                 {name}
               </Link>
             ))}
+          </div>
+
+          <h3 className="text-xl font-bold mb-4">Acesso Rápido a Rodovias</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+             {[
+               { name: "Presidente Dutra", slug: "rodovia-presidente-dutra" },
+               { name: "Carvalho Pinto", slug: "rodovia-carvalho-pinto" },
+               { name: "Marginal Tietê", slug: "marginal-tiete" },
+               { name: "Castello Branco", slug: "rodovia-castelo-branco" },
+               { name: "Imigrantes", slug: "rodovia-dos-imigrantes" },
+               { name: "Anchieta", slug: "rodovia-anchieta" },
+               { name: "Anhanguera", slug: "rodovia-anhanguera" },
+               { name: "Bandeirantes", slug: "rodovia-dos-bandeirantes" }
+             ].map(r => (
+               <Link 
+                 key={r.slug} 
+                 to="/guinchos-nas-rodovias-{$slug}" 
+                 params={{ slug: r.slug }}
+                 className="p-3 bg-background border rounded-lg hover:border-primary transition-all text-sm font-semibold flex items-center justify-between group"
+               >
+                 {r.name}
+                 <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-primary" />
+               </Link>
+             ))}
           </div>
         </div>
       </section>
