@@ -327,10 +327,6 @@ function HighwayPage() {
                 "name": `Guincho 24h na ${data.name}`,
                 "description": `Serviço de guincho e reboque 24 horas para carros, motos e veículos pesados na ${data.name}.`,
                 "serviceType": "Towing Service",
-                "areaServed": data.cities.map(city => ({
-                  "@type": "City",
-                  "name": city.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
-                })),
                 "provider": {
                   "@type": "LocalBusiness",
                   "name": SITE.name,
@@ -345,9 +341,9 @@ function HighwayPage() {
                     "addressCountry": "BR"
                   }
                 },
-                "areaServed": data.cities.map((c: string) => ({
+                "areaServed": data.cities.map((city: string) => ({
                   "@type": "City",
-                  "name": c.split('-').slice(0, -1).map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+                  "name": city.split('-').map((word: string) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
                 })),
                 "hasOfferCatalog": {
                   "@type": "OfferCatalog",
