@@ -70,8 +70,21 @@ export const Route = createFileRoute("/guincho-em-{$slug}")({
   head: ({ loaderData }) => {
     if (!loaderData) return { meta: [] };
     const { city } = loaderData;
-    const title = `Guincho em ${city.name} - ${city.uf} | Reboque 24 Horas | ${SITE.name}`;
-    const description = `Precisa de guincho em ${city.name}/${city.uf}? Oferecemos reboque 24 horas rápido e seguro para carros, motos e pesados em toda a região de ${city.name}. Auto socorro imediato com o melhor preço!`;
+    const copy = getCityCopy(city.name, city.uf, city.slug);
+    
+    // SEO Titles and Descriptions optimized for highways
+    let title = `Guincho em ${city.name} - ${city.uf} | Reboque 24 Horas | ${SITE.name}`;
+    let description = `Precisa de guincho em ${city.name}/${city.uf}? Oferecemos reboque 24 horas rápido e seguro para carros, motos e pesados em toda a região de ${city.name}. Auto socorro imediato com o melhor preço!`;
+    
+    if (city.slug === 'sao-paulo' || city.slug === 'sao-paulo-sp') {
+      title = `Guincho 24h SP: Marginal, Dutra, Castelo Branco | Reboque Rápido`;
+      description = `Socorro e guincho 24h em São Paulo/SP. Atendimento imediato nas Marginais, Bandeirantes, Anhanguera, Imigrantes e Dutra. Chegada rápida em todas as zonas de SP!`;
+    } else if (copy.regionalContext?.highways?.length) {
+      const mainHighway = copy.regionalContext.highways[0];
+      title = `Guincho em ${city.name} - ${mainHighway} | Reboque 24h`;
+      description = `Precisa de guincho na ${mainHighway} em ${city.name}? Atendimento 24 horas para carros e motos com chegada rápida. Ligue agora!`;
+    }
+
     const url = `${SITE_URL}/guincho-em-${city.slug}-${city.uf.toLowerCase()}`;
     return {
       meta: [
@@ -79,7 +92,7 @@ export const Route = createFileRoute("/guincho-em-{$slug}")({
         { name: "description", content: description },
         {
           name: "keywords",
-          content: `guincho ${city.name}, reboque ${city.name}, guincho 24 horas ${city.name} ${city.uf}, auto socorro ${city.name}, pane seca ${city.name}, guincho perto de mim ${city.name}`,
+          content: `guincho ${city.name}, reboque ${city.name}, guincho 24 horas ${city.name} ${city.uf}, auto socorro ${city.name}, pane seca ${city.name}, guincho perto de mim ${city.name}${copy.regionalContext?.highways?.length ? `, guincho ${copy.regionalContext.highways[0]}` : ""}`,
         },
         { name: "robots", content: "index, follow" },
         { name: "geo.region", content: `BR-${city.uf}` },
@@ -178,15 +191,39 @@ function CityPage() {
         "position": i + 1,
         "itemOffered": {
           "@type": "Service",
-          "name": `${s.title} em ${city.name}`,
+          "name": `${s.title} em ${city.name}${city.slug === 'sao-paulo' ? ' e Marginais' : ''}`,
           "description": s.desc,
           "provider": {
             "@type": "LocalBusiness",
             "name": SITE.name,
-            "telephone": SITE.phone
+            "telephone": SITE.phone,
+            "url": SITE_URL
           }
         }
       }))
+    },
+    "mainEntity": {
+      "@type": "FAQPage",
+      "mainEntity": [
+        ...copy.faqs.map(f => ({
+          "@type": "Question",
+          "name": f.q,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": f.a
+          }
+        })),
+        ...(city.slug === 'sao-paulo' ? [
+          {
+            "@type": "Question",
+            "name": "Vocês atendem guincho nas marginais Tietê e Pinheiros?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sim, temos unidades de prontidão em pontos estratégicos das Marginais Tietê e Pinheiros para atendimento imediato em qualquer horário."
+            }
+          }
+        ] : [])
+      ]
     }
   };
 
@@ -383,6 +420,22 @@ function CityPage() {
               </CardContent>
             </Card>
           ))}
+          {(city.slug === 'sao-paulo' || city.slug === 'sao-paulo-sp') && (
+            <>
+              <Card className="border-border/60">
+                <CardContent className="p-5">
+                  <h4 className="font-semibold">Vocês atendem guincho nas marginais Tietê e Pinheiros?</h4>
+                  <p className="mt-2 text-sm text-muted-foreground">Sim, temos unidades de prontidão em pontos estratégicos das Marginais Tietê e Pinheiros para atendimento imediato em qualquer horário, garantindo a retirada rápida do veículo.</p>
+                </CardContent>
+              </Card>
+              <Card className="border-border/60">
+                <CardContent className="p-5">
+                  <h4 className="font-semibold">Quanto tempo demora o guincho para chegar na Rodovia dos Bandeirantes?</h4>
+                  <p className="mt-2 text-sm text-muted-foreground">Nosso tempo médio de chegada na Rodovia dos Bandeirantes, trecho capital, é de 30 a 45 minutos, dependendo das condições do trânsito no momento do chamado.</p>
+                </CardContent>
+              </Card>
+            </>
+          )}
         </div>
       </section>
 
@@ -427,19 +480,21 @@ function CityPage() {
               <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Presidente Dutra</span>
               <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Carvalho Pinto</span>
               {city.slug === 'sao-paulo' && (
-                <>
-                  <span className="text-xs bg-muted px-2 py-1 rounded">Marginal Tietê</span>
-                  <span className="text-xs bg-muted px-2 py-1 rounded">Marginal Pinheiros</span>
-                  <span className="text-xs bg-muted px-2 py-1 rounded">Rod. dos Bandeirantes</span>
-                  <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Anhanguera</span>
-                  <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Castelo Branco</span>
-                  <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Imigrantes</span>
-                  <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Anchieta</span>
-                  <span className="text-xs bg-muted px-2 py-1 rounded">Rodoanel</span>
-                </>
+                <div className="w-full mt-4 space-y-4">
+                  {copy.regionalContext?.zones && Object.entries(copy.regionalContext.zones).map(([zone, roads]) => (
+                    <div key={zone} className="space-y-2">
+                      <h5 className="text-sm font-bold text-accent/80">{zone}</h5>
+                      <div className="flex flex-wrap gap-2">
+                        {roads.map(road => (
+                          <span key={road} className="text-xs bg-muted px-2 py-1 rounded">{road}</span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               )}
-              {city.slug === 'sao-jose-dos-campos' && <span className="text-xs bg-muted px-2 py-1 rounded">Rod. dos Tamoios</span>}
-              {city.slug === 'taubate' && <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Oswaldo Cruz</span>}
+              {city.slug !== 'sao-paulo' && city.slug === 'sao-jose-dos-campos' && <span className="text-xs bg-muted px-2 py-1 rounded">Rod. dos Tamoios</span>}
+              {city.slug !== 'sao-paulo' && city.slug === 'taubate' && <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Oswaldo Cruz</span>}
             </div>
           </div>
           <div className="mt-4">

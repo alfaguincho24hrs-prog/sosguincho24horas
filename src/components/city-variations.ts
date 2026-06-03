@@ -27,6 +27,13 @@ export type CityCopy = {
   longIntro: string;
   faqs: { q: string; a: string }[];
   ctaTitle: string;
+  regionalContext?: {
+    highways: string[];
+    mainAvenues: string[];
+    localFlow: string;
+    landmarks: string[];
+    zones?: Record<string, string[]>;
+  };
 };
 
 // Contexto Regional Real por Cidade
@@ -35,7 +42,20 @@ const REGIONAL_CONTEXT: Record<string, {
   mainAvenues: string[];
   localFlow: string;
   landmarks: string[];
+  zones?: Record<string, string[]>;
 }> = {
+  "sao-paulo-sp": {
+    highways: ["Marginal Tietê", "Marginal Pinheiros", "Rodovia dos Bandeirantes", "Rodovia Anhanguera", "Rodovia Castelo Branco", "Rodovia Imigrantes", "Rodovia Anchieta", "Rodoanel"],
+    mainAvenues: ["Av. Paulista", "Av. 23 de Maio", "Av. Brasil", "Av. do Estado", "Av. Rebouças"],
+    localFlow: "fluxo intenso das marginais e grandes eixos radiais que ligam a capital ao interior e litoral.",
+    landmarks: ["MASP", "Parque Ibirapuera", "Aeroporto de Congonhas", "Estádio do Morumbi"],
+    zones: {
+      "Zona Norte": ["Rodovia Fernão Dias", "Rodovia Presidente Dutra", "Marginal Tietê (trecho Norte)", "Av. Cruzeiro do Sul", "Av. Engenheiro Caetano Álvares"],
+      "Zona Sul": ["Marginal Pinheiros", "Rodovia dos Imigrantes", "Rodovia Anchieta", "Av. Interlagos", "Av. Washington Luís", "Av. Ricardo Jafet"],
+      "Zona Leste": ["Radial Leste", "Rodovia Ayrton Senna", "Jacu-Pêssego", "Av. Aricanduva", "Marginal Tietê (trecho Leste)"],
+      "Zona Oeste": ["Rodovia Raposo Tavares", "Rodovia Castelo Branco", "Rodovia Anhanguera", "Rodovia dos Bandeirantes", "Av. Francisco Morato", "Marginal Pinheiros (trecho Oeste)"]
+    }
+  },
   "taubate-sp": {
     highways: ["Dutra (BR-116)", "Oswaldo Cruz (SP-125)", "Floriano Rodrigues Pinheiro"],
     mainAvenues: ["Independência", "Charles Schnneider", "Granadeiro Guimarães"],
@@ -101,6 +121,7 @@ export function getCityCopy(cityName: string, uf: string, slug: string): CityCop
     longTitle: `Guincho 24 Horas em ${c} — Socorro rápido e profissional`,
     longIntro: `Com foco na mobilidade de ${c}, nosso serviço de reboque entende o contexto das vias ${regional.mainAvenues.join(", ")} e a importância da rapidez para liberar o fluxo após qualquer imprevisto.`,
     faqs,
-    ctaTitle: `Guincho em ${c}: Acione agora`
+    ctaTitle: `Guincho em ${c}: Acione agora`,
+    regionalContext: regional
   };
 }
