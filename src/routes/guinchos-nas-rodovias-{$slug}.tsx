@@ -295,7 +295,10 @@ export const Route = createFileRoute("/guinchos-nas-rodovias-{$slug}")({
         { property: "og:type", content: "website" },
         { name: "robots", content: "index, follow" },
       ],
-      links: [{ rel: "canonical", href: url }],
+      links: [
+        { rel: "canonical", href: url },
+        { rel: "preconnect", href: "https://wa.me" }
+      ],
     };
   },
   component: HighwayPage,
@@ -308,6 +311,9 @@ function HighwayPage() {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Preload hero image logic would go here if we had dynamic images, 
+          but we use a background gradient for the hero in this specific template. */}
+
       <BreadcrumbJsonLd
         items={[
           { name: "Início", url: "/" },
