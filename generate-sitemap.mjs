@@ -57,11 +57,26 @@ const getDynamicRoutes = () => {
     }
   }
 
+  const highwayRoutes = [];
+  const highwayDataPath = './src/routes/guinchos-nas-rodovias-{$slug}.tsx';
+  if (fs.existsSync(highwayDataPath)) {
+    const highwayDataContent = fs.readFileSync(highwayDataPath, 'utf-8');
+    const highwaySlugRegex = /"([^"]+)":\s*{/g;
+    let highwayMatch;
+    // Pula o primeiro match que geralmente é HIGHWAYS_DATA = {
+    while ((highwayMatch = highwaySlugRegex.exec(highwayDataContent)) !== null) {
+      if (highwayMatch[1] !== 'name' && highwayMatch[1] !== 'slug' && highwayMatch[1] !== 'sigla' && highwayMatch[1] !== 'region') {
+        highwayRoutes.push('/guinchos-nas-rodovias-' + highwayMatch[1]);
+      }
+    }
+  }
+
   const uniqueCities = Array.from(new Map(cities.map(c => [c.slug + '-' + c.uf, c])).values());
 
   return [
     ...uniqueCities.map(city => '/guincho-em-' + city.slug + '-' + city.uf.toLowerCase()),
-    ...blogRoutes
+    ...blogRoutes,
+    ...highwayRoutes
   ];
 };
 
