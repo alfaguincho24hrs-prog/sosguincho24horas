@@ -323,7 +323,7 @@ function HighwayPage() {
                 <Truck className="h-6 w-6 text-primary" /> Diferenciais na {data.name}
               </h2>
               <div className="grid sm:grid-cols-3 gap-4">
-                {data.features.map((feature) => (
+                {data.features.map((feature: string) => (
                   <Card key={feature} className="bg-muted/30 border-none">
                     <CardContent className="p-4 flex flex-col items-center text-center">
                       <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center mb-3">
@@ -372,8 +372,8 @@ function HighwayPage() {
             <section>
               <h2 className="text-2xl font-bold mb-6">Cidades atendidas nesta rota</h2>
               <div className="flex flex-wrap gap-2">
-                {data.cities.map((citySlug) => {
-                  const name = citySlug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ').replace(' Sp', ' (SP)');
+                {data.cities.map((citySlug: string) => {
+                  const name = citySlug.split('-').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ').replace(' Sp', ' (SP)');
                   return (
                     <Link
                       key={citySlug}
@@ -407,7 +407,7 @@ function HighwayPage() {
                 <div className="border-t pt-6">
                   <h4 className="font-bold mb-4">Outras Rodovias</h4>
                   <ul className="space-y-2 text-left">
-                    {Object.values(HIGHWAYS_DATA).filter(h => h.slug !== data.slug).slice(0, 6).map(h => (
+                    {Object.values(HIGHWAYS_DATA).filter(h => h.slug !== data.slug).slice(0, 6).map((h: HighwayInfo) => (
                       <li key={h.slug}>
                         <Link to="/guinchos-nas-rodovias-{$slug}" params={{ slug: h.slug }} className="text-sm hover:text-primary flex items-center gap-1 group">
                           <ChevronRight className="h-3 w-3 text-muted-foreground group-hover:text-primary" />
