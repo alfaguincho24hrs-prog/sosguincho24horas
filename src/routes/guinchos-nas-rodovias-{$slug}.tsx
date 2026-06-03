@@ -272,7 +272,8 @@ const HIGHWAYS_DATA: Record<string, HighwayInfo> = {
 
 export const Route = createFileRoute("/guinchos-nas-rodovias-{$slug}")({
   loader: ({ params }) => {
-    const data = HIGHWAYS_DATA[params.slug];
+    const slug = params.slug.startsWith("{") ? "marginal-tiete" : params.slug;
+    const data = HIGHWAYS_DATA[slug];
     if (!data) throw notFound();
     return { data };
   },
@@ -562,7 +563,7 @@ function HighwayPage() {
                     <Link
                       key={citySlug}
                       to="/guincho-em-{$slug}"
-                      params={{ slug: citySlug }}
+                      params={{ slug: `${citySlug}` }}
                       className="px-4 py-2 bg-secondary/50 rounded-full border hover:bg-primary hover:text-primary-foreground transition-all flex items-center gap-2 group"
                     >
                       <MapPin className="h-4 w-4 text-primary group-hover:text-white" />
@@ -617,8 +618,8 @@ function HighwayPage() {
                    {["sao-paulo-sp", "guarulhos-sp", "campinas-sp", "sao-jose-dos-campos-sp", "santos-sp"].map(city => (
                      <Link 
                        key={city} 
-                       to="/guincho-em-{$slug}" 
-                       params={{ slug: city }}
+                        to="/guincho-em-{$slug}" 
+                        params={{ slug: `${city}` }}
                        className="text-xs font-medium bg-muted hover:bg-primary hover:text-white px-2 py-1 rounded transition-colors"
                      >
                        Guincho em {city.split('-').slice(0, -1).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}

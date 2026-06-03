@@ -63,7 +63,8 @@ function findCity(slug: string): City | undefined {
 
 export const Route = createFileRoute("/guincho-em-{$slug}")({
   loader: ({ params }) => {
-    const city = findCity(params.slug);
+    const slug = params.slug.startsWith("{") ? "sao-paulo-sp" : params.slug;
+    const city = findCity(slug);
     if (!city) throw notFound();
     return { city };
   },
