@@ -21,7 +21,7 @@ const getStaticRoutes = () => {
       file.endsWith('.tsx') && 
       !file.includes('$slug') && 
       !file.includes('{$slug}') &&
-      !['admin.tsx', 'anuncie.tsx', 'servicos-de-guincho-e-reboque.tsx'].includes(file) // Omit duplicate service route if needed
+      !['admin.tsx', 'anuncie.tsx'].includes(file)
     )
     .map(file => {
       const slug = file.replace('.tsx', '');
