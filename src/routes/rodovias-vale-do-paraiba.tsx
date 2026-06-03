@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Phone, MapPin, AlertTriangle, Truck } from "lucide-react";
+import { Phone, MapPin, AlertTriangle, Truck, ChevronRight } from "lucide-react";
 import { SITE } from "@/components/site-data";
 
 export const Route = createFileRoute("/rodovias-vale-do-paraiba")({
