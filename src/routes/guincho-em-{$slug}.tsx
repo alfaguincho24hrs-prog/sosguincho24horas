@@ -191,15 +191,39 @@ function CityPage() {
         "position": i + 1,
         "itemOffered": {
           "@type": "Service",
-          "name": `${s.title} em ${city.name}`,
+          "name": `${s.title} em ${city.name}${city.slug === 'sao-paulo' ? ' e Marginais' : ''}`,
           "description": s.desc,
           "provider": {
             "@type": "LocalBusiness",
             "name": SITE.name,
-            "telephone": SITE.phone
+            "telephone": SITE.phone,
+            "url": SITE_URL
           }
         }
       }))
+    },
+    "mainEntity": {
+      "@type": "FAQPage",
+      "mainEntity": [
+        ...copy.faqs.map(f => ({
+          "@type": "Question",
+          "name": f.q,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": f.a
+          }
+        })),
+        ...(city.slug === 'sao-paulo' ? [
+          {
+            "@type": "Question",
+            "name": "Vocês atendem guincho nas marginais Tietê e Pinheiros?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sim, temos unidades de prontidão em pontos estratégicos das Marginais Tietê e Pinheiros para atendimento imediato em qualquer horário."
+            }
+          }
+        ] : [])
+      ]
     }
   };
 
