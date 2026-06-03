@@ -26,6 +26,8 @@ import {
   BreadcrumbSeparator 
 } from "@/components/ui/breadcrumb";
 
+const SITE_URL = "https://sosguincho24horas.com.br";
+
 type HighwayInfo = {
   name: string;
   slug: string;
@@ -251,6 +253,73 @@ function HighwayPage() {
           { name: "Rodovias Atendidas", url: "/rodovias-vale-do-paraiba" },
           { name: data.name, url: `/guinchos-nas-rodovias-${data.slug}` },
         ]}
+      />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Service",
+                "name": `Guincho 24h na ${data.name}`,
+                "description": `Serviço de guincho e reboque 24 horas para carros, motos e veículos pesados na ${data.name}.`,
+                "provider": {
+                  "@type": "LocalBusiness",
+                  "name": SITE.name,
+                  "telephone": SITE.phone,
+                  "url": SITE_URL,
+                  "image": "https://sosguincho24horas.com.br/assets/imagem-do-guincho.webp",
+                  "priceRange": "$$",
+                  "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": data.region.split(',')[0],
+                    "addressRegion": "SP",
+                    "addressCountry": "BR"
+                  }
+                },
+                "areaServed": data.cities.map((c: string) => ({
+                  "@type": "City",
+                  "name": c.split('-').slice(0, -1).map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+                })),
+                "hasOfferCatalog": {
+                  "@type": "OfferCatalog",
+                  "name": "Serviços de Guincho em Rodovia",
+                  "itemListElement": [
+                    {
+                      "@type": "Offer",
+                      "itemOffered": {
+                        "@type": "Service",
+                        "name": "Guincho Plataforma",
+                        "description": "Reboque para carros de passeio e utilitários."
+                      }
+                    },
+                    {
+                      "@type": "Offer",
+                      "itemOffered": {
+                        "@type": "Service",
+                        "name": "Guincho Pesado",
+                        "description": "Socorro para caminhões e ônibus."
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "@type": "FAQPage",
+                "mainEntity": data.faq.map((f: { q: string, a: string }) => ({
+                  "@type": "Question",
+                  "name": f.q,
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": f.a
+                  }
+                }))
+              }
+            ]
+          })
+        }}
       />
 
       <div className="container mx-auto px-4 py-8">
