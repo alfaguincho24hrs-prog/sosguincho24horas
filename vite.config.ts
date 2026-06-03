@@ -33,7 +33,6 @@ function generateSeoFiles(): Plugin {
     const { ALL_CITIES } = await import("./src/components/cities-data");
     const today = new Date().toISOString().split("T")[0];
     
-    // Add dynamic highway routes
     const HIGHWAY_SLUGS = [
       "marginal-tiete", "marginal-tiete-norte", "marginal-tiete-leste",
       "rodovia-castelo-branco", "rodovia-fernao-dias",
