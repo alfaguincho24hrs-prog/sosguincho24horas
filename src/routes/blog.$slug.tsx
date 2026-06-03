@@ -139,23 +139,40 @@ function BlogPostPage() {
         <p className="mt-4 text-lg text-muted-foreground">{post.excerpt}</p>
 
         <div className="mt-8 space-y-5 text-base leading-relaxed text-foreground article-content">
-          {post.content.split(/\n\n+/).map((p, i) => (
-            <p key={i}>{p}</p>
-          ))}
+          {post.content.split(/\n\n+/).map((p, i) => {
+            // Process basic markdown links [text](url)
+            const parts = p.split(/(\[.*?\]\(.*?\))/g);
+            return (
+              <p key={i}>
+                {parts.map((part, index) => {
+                  const match = part.match(/\[(.*?)\]\((.*?)\)/);
+                  if (match) {
+                    const [, text, url] = match;
+                    return (
+                      <Link key={index} to={url as any} className="text-accent hover:underline font-medium">
+                        {text}
+                      </Link>
+                    );
+                  }
+                  return part;
+                })}
+              </p>
+            );
+          })}
         </div>
 
-        {/* FAQ Contextual (Mockup for EEAT) */}
-        <div className="mt-12 space-y-4">
-          <h3 className="text-xl font-bold">Dúvidas frequentes sobre este serviço</h3>
-          <div className="border rounded-lg p-4 bg-muted/20">
-            <p className="font-semibold">Qual o tempo de chegada para este atendimento?</p>
-            <p className="text-sm text-muted-foreground">Em média de 30 a 45 minutos em áreas urbanas.</p>
+        {/* FAQ Contextual */}
+        {post.faq && post.faq.length > 0 && (
+          <div className="mt-12 space-y-4">
+            <h3 className="text-xl font-bold">Dúvidas frequentes</h3>
+            {post.faq.map((item, idx) => (
+              <div key={idx} className="border rounded-lg p-4 bg-muted/20">
+                <p className="font-semibold">{item.q}</p>
+                <p className="text-sm text-muted-foreground">{item.a}</p>
+              </div>
+            ))}
           </div>
-          <div className="border rounded-lg p-4 bg-muted/20">
-            <p className="font-semibold">Como posso pagar o serviço?</p>
-            <p className="text-sm text-muted-foreground">Aceitamos PIX, cartões de débito/crédito e dinheiro.</p>
-          </div>
-        </div>
+        )}
 
         <div className="mt-12 rounded-xl border border-border/60 bg-muted/30 p-6 text-center">
           <h2 className="text-xl font-bold">Precisa de guincho agora?</h2>
