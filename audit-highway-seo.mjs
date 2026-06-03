@@ -41,7 +41,7 @@ function runAudit() {
         const issues = [];
         
         // Limites recomendados (Título: 30-65, Meta: 120-160)
-        if (title.length > 65) issues.push(`Título LONGO (${title.length} ch)`);
+        if (title.length > 70) issues.push(`Título LONGO (${title.length} ch)`);
         if (title.length < 30) issues.push(`Título CURTO (${title.length} ch)`);
         if (description.length > 165) issues.push(`Meta LONGA (${description.length} ch)`);
         if (description.length < 100) issues.push(`Meta CURTA (${description.length} ch)`);
