@@ -272,7 +272,7 @@ const HIGHWAYS_DATA: Record<string, HighwayInfo> = {
 
 export const Route = createFileRoute("/guinchos-nas-rodovias-{$slug}")({
   loader: ({ params }) => {
-    const slug = params.slug.startsWith("{") ? "marginal-tiete" : params.slug;
+    const slug = params.slug;
     const data = HIGHWAYS_DATA[slug];
     if (!data) throw notFound();
     return { data };
