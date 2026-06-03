@@ -195,10 +195,10 @@ function CitiesIndexPage() {
           nacional. Fale conosco e localizaremos o guincho mais próximo de você.
         </p>
         <div className="mt-5 flex flex-wrap justify-center gap-3">
-          <Button asChild className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95 cursor-default">
-            <span>
+          <Button asChild className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
+            <a href="https://w.app/guincho24horas">
               <Phone className="h-4 w-4" /> Ligar agora
-            </span>
+            </a>
           </Button>
           <Button asChild variant="outline">
             <Link to="/contato">Enviar mensagem</Link>
