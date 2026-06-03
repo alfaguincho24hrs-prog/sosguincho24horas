@@ -7,8 +7,8 @@ import { SITE } from "@/components/site-data";
 
 export const Route = createFileRoute("/rodovias-vale-do-paraiba")({
   head: () => {
-    const title = "Guincho 24h nas Rodovias do Vale do Paraíba — Dutra, Carvalho Pinto, Tamoios";
-    const description = "Atendimento de guincho e reboque 24 horas nas principais rodovias do Vale do Paraíba: Dutra (BR-116), Carvalho Pinto (SP-070), Tamoios (SP-099), Oswaldo Cruz (SP-125) e Floriano Rodrigues Pinheiro (SP-123).";
+    const title = "Guincho 24h nas Rodovias do Vale do Paraíba — Dutra e Carvalho";
+    const description = "Atendimento de guincho 24h nas rodovias do Vale do Paraíba: Dutra (BR-116), Carvalho Pinto (SP-070), Tamoios (SP-099) e Oswaldo Cruz. Socorro rápido e seguro.";
     const url = "https://sosguincho24horas.com.br/rodovias-vale-do-paraiba";
     
     return {
