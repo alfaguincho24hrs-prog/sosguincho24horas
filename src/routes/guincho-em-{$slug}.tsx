@@ -426,6 +426,18 @@ function CityPage() {
             <div className="flex flex-wrap gap-2">
               <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Presidente Dutra</span>
               <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Carvalho Pinto</span>
+              {city.slug === 'sao-paulo' && (
+                <>
+                  <span className="text-xs bg-muted px-2 py-1 rounded">Marginal Tietê</span>
+                  <span className="text-xs bg-muted px-2 py-1 rounded">Marginal Pinheiros</span>
+                  <span className="text-xs bg-muted px-2 py-1 rounded">Rod. dos Bandeirantes</span>
+                  <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Anhanguera</span>
+                  <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Castelo Branco</span>
+                  <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Imigrantes</span>
+                  <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Anchieta</span>
+                  <span className="text-xs bg-muted px-2 py-1 rounded">Rodoanel</span>
+                </>
+              )}
               {city.slug === 'sao-jose-dos-campos' && <span className="text-xs bg-muted px-2 py-1 rounded">Rod. dos Tamoios</span>}
               {city.slug === 'taubate' && <span className="text-xs bg-muted px-2 py-1 rounded">Rod. Oswaldo Cruz</span>}
             </div>
