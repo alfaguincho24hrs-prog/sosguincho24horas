@@ -14,6 +14,7 @@ import { Route as ServicosRouteImport } from './routes/servicos'
 import { Route as RodoviasValeDoParaibaRouteImport } from './routes/rodovias-vale-do-paraiba'
 import { Route as RemocaoVeicularRouteImport } from './routes/remocao-veicular'
 import { Route as PaneSecaRouteImport } from './routes/pane-seca'
+import { Route as GuinchosNasRodoviasChar123slugChar125RouteImport } from './routes/guinchos-nas-rodovias-{$slug}'
 import { Route as GuinchoPesadoRouteImport } from './routes/guincho-pesado'
 import { Route as GuinchoLeveRouteImport } from './routes/guincho-leve'
 import { Route as GuinchoEmChar123slugChar125RouteImport } from './routes/guincho-em-{$slug}'
@@ -55,6 +56,12 @@ const PaneSecaRoute = PaneSecaRouteImport.update({
   path: '/pane-seca',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuinchosNasRodoviasChar123slugChar125Route =
+  GuinchosNasRodoviasChar123slugChar125RouteImport.update({
+    id: '/guinchos-nas-rodovias-{$slug}',
+    path: '/guinchos-nas-rodovias-{$slug}',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const GuinchoPesadoRoute = GuinchoPesadoRouteImport.update({
   id: '/guincho-pesado',
   path: '/guincho-pesado',
@@ -141,6 +148,7 @@ export interface FileRoutesByFullPath {
   '/guincho-em-{$slug}': typeof GuinchoEmChar123slugChar125Route
   '/guincho-leve': typeof GuinchoLeveRoute
   '/guincho-pesado': typeof GuinchoPesadoRoute
+  '/guinchos-nas-rodovias-{$slug}': typeof GuinchosNasRodoviasChar123slugChar125Route
   '/pane-seca': typeof PaneSecaRoute
   '/remocao-veicular': typeof RemocaoVeicularRoute
   '/rodovias-vale-do-paraiba': typeof RodoviasValeDoParaibaRoute
@@ -162,6 +170,7 @@ export interface FileRoutesByTo {
   '/guincho-em-{$slug}': typeof GuinchoEmChar123slugChar125Route
   '/guincho-leve': typeof GuinchoLeveRoute
   '/guincho-pesado': typeof GuinchoPesadoRoute
+  '/guinchos-nas-rodovias-{$slug}': typeof GuinchosNasRodoviasChar123slugChar125Route
   '/pane-seca': typeof PaneSecaRoute
   '/remocao-veicular': typeof RemocaoVeicularRoute
   '/rodovias-vale-do-paraiba': typeof RodoviasValeDoParaibaRoute
@@ -184,6 +193,7 @@ export interface FileRoutesById {
   '/guincho-em-{$slug}': typeof GuinchoEmChar123slugChar125Route
   '/guincho-leve': typeof GuinchoLeveRoute
   '/guincho-pesado': typeof GuinchoPesadoRoute
+  '/guinchos-nas-rodovias-{$slug}': typeof GuinchosNasRodoviasChar123slugChar125Route
   '/pane-seca': typeof PaneSecaRoute
   '/remocao-veicular': typeof RemocaoVeicularRoute
   '/rodovias-vale-do-paraiba': typeof RodoviasValeDoParaibaRoute
@@ -207,6 +217,7 @@ export interface FileRouteTypes {
     | '/guincho-em-{$slug}'
     | '/guincho-leve'
     | '/guincho-pesado'
+    | '/guinchos-nas-rodovias-{$slug}'
     | '/pane-seca'
     | '/remocao-veicular'
     | '/rodovias-vale-do-paraiba'
@@ -228,6 +239,7 @@ export interface FileRouteTypes {
     | '/guincho-em-{$slug}'
     | '/guincho-leve'
     | '/guincho-pesado'
+    | '/guinchos-nas-rodovias-{$slug}'
     | '/pane-seca'
     | '/remocao-veicular'
     | '/rodovias-vale-do-paraiba'
@@ -249,6 +261,7 @@ export interface FileRouteTypes {
     | '/guincho-em-{$slug}'
     | '/guincho-leve'
     | '/guincho-pesado'
+    | '/guinchos-nas-rodovias-{$slug}'
     | '/pane-seca'
     | '/remocao-veicular'
     | '/rodovias-vale-do-paraiba'
@@ -271,6 +284,7 @@ export interface RootRouteChildren {
   GuinchoEmChar123slugChar125Route: typeof GuinchoEmChar123slugChar125Route
   GuinchoLeveRoute: typeof GuinchoLeveRoute
   GuinchoPesadoRoute: typeof GuinchoPesadoRoute
+  GuinchosNasRodoviasChar123slugChar125Route: typeof GuinchosNasRodoviasChar123slugChar125Route
   PaneSecaRoute: typeof PaneSecaRoute
   RemocaoVeicularRoute: typeof RemocaoVeicularRoute
   RodoviasValeDoParaibaRoute: typeof RodoviasValeDoParaibaRoute
@@ -313,6 +327,13 @@ declare module '@tanstack/react-router' {
       path: '/pane-seca'
       fullPath: '/pane-seca'
       preLoaderRoute: typeof PaneSecaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guinchos-nas-rodovias-{$slug}': {
+      id: '/guinchos-nas-rodovias-{$slug}'
+      path: '/guinchos-nas-rodovias-{$slug}'
+      fullPath: '/guinchos-nas-rodovias-{$slug}'
+      preLoaderRoute: typeof GuinchosNasRodoviasChar123slugChar125RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/guincho-pesado': {
@@ -440,6 +461,8 @@ const rootRouteChildren: RootRouteChildren = {
   GuinchoEmChar123slugChar125Route: GuinchoEmChar123slugChar125Route,
   GuinchoLeveRoute: GuinchoLeveRoute,
   GuinchoPesadoRoute: GuinchoPesadoRoute,
+  GuinchosNasRodoviasChar123slugChar125Route:
+    GuinchosNasRodoviasChar123slugChar125Route,
   PaneSecaRoute: PaneSecaRoute,
   RemocaoVeicularRoute: RemocaoVeicularRoute,
   RodoviasValeDoParaibaRoute: RodoviasValeDoParaibaRoute,
@@ -449,12 +472,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}

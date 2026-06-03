@@ -151,37 +151,60 @@ function RodoviasVPPage() {
       {/* Lista de rodovias */}
       <section className="py-12">
         <div className="container max-w-5xl space-y-6">
-          {RODOVIAS.map((r) => (
-            <Card key={r.sigla}>
-              <CardHeader>
-                <div className="flex items-start justify-between gap-4 flex-wrap">
-                  <div>
-                    <Badge variant="secondary" className="mb-2">{r.sigla}</Badge>
-                    <CardTitle className="text-2xl">{r.nome}</CardTitle>
-                    <p className="text-sm text-muted-foreground mt-1">Extensão: {r.extensao}</p>
+          {RODOVIAS.map((r) => {
+            const highwaySlugMap: Record<string, string> = {
+              "BR-116": "rodovia-presidente-dutra",
+              "SP-070": "rodovia-carvalho-pinto",
+            };
+            const targetSlug = highwaySlugMap[r.sigla];
+
+            return (
+              <Card key={r.sigla}>
+                <CardHeader>
+                  <div className="flex items-start justify-between gap-4 flex-wrap">
+                    <div>
+                      <Badge variant="secondary" className="mb-2">{r.sigla}</Badge>
+                      <CardTitle className="text-2xl">
+                        {targetSlug ? (
+                          <Link to="/guinchos-nas-rodovias-{$slug}" params={{ slug: targetSlug }} className="hover:text-primary transition-colors">
+                            {r.nome}
+                          </Link>
+                        ) : r.nome}
+                      </CardTitle>
+                      <p className="text-sm text-muted-foreground mt-1">Extensão: {r.extensao}</p>
+                    </div>
+                    <div className="flex gap-2">
+                      {targetSlug && (
+                        <Button asChild variant="outline" size="sm">
+                          <Link to="/guinchos-nas-rodovias-{$slug}" params={{ slug: targetSlug }}>
+                            Ver Detalhes
+                          </Link>
+                        </Button>
+                      )}
+                      <Button asChild size="sm" className="bg-[image:var(--gradient-cta)] text-primary hover:opacity-95">
+                        <a href={telHref}><Phone className="mr-2 h-4 w-4" />Acionar guincho</a>
+                      </Button>
+                    </div>
                   </div>
-                  <Button asChild size="sm" className="bg-[image:var(--gradient-cta)] text-primary hover:opacity-95">
-                    <a href={telHref}><Phone className="mr-2 h-4 w-4" />Acionar guincho</a>
-                  </Button>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p>{r.descricao}</p>
-                <div>
-                  <h3 className="font-semibold flex items-center gap-2 mb-2">
-                    <MapPin className="h-4 w-4 text-primary" /> Pontos de referência atendidos
-                  </h3>
-                  <ul className="grid sm:grid-cols-2 gap-2 text-sm text-muted-foreground">
-                    {r.pontos.map((p) => <li key={p}>• {p}</li>)}
-                  </ul>
-                </div>
-                <div className="flex items-start gap-2 p-3 rounded-lg bg-muted/50">
-                  <AlertTriangle className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                  <p className="text-sm"><strong>Atenção:</strong> {r.riscos}</p>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p>{r.descricao}</p>
+                  <div>
+                    <h3 className="font-semibold flex items-center gap-2 mb-2">
+                      <MapPin className="h-4 w-4 text-primary" /> Pontos de referência atendidos
+                    </h3>
+                    <ul className="grid sm:grid-cols-2 gap-2 text-sm text-muted-foreground">
+                      {r.pontos.map((p) => <li key={p}>• {p}</li>)}
+                    </ul>
+                  </div>
+                  <div className="flex items-start gap-2 p-3 rounded-lg bg-muted/50">
+                    <AlertTriangle className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                    <p className="text-sm"><strong>Atenção:</strong> {r.riscos}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       </section>
 

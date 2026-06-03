@@ -277,8 +277,10 @@ function HomePage() {
             <strong>Floriano Rodrigues Pinheiro (SP-123)</strong>, <strong>Anhanguera (SP-330)</strong>,{" "}
             <strong>Bandeirantes (SP-348)</strong>, <strong>Castello Branco (SP-280)</strong>,{" "}
             <strong>Raposo Tavares (SP-270)</strong>, <strong>Régis Bittencourt (BR-116 Sul)</strong>,{" "}
-            <strong>Anchieta (SP-150)</strong> e <strong>Imigrantes (SP-160)</strong>. Conheça também a página
-            dedicada às <Link to="/rodovias-vale-do-paraiba" className="underline font-semibold">rodovias do Vale do Paraíba</Link>.
+            <strong>Anchieta (SP-150)</strong> e <strong>Imigrantes (SP-160)</strong>. Conheça também nossas páginas dedicadas para {" "}
+            <Link to="/guinchos-nas-rodovias-{$slug}" params={{ slug: "marginal-tiete" }} className="underline font-semibold">Marginal Tietê</Link>, {" "}
+            <Link to="/guinchos-nas-rodovias-{$slug}" params={{ slug: "rodovia-castelo-branco" }} className="underline font-semibold">Castello Branco</Link> e outras {" "}
+            <Link to="/rodovias-vale-do-paraiba" className="underline font-semibold">rodovias</Link>.
           </p>
           <div className="flex flex-wrap gap-3 pt-4">
             <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
