@@ -127,7 +127,16 @@ function BlogPostPage() {
         </div>
 
         {post.coverUrl && (
-          <img src={post.coverUrl} alt={post.title} className="mb-6 h-64 w-full rounded-lg object-cover" width={1200} height={400} loading="eager" decoding="async" />
+          <img 
+            src={post.coverUrl} 
+            alt={post.title} 
+            className="mb-6 h-64 w-full rounded-lg object-cover" 
+            width={800} 
+            height={400} 
+            loading="eager" 
+            decoding="async" 
+            fetchPriority="high"
+          />
         )}
 
         <div className="mb-3 flex items-center gap-2 text-xs text-muted-foreground">
