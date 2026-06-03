@@ -36,6 +36,9 @@ const checkRoutes = () => {
     if (file === 'guincho-em-{$slug}.tsx') {
       canonicalCorrect = content.includes('href: url') && content.includes('guincho-em-${city.slug}-${city.uf.toLowerCase()}');
     }
+    if (file === 'guinchos-nas-rodovias-{$slug}.tsx') {
+      canonicalCorrect = content.includes('href: url') && content.includes('guinchos-nas-rodovias-${data.slug}');
+    }
 
     // Schema Validation
     if (file === 'index.tsx') {
