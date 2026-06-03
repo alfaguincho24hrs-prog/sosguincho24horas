@@ -9,6 +9,8 @@ const SITE_URL = 'https://sosguincho24horas.com.br';
 const checkRoutes = () => {
   const files = fs.readdirSync(ROUTES_DIR);
   const results = [];
+  const titles = new Map();
+  const descriptions = new Map();
 
   // Also read ServicePage component to check schema pattern and headings
   const servicePagePath = path.join(COMPONENTS_DIR, 'service-page.tsx');
@@ -22,9 +24,34 @@ const checkRoutes = () => {
     const routePath = slug === '' ? '/' : `/${slug}`;
     const expectedCanonical = `${SITE_URL}${routePath === '/' ? '' : routePath}`;
 
-    const hasTitle = content.includes('title:') || content.includes('title,') || content.includes('{ title }');
-    const hasDescription = content.includes('name: "description"');
+    const hasTitle = content.includes('title:') || content.includes('title,') || content.includes('{ title }') || content.includes('const title =');
+    const hasDescription = content.includes('name: "description"') || content.includes('const description =');
     const hasCanonical = content.includes('rel: "canonical"');
+
+    let titleVal = "";
+    let descVal = "";
+
+    // Tentar extrair título e descrição para validar tamanho e duplicidade
+    const titleMatch = content.match(/const title = [`"']([^`"']+)[`"']/);
+    const descMatch = content.match(/const description = [`"']([^`"']+)[`"']/);
+    
+    if (titleMatch) titleVal = titleMatch[1];
+    if (descMatch) descVal = descMatch[1];
+
+    let seoIssues = [];
+    if (hasTitle && titleVal) {
+      if (titleVal.length < 30) seoIssues.push(`Título curto (${titleVal.length} ch)`);
+      if (titleVal.length > 70) seoIssues.push(`Título longo (${titleVal.length} ch)`);
+      if (titles.has(titleVal) && !file.includes('{$slug}')) seoIssues.push(`Título duplicado com ${titles.get(titleVal)}`);
+      titles.set(titleVal, file);
+    }
+    
+    if (hasDescription && descVal) {
+      if (descVal.length < 100) seoIssues.push(`Desc curta (${descVal.length} ch)`);
+      if (descVal.length > 165) seoIssues.push(`Desc longa (${descVal.length} ch)`);
+      if (descriptions.has(descVal) && !file.includes('{$slug}')) seoIssues.push(`Desc duplicada com ${descriptions.get(descVal)}`);
+      descriptions.set(descVal, file);
+    }
     
     let canonicalCorrect = content.includes(`href: "${expectedCanonical}"`);
     let schemaValid = false;
@@ -105,7 +132,8 @@ const checkRoutes = () => {
       schemaValid: schemaValid && !hasPlaceholders,
       headingsValid: headingCheck,
       h1Count,
-      status: (hasTitle && hasDescription && hasCanonical && canonicalCorrect && schemaValid && !hasPlaceholders && headingCheck) ? '✅ OK' : '❌ ERROR'
+      status: (hasTitle && hasDescription && hasCanonical && canonicalCorrect && schemaValid && !hasPlaceholders && headingCheck && seoIssues.length === 0) ? '✅ OK' : '❌ ERROR',
+      seoIssues
     });
   });
 
@@ -118,6 +146,15 @@ const checkRoutes = () => {
   } else {
     console.log('\n✅ All validations passed: SEO, Schema, and Heading hierarchy!');
     
+    const seoIssuesFound = results.filter(r => r.seoIssues && r.seoIssues.length > 0);
+    if (seoIssuesFound.length > 0) {
+      console.error(`\n❌ SEO Content Issues:`);
+      seoIssuesFound.forEach(r => {
+        console.error(`   - ${r.route}: ${r.seoIssues.join(', ')}`);
+      });
+      process.exit(1);
+    }
+
     // Sitemap Validation
     const sitemapPath = './public/sitemap.xml';
     if (!fs.existsSync(sitemapPath)) {

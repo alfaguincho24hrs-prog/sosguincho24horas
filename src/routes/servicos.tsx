@@ -11,7 +11,7 @@ import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 export const Route = createFileRoute("/servicos")({
   head: () => {
     const title = "Serviços de Guincho e Reboque 24h | SOS Guincho 24 horas";
-    const description = "Conheça todos os nossos serviços de guincho 24 horas: reboque leve, pesado, motos, auto socorro mecânico, pane seca e remoção veicular. Atendimento especializado e rápido em todo o Brasil.";
+    const description = "Conheça nossos serviços de guincho 24h: reboque leve, pesado, motos, mecânico e pane seca. Atendimento rápido e especializado em todo o Brasil. Chame agora!";
     const url = "https://sosguincho24horas.com.br/servicos";
     
     const serviceSchema = {
