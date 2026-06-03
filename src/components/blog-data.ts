@@ -13,14 +13,61 @@ export type BlogPost = {
 const STORAGE_KEY = "blog_posts_v1";
 
 export const DEFAULT_POSTS: BlogPost[] = [
-  // NOVO: Post consolidado das Rodovias (Marginais e Principais)
   {
-    slug: "guincho-24h-marginais-e-principais-rodovias-sp",
-    title: "Guincho 24h nas Marginais e Principais Rodovias de SP: O Guia Completo",
-    excerpt: "Precisa de guincho na Marginal Tietê, Pinheiros, Castelo Branco, Dutra ou Imigrantes? Saiba como funciona o socorro rápido 24h nas principais vias de São Paulo.",
+    slug: "guincho-na-marginal-tiete-norte-e-leste",
+    title: "Guincho 24h na Marginal Tietê: Socorro nos Trechos Norte e Leste",
+    excerpt: "Pane na Marginal Tietê? Saiba como solicitar guincho rápido nos trechos Norte e Leste para garantir sua segurança.",
     date: "03 de junho de 2026",
     category: "Rodovias",
-    content: "Circular pelas grandes rodovias e marginais de São Paulo exige atenção constante. Quando ocorre uma pane mecânica ou acidente, a agilidade no resgate é fundamental para a sua segurança e para a fluidez do trânsito.\n\n### Atendimento nas Marginais Tietê e Pinheiros\nAs Marginais são as veias artérias de São Paulo. Atendemos todos os trechos:\n- **Marginal Tietê:** Cobertura completa nos trechos Norte (Santana/Casa Verde) e Leste (Tatuapé/Penha).\n- **Marginal Pinheiros:** Socorro imediato nos trechos Sul (Santo Amaro/Interlagos) e Oeste (Butantã/Pinheiros).\nNossas equipes estão posicionadas em pontos estratégicos para chegar em até 20 minutos, mesmo em horários de pico.\n\n### Principais Rodovias: Conexão Capital e Interior\nSeja para o interior ou para o litoral, garantimos reboque 24h com plataforma hidráulica nas seguintes vias:\n- **Rodovia Presidente Dutra (BR-116):** Atendimento especializado em todo o Vale do Paraíba.\n- **Rodovia Fernão Dias (BR-381):** Especialistas em trechos de serra e áreas urbanas de Guarulhos e Mairiporã.\n- **Rodovia Castelo Branco (SP-280):** Ligação rápida para Barueri, Sorocaba e região oeste.\n- **Rodovia Ayrton Senna e Carvalho Pinto:** Alternativa segura para o Litoral Norte e Vale.\n- **Rodovias Anchieta e Imigrantes:** Descida e subida da serra com equipamentos de alta performance.\n- **Rodovias Anhanguera e Bandeirantes:** Eixo econômico para Jundiaí e Campinas.\n- **Rodoanel Mario Covas:** Conexão entre todas as rodovias com suporte em todas as alças de acesso.\n- **Rodovia Raposo Tavares:** Atendimento na Zona Oeste, Cotia e Sorocaba.\n\n### Por que escolher o SOS Guincho 24h?\nContamos com frotas modernas de guinchos leves e pesados, prontos para qualquer situação. Se o seu veículo apresentou problemas na Rodovia dos Bandeirantes ou no Rodoanel, nossa central está disponível agora para enviar o socorro mais próximo.\n\n**Chame agora no WhatsApp ou Telefone para um orçamento rápido!**",
+    content: "A Marginal Tietê é uma das vias mais complexas de SP. Nosso serviço de guincho atende com prioridade os trechos Norte (região de Santana e Vila Maria) e Leste (região do Tatuapé e Penha).\n\nSe o seu veículo parar na pista central ou local, sinalize imediatamente. Nossas bases próximas permitem chegada rápida para evitar congestionamentos e garantir a remoção segura do seu automóvel ou moto.",
+  },
+  {
+    slug: "guincho-marginal-pinheiros-sul-e-oeste",
+    title: "Guincho na Marginal Pinheiros: Atendimento nos Trechos Sul e Oeste",
+    excerpt: "Serviço de reboque 24h na Marginal Pinheiros. Atendemos com agilidade as regiões de Santo Amaro e Butantã.",
+    date: "03 de junho de 2026",
+    category: "Rodovias",
+    content: "Na Marginal Pinheiros, o fluxo é intenso e qualquer parada pode ser perigosa. Oferecemos guincho 24h especializado no Trecho Sul (Santo Amaro/Interlagos) e no Trecho Oeste (Butantã/Pinheiros).\n\nCom equipamentos modernos, realizamos o auto socorro em tempo recorde. Seja para pane elétrica, mecânica ou acidentes, conte com o SOS Guincho 24h para um atendimento profissional na Zona Sul e Oeste de São Paulo.",
+  },
+  {
+    slug: "socorro-guincho-na-castelo-branco-e-rodoanel",
+    title: "Socorro e Guincho na Castelo Branco e Rodoanel Mario Covas",
+    excerpt: "Precisa de guincho na Rodovia Castelo Branco ou no Rodoanel? Atendimento rápido em todas as alças e trechos.",
+    date: "03 de junho de 2026",
+    category: "Rodovias",
+    content: "A Rodovia Castelo Branco e o Rodoanel Mario Covas são rotas fundamentais para o transporte em SP. Nossa cobertura abrange desde o início da Castelo em SP até Barueri e Sorocaba, além de todos os trechos do Rodoanel (Sul, Leste, Oeste e Norte).\n\nNossas plataformas estão prontas para atender veículos de passeio e pesados. Se você ficou parado em uma alça de acesso ou no acostamento, ligue agora para o socorro mais ágil da região.",
+  },
+  {
+    slug: "guincho-fernao-dias-e-presidente-dutra-seguranca",
+    title: "Guincho na Fernão Dias e Dutra: Segurança em Longas Distâncias",
+    excerpt: "Atendimento de reboque nas rodovias Fernão Dias e Presidente Dutra. Socorro 24h em trechos urbanos e de serra.",
+    date: "03 de junho de 2026",
+    category: "Rodovias",
+    content: "As rodovias Fernão Dias (BR-381) e Presidente Dutra (BR-116) exigem atenção redobrada, especialmente nos trechos de serra. Oferecemos serviço de guincho 24h com foco na segurança do motorista e dos passageiros.\n\nAtendemos ocorrências em Guarulhos, Mairiporã, São José dos Campos e demais cidades do Vale do Paraíba. Nossa equipe é treinada para realizar remoções em vias de alta velocidade com total eficiência.",
+  },
+  {
+    slug: "guincho-carvalho-pinto-ayrton-senna-vale",
+    title: "Guincho na Carvalho Pinto e Ayrton Senna: Rumo ao Vale e Litoral",
+    excerpt: "Guincho rápido nas rodovias Ayrton Senna e Carvalho Pinto. Atendimento especializado para quem viaja ao Vale do Paraíba.",
+    date: "03 de junho de 2026",
+    category: "Rodovias",
+    content: "Para quem utiliza o corredor Ayrton Senna/Carvalho Pinto, o SOS Guincho 24h garante tranquilidade em caso de imprevistos. Cobrimos toda a extensão dessas rodovias, facilitando o acesso ao Vale do Paraíba e Litoral Norte.\n\nNossos guinchos possuem tecnologia de ponta para o transporte de veículos leves e utilitários. Se o seu carro apresentou falha mecânica, nosso resgate chega rápido para te tirar da rodovia com segurança.",
+  },
+  {
+    slug: "reboque-imigrantes-anchieta-serra-litoral",
+    title: "Reboque nas Rodovias Imigrantes e Anchieta: Serra e Litoral",
+    excerpt: "Socorro 24h no Sistema Anchieta-Imigrantes. Guincho especializado para trechos de serra e túneis.",
+    date: "03 de junho de 2026",
+    category: "Rodovias",
+    content: "O Sistema Anchieta-Imigrantes é o principal acesso ao Porto de Santos e às praias. Por isso, nosso serviço de reboque é especializado em trechos sinuosos e de baixa visibilidade, como túneis e neblina.\n\nAtendemos veículos leves e pesados na Rodovia dos Imigrantes e na Rodovia Anchieta. Se precisar de guincho na descida ou subida da serra, conte com nossa equipe experiente para um atendimento ágil e seguro.",
+  },
+  {
+    slug: "guincho-anhanguera-bandeirantes-raposo-tavares",
+    title: "Guincho na Anhanguera, Bandeirantes e Raposo Tavares",
+    excerpt: "Atendimento de auto socorro nas rodovias Anhanguera, Bandeirantes e Raposo Tavares. Reboque 24h para o interior.",
+    date: "03 de junho de 2026",
+    category: "Rodovias",
+    content: "As rodovias Anhanguera, Bandeirantes e Raposo Tavares conectam a capital ao próspero interior paulista. Oferecemos guincho 24h para essas vias, atendendo desde a Marginal até cidades como Jundiaí, Campinas e Sorocaba.\n\nSeja por falta de combustível (pane seca) ou falha no motor, nossas plataformas hidráulicas garantem o transporte seguro do seu veículo. Priorizamos a agilidade para que você siga sua viagem o mais rápido possível.",
   },
   // SILO 1 – Rodovias
   {
