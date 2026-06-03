@@ -145,6 +145,15 @@ const checkRoutes = () => {
   } else {
     console.log('\n✅ All validations passed: SEO, Schema, and Heading hierarchy!');
     
+    const seoIssuesFound = results.filter(r => r.seoIssues && r.seoIssues.length > 0);
+    if (seoIssuesFound.length > 0) {
+      console.error(`\n❌ SEO Content Issues:`);
+      seoIssuesFound.forEach(r => {
+        console.error(`   - ${r.route}: ${r.seoIssues.join(', ')}`);
+      });
+      process.exit(1);
+    }
+
     // Sitemap Validation
     const sitemapPath = './public/sitemap.xml';
     if (!fs.existsSync(sitemapPath)) {
