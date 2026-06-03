@@ -295,7 +295,10 @@ export const Route = createFileRoute("/guinchos-nas-rodovias-{$slug}")({
         { property: "og:type", content: "website" },
         { name: "robots", content: "index, follow" },
       ],
-      links: [{ rel: "canonical", href: url }],
+      links: [
+        { rel: "canonical", href: url },
+        { rel: "preconnect", href: "https://wa.me" }
+      ],
     };
   },
   component: HighwayPage,

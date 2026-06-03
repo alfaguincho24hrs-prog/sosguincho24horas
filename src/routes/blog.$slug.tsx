@@ -25,7 +25,10 @@ export const Route = createFileRoute("/blog/$slug")({
         { name: "twitter:description", content: description },
         { name: "twitter:image", content: image },
       ],
-      links: [{ rel: "canonical", href: url }],
+      links: [
+        { rel: "canonical", href: url },
+        { rel: "preconnect", href: "https://wa.me" }
+      ],
       scripts: [
         {
           type: "application/ld+json",
