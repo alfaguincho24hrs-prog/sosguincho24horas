@@ -32,6 +32,16 @@ function generateSeoFiles(): Plugin {
     // Dynamic import so SSR/edge bundle doesn't pull cities-data
     const { ALL_CITIES } = await import("./src/components/cities-data");
     const today = new Date().toISOString().split("T")[0];
+    
+    // Add dynamic highway routes
+    const HIGHWAY_SLUGS = [
+      "marginal-tiete", "rodovia-castelo-branco", "rodovia-fernao-dias",
+      "rodovia-presidente-dutra", "rodovia-carvalho-pinto", "rodovia-dos-imigrantes",
+      "rodovia-anchieta", "rodovia-anhanguera", "rodoanel-mario-covas",
+      "rodovia-ayrton-senna", "rodovia-raposo-tavares", "rodovia-dos-bandeirantes",
+      "marginal-pinheiros"
+    ];
+
     const urls: string[] = [];
     for (const path of STATIC_ROUTES) {
       urls.push(`  <url><loc>${SITE_URL}${path}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>${path === "/" ? "1.0" : "0.8"}</priority></url>`);
@@ -39,6 +49,9 @@ function generateSeoFiles(): Plugin {
     for (const c of ALL_CITIES) {
       const slug = `${c.slug}-${c.uf.toLowerCase()}`;
       urls.push(`  <url><loc>${SITE_URL}/guincho-em-${slug}</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>`);
+    }
+    for (const slug of HIGHWAY_SLUGS) {
+      urls.push(`  <url><loc>${SITE_URL}/guinchos-nas-rodovias-${slug}</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>`);
     }
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join("\n")}\n</urlset>\n`;
     const robots = `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`;
