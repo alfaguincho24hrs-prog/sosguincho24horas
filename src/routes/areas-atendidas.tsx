@@ -65,10 +65,10 @@ function AreasAtendidasPage() {
           <p className="mb-6 text-muted-foreground">Nossa central está disponível 24 horas por dia para despachar a unidade mais próxima até você.</p>
           <div className="flex flex-wrap gap-4">
             <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary">
-              <a href={`tel:${SITE.phone}`}><Phone className="h-4 w-4" /> Solicitar agora</a>
+              <a href="https://w.app/guincho24horas"><Phone className="h-4 w-4" /> Solicitar agora</a>
             </Button>
             <Button asChild size="lg" variant="outline">
-              <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noreferrer"><MessageCircle className="h-4 w-4" /> WhatsApp</a>
+              <a href="https://w.app/guincho24horas" target="_blank" rel="noreferrer"><MessageCircle className="h-4 w-4" /> WhatsApp</a>
             </Button>
           </div>
         </div>

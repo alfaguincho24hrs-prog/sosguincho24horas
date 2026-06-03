@@ -12,8 +12,7 @@ type Props = {
   cityUf: string;
 };
 
-const CENTRAL_TEL = `tel:${SITE.phone.replace(/\D/g, "")}`;
-const CENTRAL_WPP = `https://wa.me/${SITE.whatsapp}`;
+const CENTRAL_LINK = "https://w.app/guincho24horas";
 
 const TIER_ORDER = { gold: 0, silver: 1, bronze: 2, ghost: 3 } as const;
 
@@ -76,7 +75,7 @@ function PaidCard({ p, cityName }: { p: Provider; cityName: string }) {
     `Olá! Preciso de guincho em ${cityName} agora.`
   )}`;
   const telDigits = p.phone || p.whatsapp;
-  const telHref = telDigits ? `tel:${telDigits}` : CENTRAL_TEL;
+  const telHref = telDigits ? `tel:${telDigits}` : CENTRAL_LINK;
   return (
     <Card className={`relative overflow-hidden ${style.border}`}>
       <div className={`absolute right-0 top-0 rounded-bl-lg px-3 py-1 text-xs font-bold uppercase tracking-wide ${style.chip}`}>
@@ -201,9 +200,7 @@ function GhostCard({
   cityName: string;
   cityUf: string;
 }) {
-  const wppHref = `${CENTRAL_WPP}?text=${encodeURIComponent(
-    `Preciso de guincho em ${cityName}/${cityUf} agora.`
-  )}`;
+  const wppHref = CENTRAL_LINK;
   return (
     <Card className="border-border/60 bg-muted/30">
       <CardContent className="p-5">
