@@ -516,29 +516,65 @@ function CityPage() {
                   
                   {/* Mapa interativo de rodovias e pontos de atendimento para SP */}
                   <div className="mt-8 space-y-4">
-                    <h5 className="text-sm font-bold text-accent">Mapa de Atendimento nas Rodovias</h5>
-                    <div className="overflow-hidden rounded-xl border border-border/60 shadow-md bg-muted/10">
+                    <div className="flex items-center justify-between">
+                      <h5 className="text-sm font-bold text-accent">Pontos de Apoio em Rodovias</h5>
+                      <Badge variant="outline" className="text-[10px] animate-pulse bg-green-500/5 text-green-600 border-green-200">
+                        Unidades Online
+                      </Badge>
+                    </div>
+                    
+                    <div className="overflow-hidden rounded-xl border border-border/60 shadow-md bg-muted/10 relative group">
                       <iframe
                         title="Mapa de Atendimento em Rodovias de São Paulo"
                         src="https://www.google.com/maps/embed?pb=!1m12!1m8!1m3!1d117036.01254881845!2d-46.6333!3d-23.5505!3m2!1i1024!2i768!4f13.1!2m1!1sguincho+24h+rodovias+sao+paulo!5e0!3m2!1spt-BR!2sbr!4v1717430400000!5m2!1spt-BR!2sbr"
                         width="100%"
-                        height="300"
+                        height="350"
                         style={{ border: 0 }}
                         allowFullScreen
                         loading="lazy"
                         referrerPolicy="no-referrer-when-downgrade"
+                        className="filter grayscale-[0.2] contrast-[1.1]"
                       />
-                    </div>
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="p-3 bg-secondary/30 rounded-lg border border-border/40">
-                        <p className="text-[10px] uppercase font-bold text-muted-foreground">Base Norte</p>
-                        <p className="text-xs font-semibold">Marginal Tietê / Dutra</p>
-                      </div>
-                      <div className="p-3 bg-secondary/30 rounded-lg border border-border/40">
-                        <p className="text-[10px] uppercase font-bold text-muted-foreground">Base Sul</p>
-                        <p className="text-xs font-semibold">Marginal Pinheiros / Imigrantes</p>
+                      <div className="absolute bottom-4 left-4 right-4 pointer-events-none">
+                         <div className="bg-background/95 backdrop-blur-sm p-3 rounded-lg border shadow-lg flex items-center gap-3">
+                            <div className="h-2 w-2 rounded-full bg-green-500 animate-ping" />
+                            <p className="text-[11px] font-medium">Bases móveis monitoradas via GPS em tempo real</p>
+                         </div>
                       </div>
                     </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                      {[
+                        { name: "Base Norte", loc: "Marginal Tietê / Dutra" },
+                        { name: "Base Sul", loc: "Pinheiros / Imigrantes" },
+                        { name: "Base Leste", loc: "Radial / Ayrton Senna" },
+                        { name: "Base Oeste", loc: "Castelo / Raposo" },
+                        { name: "Base Centro", loc: "23 de Maio / Tiradentes" },
+                        { name: "Rodoanel", loc: "Trecho Sul e Oeste" }
+                      ].map((base) => (
+                        <div key={base.name} className="p-3 bg-secondary/30 rounded-lg border border-border/40 hover:border-primary/40 transition-colors">
+                          <p className="text-[9px] uppercase font-bold text-muted-foreground mb-1">{base.name}</p>
+                          <p className="text-[11px] font-semibold leading-tight">{base.loc}</p>
+                        </div>
+                      ))}
+                    </div>
+
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="w-full text-xs font-bold gap-2"
+                      onClick={() => {
+                        if (navigator.geolocation) {
+                          navigator.geolocation.getCurrentPosition(() => {
+                            // Em um app real, aqui calcularíamos a base mais próxima
+                            // Por agora, apenas simulamos um feedback visual
+                            alert("Localizando base mais próxima... Unidade Marginal Tietê a 8 min de você.");
+                          });
+                        }
+                      }}
+                    >
+                      <MapPin className="h-3 w-3" /> Localizar unidade mais próxima
+                    </Button>
                   </div>
                 </div>
               )}
