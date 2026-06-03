@@ -132,6 +132,8 @@ function BlogPostPage() {
         {post.coverUrl && (
           <img 
             src={post.coverUrl} 
+            srcSet={`${post.coverUrl} 800w, ${post.coverUrl} 400w`}
+            sizes="(max-width: 768px) 100vw, 800px"
             alt={post.title} 
             className="mb-6 h-64 w-full rounded-lg object-cover" 
             width={800} 
