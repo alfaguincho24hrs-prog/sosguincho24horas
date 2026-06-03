@@ -27,6 +27,13 @@ export type CityCopy = {
   longIntro: string;
   faqs: { q: string; a: string }[];
   ctaTitle: string;
+  regionalContext?: {
+    highways: string[];
+    mainAvenues: string[];
+    localFlow: string;
+    landmarks: string[];
+    zones?: Record<string, string[]>;
+  };
 };
 
 // Contexto Regional Real por Cidade
