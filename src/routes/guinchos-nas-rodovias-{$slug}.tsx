@@ -26,6 +26,8 @@ import {
   BreadcrumbSeparator 
 } from "@/components/ui/breadcrumb";
 
+const SITE_URL = "https://sosguincho24horas.com.br";
+
 type HighwayInfo = {
   name: string;
   slug: string;
@@ -277,9 +279,9 @@ function HighwayPage() {
                     "addressCountry": "BR"
                   }
                 },
-                "areaServed": data.cities.map(c => ({
+                "areaServed": data.cities.map((c: string) => ({
                   "@type": "City",
-                  "name": c.split('-').slice(0, -1).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+                  "name": c.split('-').slice(0, -1).map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
                 })),
                 "hasOfferCatalog": {
                   "@type": "OfferCatalog",
@@ -306,7 +308,7 @@ function HighwayPage() {
               },
               {
                 "@type": "FAQPage",
-                "mainEntity": data.faq.map(f => ({
+                "mainEntity": data.faq.map((f: { q: string, a: string }) => ({
                   "@type": "Question",
                   "name": f.q,
                   "acceptedAnswer": {
