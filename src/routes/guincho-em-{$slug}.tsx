@@ -132,6 +132,57 @@ const SERVICE_ITEMS = [
   { icon: ShieldCheck, title: "Remoção veicular", desc: "Retirada de sinistrados, leilões e transportes programados." },
 ];
 
+const SP_REGIONAL_FAQS = [
+  {
+    zone: "Zona Norte",
+    faqs: [
+      { q: "Qual o tempo de chegada para guincho na Rodovia Fernão Dias?", a: "Nossa base na Zona Norte permite chegar à Fernão Dias em aproximadamente 20-30 minutos, cobrindo desde o início na Marginal até Mairiporã." },
+      { q: "Atendem a Rodovia Dutra na região da Vila Maria?", a: "Sim, temos guinchos de prontidão na região da Vila Maria e Marginal Tietê para socorro imediato na Rodovia Presidente Dutra." }
+    ],
+    links: [
+      { name: "Rodovia Fernão Dias", slug: "rodovia-fernao-dias" },
+      { name: "Rodovia Presidente Dutra", slug: "rodovia-presidente-dutra" }
+    ]
+  },
+  {
+    zone: "Zona Sul",
+    faqs: [
+      { q: "Como solicitar guincho na Rodovia dos Imigrantes?", a: "Atendemos todo o trecho urbano da Imigrantes na Zona Sul. Ligue para nossa central e despacharemos a unidade mais próxima em Interlagos ou Jabaquara." },
+      { q: "Vocês fazem reboque na Marginal Pinheiros próximo ao Morumbi?", a: "Sim, cobrimos toda a extensão da Marginal Pinheiros, com foco nos eixos do Morumbi, Santo Amaro e Itaim Bibi." }
+    ],
+    links: [
+      { name: "Rodovia dos Imigrantes", slug: "rodovia-dos-imigrantes" },
+      { name: "Rodovia Anchieta", slug: "rodovia-anchieta" },
+      { name: "Marginal Pinheiros", slug: "marginal-pinheiros" }
+    ]
+  },
+  {
+    zone: "Zona Leste",
+    faqs: [
+      { q: "Atendem guincho na Rodovia Ayrton Senna?", a: "Sim, temos unidades baseadas próximas ao acesso da Jacu-Pêssego para atendimento rápido em toda a Ayrton Senna no trecho da Zona Leste." },
+      { q: "Qual a cobertura na Marginal Tietê trecho Leste?", a: "Cobrimos toda a região do Tatuapé, Penha e Itaquera com guinchos leves e pesados de prontidão na Marginal." }
+    ],
+    links: [
+      { name: "Rodovia Ayrton Senna", slug: "rodovia-ayrton-senna" },
+      { name: "Marginal Tietê", slug: "marginal-tiete" }
+    ]
+  },
+  {
+    zone: "Zona Oeste",
+    faqs: [
+      { q: "Quanto tempo demora o guincho na Rodovia Castelo Branco?", a: "Para o trecho inicial da Castelo Branco (Alphaville/Osasco), o tempo médio é de 20 minutos saindo da nossa base Oeste." },
+      { q: "Atendem a Rodovia Raposo Tavares em Cotia?", a: "Sim, atendemos toda a extensão da Raposo Tavares, conectando a Zona Oeste à região de Cotia e Vargem Grande." }
+    ],
+    links: [
+      { name: "Rodovia Castelo Branco", slug: "rodovia-castelo-branco" },
+      { name: "Rodovia Raposo Tavares", slug: "rodovia-raposo-tavares" },
+      { name: "Rodovia Anhanguera", slug: "rodovia-anhanguera" },
+      { name: "Rodovia dos Bandeirantes", slug: "rodovia-dos-bandeirantes" }
+    ]
+  }
+];
+
+
 function CityPage() {
   const { city } = Route.useLoaderData();
   const telHref = `tel:${SITE.phone.replace(/\D/g, "")}`;
