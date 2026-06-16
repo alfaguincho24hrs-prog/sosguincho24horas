@@ -535,7 +535,7 @@ function ProviderForm({
 }: {
   city: string;
   initial?: FormState;
-  onSaved: (data: FormState) => void;
+  onSaved: (data: FormState) => void | Promise<void>;
   isEdit?: boolean;
 }) {
   const [f, setF] = useState<FormState>(initial || emptyForm());
@@ -847,8 +847,8 @@ function ProviderRow({
 }: {
   provider: Provider;
   isCustom: boolean;
-  onSave: (patch: ProviderOverride) => void;
-  onRemove: () => void;
+  onSave: (patch: ProviderOverride) => void | Promise<void>;
+  onRemove: () => void | Promise<void>;
 }) {
   const [open, setOpen] = useState(false);
   const tierMeta = TIERS.find((t) => t.value === provider.tier)!;
