@@ -355,7 +355,9 @@ const SP_REGIONAL_FAQS = [
 
 
 function CityPage() {
-  const { city } = Route.useLoaderData();
+  const data = Route.useLoaderData();
+  if (data.kind !== "city") return null;
+  const { city } = data;
   const telHref = `tel:${SITE.phone.replace(/\D/g, "")}`;
   const local = getCityLocalData(`${city.slug}-${city.uf.toLowerCase()}`, city.uf);
   const copy = getCityCopy(city.name, city.uf, city.slug);
