@@ -61,7 +61,7 @@ export const loginAdmin = createServerFn({ method: "POST" })
     setCookie(COOKIE_NAME, signSession(expiresAt), {
       httpOnly: true,
       secure: true,
-      sameSite: "strict",
+      sameSite: "none",
       path: "/",
       maxAge: Math.floor(SESSION_TTL_MS / 1000),
     });
@@ -72,7 +72,7 @@ export const logoutAdmin = createServerFn({ method: "POST" }).handler(async () =
   setCookie(COOKIE_NAME, "", {
     httpOnly: true,
     secure: true,
-    sameSite: "strict",
+    sameSite: "none",
     path: "/",
     maxAge: 0,
   });
