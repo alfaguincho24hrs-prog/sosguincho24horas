@@ -166,7 +166,7 @@ export function LocationsGrid() {
                       aria-labelledby={`cidades-${letter}-title`}
                       className="scroll-mt-24"
                     >
-                      <h4
+                      <h3
                         id={`cidades-${letter}-title`}
                         className="mb-2 border-b border-border/60 pb-1 text-sm font-bold text-accent"
                       >
@@ -174,7 +174,7 @@ export function LocationsGrid() {
                         <span className="text-xs font-normal text-muted-foreground">
                           ({cities.length})
                         </span>
-                      </h4>
+                      </h3>
                       <ul className="grid grid-cols-2 gap-x-4 gap-y-1.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
                         {cities.map((c) => (
                           <li key={`${c.slug}-${c.uf}`}>

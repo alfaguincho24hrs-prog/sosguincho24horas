@@ -216,7 +216,7 @@ export function TestimonialsCarousel({ citySeed }: { citySeed?: string } = {}) {
                     <Quote className="h-6 w-6 text-primary/40" />
                     <p className="flex-1 text-sm leading-relaxed text-muted-foreground">"{t.text}"</p>
                     <div className="border-t pt-3">
-                      <h4 className="font-semibold">{t.name}</h4>
+                      <h3 className="font-semibold">{t.name}</h3>
                       <h5 className="flex items-center gap-1 text-xs font-normal text-muted-foreground">
                         <MapPin className="h-3 w-3" />
                         {t.city}
