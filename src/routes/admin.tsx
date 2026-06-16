@@ -318,21 +318,35 @@ const ALL_CITY_OPTIONS = ALL_CITIES.map((c) => ({
 function AdminEditor({ initialCity }: { initialCity: string }) {
   const [city, setCity] = useState(initialCity || ALL_CITY_OPTIONS[0]?.value || "");
   const [tick, setTick] = useState(0);
+  const [cadastradas, setCadastradas] = useState<string[]>([]);
+  const [providers, setProviders] = useState<Provider[]>([]);
+  const [addedIds, setAddedIds] = useState<Set<string>>(new Set());
+  const [loading, setLoading] = useState(false);
 
-  const cadastradas = useMemo(() => listProviderCities(), [tick]);
+  const loadProviderData = useServerFn(getAdminProviderData);
+  const createProvider = useServerFn(createAdminProvider);
+  const saveProvider = useServerFn(saveAdminProviderOverride);
+  const deleteProvider = useServerFn(deleteAdminProvider);
 
-  const providers = useMemo<Provider[]>(() => {
-    if (!city) return [];
-    const base = getRawCityProviders(city);
-    const ov = readOverrides()[city] || {};
-    return base.map((p) => (p.id && ov[p.id] ? { ...p, ...ov[p.id] } : p));
-  }, [city, tick]);
-
-  const addedIds = useMemo(() => {
-    const added = readAddedProviders()[city] || [];
-    return new Set(added.map((p) => p.id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [city, tick]);
+  useEffect(() => {
+    if (!city) return;
+    let cancelled = false;
+    setLoading(true);
+    loadProviderData({ data: { citySlug: city } })
+      .then((data) => {
+        if (cancelled) return;
+        setProviders(data.providers);
+        setCadastradas(data.cities);
+        setAddedIds(new Set(data.addedProviderIds));
+      })
+      .catch(() => toast.error("Erro ao carregar anunciantes"))
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [city, tick, loadProviderData]);
 
   return (
     <div className="container mx-auto max-w-5xl px-4 py-10">
@@ -381,8 +395,8 @@ function AdminEditor({ initialCity }: { initialCity: string }) {
       <ProviderForm
         key={`new-${city}`}
         city={city}
-        onSaved={(data) => {
-          addProvider(city, {
+        onSaved={async (data) => {
+          await createProvider({ data: { citySlug: city, provider: {
             name: data.name,
             tier: data.tier,
             area: data.area || undefined,
@@ -396,7 +410,7 @@ function AdminEditor({ initialCity }: { initialCity: string }) {
             verified: data.verified,
             logoUrl: data.logoUrl || undefined,
             photos: data.photos.length ? data.photos : undefined,
-          });
+          } } });
           setTick((t) => t + 1);
           toast.success("Anunciante criado");
         }}
@@ -405,6 +419,7 @@ function AdminEditor({ initialCity }: { initialCity: string }) {
       <h2 className="mb-3 mt-8 text-lg font-semibold">
         Anunciantes desta cidade ({providers.length})
       </h2>
+      {loading && <p className="mb-3 text-sm text-muted-foreground">Carregando anunciantes…</p>}
 
       <div className="space-y-3">
         {providers.map((p) => (
@@ -412,18 +427,18 @@ function AdminEditor({ initialCity }: { initialCity: string }) {
             key={p.id || p.name}
             provider={p}
             isCustom={!!p.id && addedIds.has(p.id)}
-            onSave={(patch) => {
+            onSave={async (patch) => {
               if (!p.id) {
                 toast.error("Anunciante sem ID — não pode ser editado.");
                 return;
               }
-              setProviderOverride(city, p.id, patch);
+              await saveProvider({ data: { citySlug: city, providerId: p.id, patch } });
               setTick((t) => t + 1);
               toast.success("Salvo");
             }}
-            onRemove={() => {
+            onRemove={async () => {
               if (!p.id) return;
-              removeAddedProvider(city, p.id);
+              await deleteProvider({ data: { citySlug: city, providerId: p.id } });
               setTick((t) => t + 1);
               toast.success("Anunciante removido");
             }}
