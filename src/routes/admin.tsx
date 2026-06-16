@@ -564,7 +564,7 @@ function ProviderForm({
     e.preventDefault();
     const name = f.name.trim();
     if (!name) return toast.error("Informe o nome do anunciante");
-    if (!city) return toast.error("Selecione uma cidade");
+    if (!isEdit && !city) return toast.error("Selecione uma cidade");
     if (f.tier !== "ghost" && !f.whatsapp && !f.phone) {
       return toast.error("Tiers pagos exigem WhatsApp ou Telefone");
     }
