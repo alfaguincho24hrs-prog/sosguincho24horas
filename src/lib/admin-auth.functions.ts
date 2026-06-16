@@ -51,6 +51,13 @@ async function verifySession(value: string | undefined): Promise<boolean> {
   return constantTimeEqual(sig, expected);
 }
 
+export async function requireAdminSession() {
+  const cookie = getCookie(COOKIE_NAME);
+  if (!(await verifySession(cookie))) {
+    throw new Error("Unauthorized");
+  }
+}
+
 export const loginAdmin = createServerFn({ method: "POST" })
   .inputValidator((d: { password: string }) => {
     if (!d || typeof d.password !== "string" || d.password.length === 0 || d.password.length > 200) {
