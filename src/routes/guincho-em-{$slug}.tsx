@@ -80,7 +80,7 @@ export const Route = createFileRoute("/guincho-em-{$slug}")({
       const { location } = loaderData;
       const cityName = location.city ?? "São Paulo";
       const uf = location.uf ?? "SP";
-      const title = `Guincho 24 Horas em ${location.name} - ${cityName}/${uf} | Chegamos Rápido`;
+      const title = `Guincho 24h em ${location.name} - ${cityName}/${uf}`;
       const description = `Serviço de guincho 24 horas em ${location.name}, ${cityName}/${uf}. Reboque rápido para carros, motos e veículos pesados. Auto socorro imediato — ligue agora!`;
       const url = `${SITE_URL}/guincho-em-${location.slug}`;
       return {
