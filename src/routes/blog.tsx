@@ -1,9 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Calendar, ArrowRight, Pencil } from "lucide-react";
 import { getAllPosts, type BlogPost } from "@/components/blog-data";
+import { getPublicBlogPosts } from "@/lib/admin-data.functions";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 
 export const Route = createFileRoute("/blog")({
@@ -23,11 +25,22 @@ export const Route = createFileRoute("/blog")({
 });
 
 function BlogPage() {
-  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [posts, setPosts] = useState<BlogPost[]>(() => getAllPosts());
+  const loadPosts = useServerFn(getPublicBlogPosts);
 
   useEffect(() => {
-    setPosts(getAllPosts());
-  }, []);
+    let cancelled = false;
+    loadPosts({})
+      .then((data) => {
+        if (!cancelled) setPosts(data);
+      })
+      .catch(() => {
+        if (!cancelled) setPosts(getAllPosts());
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [loadPosts]);
 
   return (
     <div className="bg-background">
