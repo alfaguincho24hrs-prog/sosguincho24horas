@@ -72,7 +72,7 @@ export const logoutAdmin = createServerFn({ method: "POST" }).handler(async () =
   setCookie(COOKIE_NAME, "", {
     httpOnly: true,
     secure: true,
-    sameSite: "strict",
+    sameSite: "none",
     path: "/",
     maxAge: 0,
   });
