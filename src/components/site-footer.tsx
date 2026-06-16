@@ -28,7 +28,7 @@ const SiteFooter = memo(() => {
           </div>
 
           <div>
-            <h4 className="text-lg font-bold mb-6 text-accent">Serviços 24h</h4>
+            <h3 className="text-lg font-bold mb-6 text-accent">Serviços 24h</h3>
             <ul className="space-y-3">
               <li><Link to="/guincho-leve" className="text-sm text-primary-foreground/70 hover:text-accent transition-colors flex items-center gap-2">Guincho Leve</Link></li>
               <li><Link to="/guincho-pesado" className="text-sm text-primary-foreground/70 hover:text-accent transition-colors flex items-center gap-2">Guincho Pesado</Link></li>
@@ -40,7 +40,7 @@ const SiteFooter = memo(() => {
           </div>
 
           <div>
-            <h4 className="text-lg font-bold mb-6 text-accent">Cidades em Destaque</h4>
+            <h3 className="text-lg font-bold mb-6 text-accent">Cidades em Destaque</h3>
             <ul className="space-y-3">
               {CITIES.slice(0, 6).map((c) => (
                 <li key={c}>
@@ -63,7 +63,7 @@ const SiteFooter = memo(() => {
           </div>
 
           <div>
-            <h4 className="text-lg font-bold mb-6 text-accent">Central de Emergência</h4>
+            <h3 className="text-lg font-bold mb-6 text-accent">Central de Emergência</h3>
             <div className="space-y-4">
               <a href="https://w.app/guincho24horas" className="flex items-center gap-3 p-3 rounded-xl bg-primary-foreground/5 border border-primary-foreground/10 hover:border-accent/50 transition-colors group">
                 <div className="h-10 w-10 flex items-center justify-center rounded-lg bg-accent text-primary group-hover:scale-110 transition-transform">

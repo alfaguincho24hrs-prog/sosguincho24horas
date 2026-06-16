@@ -1,0 +1,69 @@
+name: Post-Deploy Monitor
+
+on:
+  # Roda automaticamente após cada push no branch principal (deploy)
+  push:
+    branches: [main]
+  # Verificação diária às 06:00 UTC (03:00 BRT)
+  schedule:
+    - cron: "0 6 * * *"
+  # Disparo manual
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "URL alvo"
+        required: false
+        default: "https://sosguincho24horas.com.br"
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Instalar dependências
+        run: bun install --frozen-lockfile
+
+      - name: Aguardar propagação do deploy (60s)
+        if: github.event_name == 'push'
+        run: sleep 60
+
+      - name: Rodar monitor pós-deploy
+        env:
+          ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}
+        run: node monitor-deploy.mjs --url=${{ github.event.inputs.url || 'https://sosguincho24horas.com.br' }}
+
+      - name: Lighthouse CI (home + cidade)
+        if: always()
+        run: |
+          npx -y lighthouse https://sosguincho24horas.com.br \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --chrome-flags="--headless --no-sandbox" \
+            --output=json --output-path=lh-home.json --quiet || true
+          npx -y lighthouse https://sosguincho24horas.com.br/guincho-em-taubate-sp \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --chrome-flags="--headless --no-sandbox" \
+            --output=json --output-path=lh-city.json --quiet || true
+          node -e "
+            for (const f of ['lh-home.json','lh-city.json']) {
+              try {
+                const d = require('./'+f);
+                console.log('\\n📊 '+f);
+                for (const [k,v] of Object.entries(d.categories))
+                  console.log('  '+k+': '+Math.round(v.score*100));
+              } catch(e) { console.log('skip '+f); }
+            }
+          "
+
+      - name: Upload relatórios Lighthouse
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: lh-*.json
+          retention-days: 30

@@ -38,7 +38,7 @@ export function LocationsGrid() {
           </Badge>
           <h2
             id="locations-grid-title"
-            className="text-2xl font-bold tracking-tight md:text-3xl text-accent/90"
+            className="text-2xl font-bold tracking-tight md:text-3xl text-accent"
           >
             Guincho 24 horas em todos os bairros de São Paulo
           </h2>
@@ -90,7 +90,7 @@ export function LocationsGrid() {
         <details className="group mt-10 rounded-lg border border-border/60 bg-background/60">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 text-left transition-colors hover:bg-secondary/40">
             <div>
-              <h3 className="text-base font-semibold text-accent/90 md:text-lg">
+              <h3 className="text-base font-semibold text-accent md:text-lg">
                 Ver todas as cidades atendidas no Brasil
               </h3>
               <p className="mt-0.5 text-xs text-muted-foreground">
@@ -166,15 +166,15 @@ export function LocationsGrid() {
                       aria-labelledby={`cidades-${letter}-title`}
                       className="scroll-mt-24"
                     >
-                      <h4
+                      <h3
                         id={`cidades-${letter}-title`}
-                        className="mb-2 border-b border-border/60 pb-1 text-sm font-bold text-accent/90"
+                        className="mb-2 border-b border-border/60 pb-1 text-sm font-bold text-accent"
                       >
                         {letter}{" "}
                         <span className="text-xs font-normal text-muted-foreground">
                           ({cities.length})
                         </span>
-                      </h4>
+                      </h3>
                       <ul className="grid grid-cols-2 gap-x-4 gap-y-1.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
                         {cities.map((c) => (
                           <li key={`${c.slug}-${c.uf}`}>

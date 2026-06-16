@@ -182,7 +182,7 @@ export function TestimonialsCarousel({ citySeed }: { citySeed?: string } = {}) {
       <div className="container mx-auto px-4">
         <div className="mx-auto mb-10 max-w-3xl text-center">
           <Badge variant="secondary" className="mb-3">Avaliações reais — guincho 24h</Badge>
-          <h2 id="depoimentos-heading" className="text-3xl font-bold tracking-tight md:text-4xl text-accent/90">
+          <h2 id="depoimentos-heading" className="text-3xl font-bold tracking-tight md:text-4xl text-accent">
             {citySeed ? `Avaliações reais em ${citySeed.split(' - ')[0]}` : "Avaliações de clientes satisfeitos com nosso serviço de guincho e reboque 24h"}
           </h2>
           <div className="mt-4 flex items-center justify-center gap-1">
@@ -208,7 +208,7 @@ export function TestimonialsCarousel({ citySeed }: { citySeed?: string } = {}) {
               <CarouselItem key={i} className="md:basis-1/2 lg:basis-1/3">
                 <Card className="h-full border-border/60">
                   <CardContent className="flex h-full flex-col gap-4 p-6">
-                    <div className="flex items-center gap-1 text-accent" aria-label="Avaliação 5 de 5 estrelas">
+                    <div className="flex items-center gap-1 text-accent" role="img" aria-label="Avaliação 5 de 5 estrelas">
                       {Array.from({ length: 5 }).map((_, idx) => (
                         <Star key={idx} className="h-4 w-4 fill-current" />
                       ))}
@@ -216,7 +216,7 @@ export function TestimonialsCarousel({ citySeed }: { citySeed?: string } = {}) {
                     <Quote className="h-6 w-6 text-primary/40" />
                     <p className="flex-1 text-sm leading-relaxed text-muted-foreground">"{t.text}"</p>
                     <div className="border-t pt-3">
-                      <h4 className="font-semibold">{t.name}</h4>
+                      <h3 className="font-semibold">{t.name}</h3>
                       <h5 className="flex items-center gap-1 text-xs font-normal text-muted-foreground">
                         <MapPin className="h-3 w-3" />
                         {t.city}

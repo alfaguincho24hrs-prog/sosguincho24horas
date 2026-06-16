@@ -21,7 +21,7 @@ export function SeoBlock({ badge, title, paragraphs, bullets, faqs, whatsappMess
     <section className="container mx-auto px-4 py-20">
       <div className="mx-auto max-w-4xl space-y-6">
         <Badge variant="secondary">{badge}</Badge>
-        <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-accent/90">{title}</h2>
+        <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-accent">{title}</h2>
         {paragraphs.map((p, i) => (
           <p key={i} className="text-muted-foreground leading-relaxed" dangerouslySetInnerHTML={{ __html: p }} />
         ))}
@@ -35,7 +35,7 @@ export function SeoBlock({ badge, title, paragraphs, bullets, faqs, whatsappMess
 
         {faqs && faqs.length > 0 && (
           <>
-            <h3 className="text-2xl font-bold pt-4 text-accent/90">Perguntas frequentes</h3>
+            <h3 className="text-2xl font-bold pt-4 text-accent">Perguntas frequentes</h3>
             <Accordion type="single" collapsible className="w-full">
               {faqs.map((f, i) => (
                 <AccordionItem key={i} value={`faq-${i}`}>

@@ -14,7 +14,8 @@
     "check-seo": "node check-seo.mjs",
     "generate-sitemap": "node generate-sitemap.mjs",
     "check-links": "node check-links.mjs",
-    "audit-highways": "node audit-highway-seo.mjs"
+    "audit-highways": "node audit-highway-seo.mjs",
+    "monitor": "node monitor-deploy.mjs"
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.25.5",

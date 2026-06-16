@@ -46,12 +46,12 @@ function FrotaPage() {
       <div className="grid md:grid-cols-2 gap-8">
         <div className="p-6 border rounded-xl bg-muted/20">
           <Truck className="h-10 w-10 text-accent mb-4" />
-          <h2 className="text-2xl font-semibold mb-2 text-accent/90">Guincho Plataforma Leve</h2>
+          <h2 className="text-2xl font-semibold mb-2 text-accent">Guincho Plataforma Leve</h2>
           <p className="text-muted-foreground">Ideal para carros de passeio, SUVs e picapes. Plataforma hidráulica que garante embarque suave e transporte seguro.</p>
         </div>
         <div className="p-6 border rounded-xl bg-muted/20">
           <Truck className="h-10 w-10 text-accent mb-4" />
-          <h2 className="text-2xl font-semibold mb-2 text-accent/90">Guincho Pesado e Munk</h2>
+          <h2 className="text-2xl font-semibold mb-2 text-accent">Guincho Pesado e Munk</h2>
           <p className="text-muted-foreground">Equipamentos robustos para remoção de ônibus, caminhões e maquinários agrícolas. Alta capacidade de carga.</p>
         </div>
       </div>
