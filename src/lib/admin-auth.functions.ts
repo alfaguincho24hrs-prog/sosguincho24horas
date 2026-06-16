@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { getCookie, setCookie } from "@tanstack/react-start/server";
+import { getCookie, getRequest, setCookie } from "@tanstack/react-start/server";
 
 const COOKIE_NAME = "admin_session";
 const SESSION_TTL_MS = 1000 * 60 * 60 * 8; // 8h
@@ -51,6 +51,15 @@ async function verifySession(value: string | undefined): Promise<boolean> {
   return constantTimeEqual(sig, expected);
 }
 
+function isSecureRequest() {
+  try {
+    const url = getRequest()?.url;
+    return url ? new URL(url).protocol === "https:" : false;
+  } catch {
+    return false;
+  }
+}
+
 export async function requireAdminSession() {
   const cookie = getCookie(COOKIE_NAME);
   if (!(await verifySession(cookie))) {
@@ -80,8 +89,8 @@ export const loginAdmin = createServerFn({ method: "POST" })
     const token = await signSession(expiresAt);
     setCookie(COOKIE_NAME, token, {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: isSecureRequest(),
+      sameSite: "lax",
       path: "/",
       maxAge: Math.floor(SESSION_TTL_MS / 1000),
     });
@@ -91,8 +100,8 @@ export const loginAdmin = createServerFn({ method: "POST" })
 export const logoutAdmin = createServerFn({ method: "POST" }).handler(async () => {
   setCookie(COOKIE_NAME, "", {
     httpOnly: true,
-    secure: true,
-    sameSite: "none",
+    secure: isSecureRequest(),
+    sameSite: "lax",
     path: "/",
     maxAge: 0,
   });
