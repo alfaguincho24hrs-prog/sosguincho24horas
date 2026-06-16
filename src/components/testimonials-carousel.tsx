@@ -182,7 +182,7 @@ export function TestimonialsCarousel({ citySeed }: { citySeed?: string } = {}) {
       <div className="container mx-auto px-4">
         <div className="mx-auto mb-10 max-w-3xl text-center">
           <Badge variant="secondary" className="mb-3">Avaliações reais — guincho 24h</Badge>
-          <h2 id="depoimentos-heading" className="text-3xl font-bold tracking-tight md:text-4xl text-accent/90">
+          <h2 id="depoimentos-heading" className="text-3xl font-bold tracking-tight md:text-4xl text-accent">
             {citySeed ? `Avaliações reais em ${citySeed.split(' - ')[0]}` : "Avaliações de clientes satisfeitos com nosso serviço de guincho e reboque 24h"}
           </h2>
           <div className="mt-4 flex items-center justify-center gap-1">

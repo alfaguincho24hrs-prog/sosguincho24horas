@@ -260,7 +260,7 @@ function LocationPage({ location }: { location: Location }) {
       </header>
 
       <section className="mt-14">
-        <h2 className="text-2xl font-bold md:text-3xl text-accent/90">
+        <h2 className="text-2xl font-bold md:text-3xl text-accent">
           Serviços disponíveis em {location.name}
         </h2>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -280,7 +280,7 @@ function LocationPage({ location }: { location: Location }) {
 
       <section className="mt-14 grid gap-8 md:grid-cols-2">
         <div>
-          <h2 className="text-2xl font-bold md:text-3xl text-accent/90">
+          <h2 className="text-2xl font-bold md:text-3xl text-accent">
             Por que escolher nosso guincho em {location.name}?
           </h2>
           <ul className="mt-4 space-y-3 text-muted-foreground">
@@ -569,7 +569,7 @@ function CityPage() {
 
       {/* Serviços na cidade */}
       <section className="mt-14">
-        <h2 className="text-2xl font-bold md:text-3xl text-accent/90">{copy.servicesTitle}</h2>
+        <h2 className="text-2xl font-bold md:text-3xl text-accent">{copy.servicesTitle}</h2>
         <p className="mt-2 max-w-3xl text-muted-foreground">{copy.servicesIntro}</p>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICE_ITEMS.map((s) => (
@@ -590,7 +590,7 @@ function CityPage() {
 
       {/* Bairros e CEPs - SEO local hiper-segmentado */}
       <section className="mt-14">
-        <h2 className="text-2xl font-bold md:text-3xl text-accent/90">{copy.neighborhoodsTitle}</h2>
+        <h2 className="text-2xl font-bold md:text-3xl text-accent">{copy.neighborhoodsTitle}</h2>
         <p className="mt-2 max-w-3xl text-muted-foreground">
           Nosso serviço de guincho 24h cobre todos os bairros de {city.name}/{city.uf},
           incluindo região central, zona industrial, bairros residenciais e
@@ -625,7 +625,7 @@ function CityPage() {
       {/* Por que escolher */}
       <section className="mt-14 grid gap-8 md:grid-cols-2">
         <div>
-          <h2 className="text-2xl font-bold md:text-3xl text-accent/90">{copy.whyTitle}</h2>
+          <h2 className="text-2xl font-bold md:text-3xl text-accent">{copy.whyTitle}</h2>
           <ul className="mt-4 space-y-3 text-muted-foreground">
             <li className="flex gap-3">
               <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
@@ -664,7 +664,7 @@ function CityPage() {
 
       {/* FAQ */}
       <section className="mt-14">
-        <h2 className="text-2xl font-bold md:text-3xl text-accent/90">{copy.faqTitle}</h2>
+        <h2 className="text-2xl font-bold md:text-3xl text-accent">{copy.faqTitle}</h2>
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           {copy.faqs.map((f) => (
             <Card key={f.q} className="border-border/60">
@@ -696,7 +696,7 @@ function CityPage() {
       {/* FAQ Regional por Zona (Apenas SP) */}
       {(city.slug === 'sao-paulo' || city.slug === 'sao-paulo-sp') && (
         <section className="mt-14">
-          <h2 className="text-2xl font-bold md:text-3xl text-accent/90 mb-6">FAQ por Região de São Paulo</h2>
+          <h2 className="text-2xl font-bold md:text-3xl text-accent mb-6">FAQ por Região de São Paulo</h2>
           <div className="grid gap-6 md:grid-cols-2">
             {SP_REGIONAL_FAQS.map((reg) => (
               <Card key={reg.zone} className="border-border/60 bg-muted/5 shadow-sm">
@@ -737,7 +737,7 @@ function CityPage() {
       {/* Cidades vizinhas + serviços relacionados — interlinking semântico regional */}
       <section className="mt-14 grid gap-8 md:grid-cols-2">
         <div>
-          <h2 className="text-2xl font-bold text-accent/90">Atendimento Regional em {city.uf}</h2>
+          <h2 className="text-2xl font-bold text-accent">Atendimento Regional em {city.uf}</h2>
           <p className="mt-2 text-sm text-muted-foreground">
             Operamos com uma rede logística que permite interligar o socorro entre {city.name} e cidades vizinhas com rapidez.
           </p>
@@ -898,7 +898,7 @@ function CityPage() {
         </div>
 
         <div>
-          <h2 className="text-2xl font-bold text-accent/90">Serviços em {city.name}</h2>
+          <h2 className="text-2xl font-bold text-accent">Serviços em {city.name}</h2>
           <div className="mt-4 flex flex-wrap gap-2">
             {[
               { to: "/guincho-leve" as const, label: `Guincho leve em ${city.name}` },
@@ -922,7 +922,7 @@ function CityPage() {
 
       {/* SEO LONGO — autoridade local */}
       <section className="mt-14 max-w-4xl space-y-5">
-        <h2 className="text-2xl font-bold md:text-3xl text-accent/90">{copy.longTitle}</h2>
+        <h2 className="text-2xl font-bold md:text-3xl text-accent">{copy.longTitle}</h2>
         <p className="text-muted-foreground leading-relaxed">{copy.longIntro}</p>
         <p className="text-muted-foreground leading-relaxed">
           Nossa central despacha o socorro mais próximo da sua localização em{" "}
@@ -937,7 +937,7 @@ function CityPage() {
             </span>
           ))} — recebem atendimento prioritário em qualquer horário do dia ou da noite.
         </p>
-        <h3 className="text-xl font-bold pt-2 text-accent/90">Quando acionar um guincho em {city.name}?</h3>
+        <h3 className="text-xl font-bold pt-2 text-accent">Quando acionar um guincho em {city.name}?</h3>
         <p className="text-muted-foreground leading-relaxed">
           Acidentes de trânsito, colisões, capotamentos, panes elétricas, problemas no câmbio,
           superaquecimento de motor, pneu furado sem estepe, falta de combustível, bateria
@@ -947,7 +947,7 @@ function CityPage() {
           imediatamente. Tentar empurrar ou rebocar de forma improvisada pode causar acidentes
           graves, multas de trânsito e danos ainda maiores ao seu veículo.
         </p>
-        <h3 className="text-xl font-bold pt-2 text-accent/90">Por que escolher nossa rede em {city.name}/{city.uf}?</h3>
+        <h3 className="text-xl font-bold pt-2 text-accent">Por que escolher nossa rede em {city.name}/{city.uf}?</h3>
         <ul className="space-y-2 text-muted-foreground leading-relaxed">
           <li>✅ <strong>Atendimento 24h, 7 dias por semana</strong>, inclusive feriados e madrugada.</li>
           <li>✅ <strong>Empresas verificadas</strong> com CNPJ ativo, ANTT regularizada e seguro.</li>
@@ -970,7 +970,7 @@ function CityPage() {
 
       {/* CTA final */}
       <section className="mt-14 rounded-2xl bg-secondary/50 p-10 text-center">
-        <h2 className="text-2xl font-bold md:text-3xl text-accent/90">{copy.ctaTitle}</h2>
+        <h2 className="text-2xl font-bold md:text-3xl text-accent">{copy.ctaTitle}</h2>
         <p className="mt-2 text-muted-foreground">
           Não fique parado na estrada. Acione agora e resolva sua emergência com
           rapidez e segurança em {city.name}/{city.uf}.

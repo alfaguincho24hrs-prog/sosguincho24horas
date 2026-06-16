@@ -115,7 +115,7 @@ export function CitySocialProof({ cityName, neighborhoods, uf }: Props) {
       />
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 className="text-2xl font-bold md:text-3xl text-accent/90">
+          <h2 className="text-2xl font-bold md:text-3xl text-accent">
             Avaliações reais em {cityName}
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -150,7 +150,7 @@ export function CitySocialProof({ cityName, neighborhoods, uf }: Props) {
       </div>
       {/* Bloco de Contexto Operacional para EEAT */}
       <div className="mt-8 rounded-xl bg-muted/30 p-6 border border-border/50">
-        <h3 className="text-lg font-bold mb-2 text-accent/90">Informação Operacional Regional</h3>
+        <h3 className="text-lg font-bold mb-2 text-accent">Informação Operacional Regional</h3>
         <p className="text-sm text-muted-foreground italic">
           {REGIONAL_CONTEXT[`${cityName.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-")}-${uf?.toLowerCase() || 'sp'}`] || 
            `Atendemos toda a região de ${cityName} com frota própria e parceiros homologados, garantindo segurança e preço justo em cada chamado.`}

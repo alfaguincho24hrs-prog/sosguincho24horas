@@ -63,7 +63,7 @@ function AnunciePage() {
 
       <section className="container mx-auto grid gap-10 px-4 pb-20 md:grid-cols-2">
         <div>
-          <h2 className="text-3xl font-bold text-accent/90">O que está incluso</h2>
+          <h2 className="text-3xl font-bold text-accent">O que está incluso</h2>
           <ul className="mt-6 space-y-3">
             {[
               "Página exclusiva da sua empresa com fotos e contato",
@@ -80,7 +80,7 @@ function AnunciePage() {
 
         <Card className="border-border/60 shadow-[var(--shadow-elegant)]">
           <CardContent className="p-6">
-            <h3 className="text-xl font-semibold text-accent/90">Solicite seu cadastro</h3>
+            <h3 className="text-xl font-semibold text-accent">Solicite seu cadastro</h3>
             <p className="mt-1 text-sm text-muted-foreground">Preencha os dados e nossa equipe entrará em contato em até 24 horas.</p>
             <form
               className="mt-5 space-y-4"
