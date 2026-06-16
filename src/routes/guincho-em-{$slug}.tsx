@@ -35,6 +35,7 @@ import { AdminEditButton } from "@/components/admin-edit-button";
 import { EtaBadge } from "@/components/eta-badge";
 import { LeadFormGeo } from "@/components/lead-form-geo";
 import { CitySocialProof } from "@/components/city-social-proof";
+import { findLocationBySlug, type Location } from "@/data/locations";
 
 const SITE_URL = "https://sosguincho24horas.com.br";
 
@@ -64,19 +65,51 @@ function findCity(slug: string): City | undefined {
 export const Route = createFileRoute("/guincho-em-{$slug}")({
   loader: ({ params }) => {
     const slug = params.slug.startsWith("{") ? "sao-paulo-sp" : params.slug;
+    // 1) Tenta cidade
     const city = findCity(slug);
-    if (!city) throw notFound();
-    return { city };
+    if (city) return { kind: "city" as const, city };
+    // 2) Tenta bairro/localidade (SEO programático)
+    const location = findLocationBySlug(slug);
+    if (location) return { kind: "location" as const, location };
+    throw notFound();
   },
   head: ({ loaderData }) => {
     if (!loaderData) return { meta: [] };
+
+    if (loaderData.kind === "location") {
+      const { location } = loaderData;
+      const cityName = location.city ?? "São Paulo";
+      const uf = location.uf ?? "SP";
+      const title = `Guincho 24 Horas em ${location.name} - ${cityName}/${uf} | Chegamos Rápido`;
+      const description = `Serviço de guincho 24 horas em ${location.name}, ${cityName}/${uf}. Reboque rápido para carros, motos e veículos pesados. Auto socorro imediato — ligue agora!`;
+      const url = `${SITE_URL}/guincho-em-${location.slug}`;
+      return {
+        meta: [
+          { title },
+          { name: "description", content: description },
+          { name: "robots", content: "index, follow" },
+          { name: "geo.region", content: `BR-${uf}` },
+          { name: "geo.placename", content: `${location.name}, ${cityName}` },
+          { property: "og:title", content: title },
+          { property: "og:description", content: description },
+          { property: "og:url", content: url },
+          { property: "og:type", content: "website" },
+          { property: "og:locale", content: "pt_BR" },
+          { name: "twitter:card", content: "summary_large_image" },
+          { name: "twitter:title", content: title },
+          { name: "twitter:description", content: description },
+        ],
+        links: [{ rel: "canonical", href: url }],
+      };
+    }
+
     const { city } = loaderData;
     const copy = getCityCopy(city.name, city.uf, city.slug);
-    
+
     // SEO Titles and Descriptions optimized for highways
     let title = `Guincho em ${city.name} - ${city.uf} | Reboque 24 Horas | ${SITE.name}`;
     let description = `Precisa de guincho em ${city.name}/${city.uf}? Oferecemos reboque 24 horas rápido e seguro para carros, motos e pesados em toda a região de ${city.name}. Auto socorro imediato com o melhor preço!`;
-    
+
     if (city.slug === 'sao-paulo' || city.slug === 'sao-paulo-sp') {
       title = `Guincho 24h SP: Marginal, Dutra, Castelo Branco | Reboque Rápido`;
       description = `Socorro e guincho 24h em São Paulo/SP. Atendimento imediato nas Marginais, Bandeirantes, Anhanguera, Imigrantes e Dutra. Chegada rápida em todas as zonas de SP!`;
@@ -112,17 +145,154 @@ export const Route = createFileRoute("/guincho-em-{$slug}")({
   },
   notFoundComponent: () => (
     <div className="container mx-auto px-4 py-24 text-center">
-      <h2 className="text-3xl font-bold">Cidade não encontrada</h2>
+      <h2 className="text-3xl font-bold">Localidade não encontrada</h2>
       <p className="mt-3 text-muted-foreground">
-        Não localizamos esta cidade em nossa cobertura.
+        Não localizamos esta cidade ou bairro em nossa cobertura.
       </p>
       <Button asChild className="mt-6">
         <Link to="/servicos-de-guincho-e-reboque">Ver todas as cidades</Link>
       </Button>
     </div>
   ),
-  component: CityPage,
+  component: RouteComponent,
 });
+
+function RouteComponent() {
+  const data = Route.useLoaderData();
+  if (data.kind === "location") return <LocationPage location={data.location} />;
+  return <CityPage />;
+}
+
+function LocationPage({ location }: { location: Location }) {
+  const cityName = location.city ?? "São Paulo";
+  const uf = location.uf ?? "SP";
+  const url = `${SITE_URL}/guincho-em-${location.slug}`;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: `SOS Guincho 24 horas - ${location.name}`,
+    "@id": url,
+    url,
+    telephone: SITE.phone,
+    priceRange: "$$",
+    areaServed: { "@type": "Place", name: `${location.name}, ${cityName}` },
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: cityName,
+      addressRegion: uf,
+      addressCountry: "BR",
+    },
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+      opens: "00:00",
+      closes: "23:59",
+    },
+  };
+
+  return (
+    <div className="container mx-auto px-4 py-10">
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Início", url: "/" },
+          { name: "Cidades atendidas", url: "/servicos-de-guincho-e-reboque" },
+          { name: `Guincho em ${location.name}`, url: `/guincho-em-${location.slug}` },
+        ]}
+      />
+
+      <Breadcrumb className="mb-6">
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild><Link to="/">Início</Link></BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link to="/servicos-de-guincho-e-reboque">Cidades</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>{location.name}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+
+      <header className="rounded-2xl bg-[image:var(--gradient-hero,linear-gradient(135deg,hsl(var(--secondary)),hsl(var(--background))))] p-8 md:p-12">
+        <Badge variant="secondary" className="mb-3">
+          <MapPin className="mr-1 h-3 w-3" /> {location.name} — {cityName}/{uf}
+        </Badge>
+        <h1 className="text-3xl font-bold tracking-tight md:text-5xl text-accent">
+          Serviço de Guincho 24 Horas em {location.name} — Chegamos Rápido
+        </h1>
+        <p className="mt-4 max-w-2xl text-muted-foreground">
+          Reboque emergencial 24 horas em {location.name} ({cityName}/{uf}). Atendemos carros,
+          motos e veículos pesados com tempo médio de chegada inferior a 30 minutos. Pane seca,
+          bateria descarregada, troca de pneu e remoção veicular no local.
+        </p>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
+            <a href="https://w.app/guincho24horas">
+              <Phone className="h-4 w-4" /> Ligar para {SITE.phone}
+            </a>
+          </Button>
+          <Button asChild size="lg" variant="outline">
+            <a href="https://w.app/guincho24horas" target="_blank" rel="noopener noreferrer">
+              WhatsApp 24h
+            </a>
+          </Button>
+        </div>
+        <div className="mt-6 flex flex-wrap gap-4 text-sm text-muted-foreground">
+          <span className="flex items-center gap-1"><Clock className="h-4 w-4" /> Atendimento 24h</span>
+          <span className="flex items-center gap-1"><ShieldCheck className="h-4 w-4" /> Empresas credenciadas</span>
+          <span className="flex items-center gap-1"><Star className="h-4 w-4 fill-current text-yellow-500" /> Nota 4.9/5</span>
+        </div>
+      </header>
+
+      <section className="mt-14">
+        <h2 className="text-2xl font-bold md:text-3xl text-accent/90">
+          Serviços disponíveis em {location.name}
+        </h2>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {SERVICE_ITEMS.map((s) => (
+            <Card key={s.title} className="border-border/60">
+              <CardContent className="p-5">
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-md bg-secondary">
+                  <s.icon className="h-5 w-5 text-primary" />
+                </div>
+                <h3 className="font-semibold">{s.title} em {location.name}</h3>
+                <p className="mt-1 text-sm text-muted-foreground">{s.desc}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-14 grid gap-8 md:grid-cols-2">
+        <div>
+          <h2 className="text-2xl font-bold md:text-3xl text-accent/90">
+            Por que escolher nosso guincho em {location.name}?
+          </h2>
+          <ul className="mt-4 space-y-3 text-muted-foreground">
+            <li className="flex gap-3"><Clock className="mt-0.5 h-5 w-5 shrink-0 text-primary" /><span>Tempo médio de chegada em {location.name}: 20 a 30 minutos.</span></li>
+            <li className="flex gap-3"><ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-primary" /><span>Empresas credenciadas, com seguro e operadores treinados.</span></li>
+            <li className="flex gap-3"><Truck className="mt-0.5 h-5 w-5 shrink-0 text-primary" /><span>Frota completa para qualquer porte de veículo.</span></li>
+            <li className="flex gap-3"><Star className="mt-0.5 h-5 w-5 shrink-0 text-primary" /><span>Atendimento avaliado em 4.9/5 por clientes da região.</span></li>
+          </ul>
+        </div>
+        <LeadFormGeo defaultCity={`${location.name} - ${cityName}`} />
+      </section>
+
+      <LazyTestimonialsCarousel />
+    </div>
+  );
+}
 
 const SERVICE_ITEMS = [
   { icon: Car, title: "Guincho para carros", desc: "Plataforma hidráulica para veículos de passeio, SUVs e utilitários." },
