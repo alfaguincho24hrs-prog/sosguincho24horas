@@ -935,7 +935,22 @@ function ProviderRow({
 function BlogAdmin() {
   const [tick, setTick] = useState(0);
   const [editing, setEditing] = useState<BlogPost | null>(null);
-  const posts = useMemo(() => getAllPosts(), [tick]);
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const loadPosts = useServerFn(getAdminBlogPosts);
+  const savePost = useServerFn(saveAdminBlogPost);
+  const removePost = useServerFn(deleteAdminBlogPost);
+
+  useEffect(() => {
+    let cancelled = false;
+    loadPosts({})
+      .then((data) => {
+        if (!cancelled) setPosts(data);
+      })
+      .catch(() => toast.error("Erro ao carregar artigos"));
+    return () => {
+      cancelled = true;
+    };
+  }, [tick, loadPosts]);
 
   const blank: BlogPost = {
     slug: "",
@@ -958,8 +973,8 @@ function BlogAdmin() {
         key={editing?.slug || "new"}
         initial={editing || blank}
         isEdit={!!editing}
-        onSaved={(post) => {
-          upsertPost(post);
+        onSaved={async (post) => {
+          await savePost({ data: post });
           setEditing(null);
           setTick((t) => t + 1);
           toast.success(editing ? "Artigo atualizado" : "Artigo criado");
@@ -983,9 +998,10 @@ function BlogAdmin() {
                   variant="outline"
                   onClick={() => {
                     if (!confirm(`Excluir "${p.title}"?`)) return;
-                    deletePost(p.slug);
-                    setTick((t) => t + 1);
-                    toast.success("Artigo removido");
+                    removePost({ data: { slug: p.slug } }).then(() => {
+                      setTick((t) => t + 1);
+                      toast.success("Artigo removido");
+                    });
                   }}
                 >
                   <Trash2 className="h-4 w-4" />
