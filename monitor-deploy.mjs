@@ -27,7 +27,7 @@ const REMOTE_CHECKS = [
   { name: "sitemap", path: "/sitemap.xml" },
   { name: "robots", path: "/robots.txt" },
   { name: "cidade-exemplo", path: "/guincho-em-taubate-sp" },
-  { name: "rodovias-exemplo", path: "/guinchos-nas-rodovias-dutra" },
+  { name: "rodovias-exemplo", path: "/guinchos-nas-rodovias-marginal-tiete" },
 ];
 
 const results = [];
