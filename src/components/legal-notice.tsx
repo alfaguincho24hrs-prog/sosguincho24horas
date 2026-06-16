@@ -13,13 +13,13 @@ export function LegalNotice() {
         </p>
         <div className="mt-4 flex flex-wrap gap-3">
           <Button asChild className="bg-[image:var(--gradient-cta)] text-primary hover:opacity-90 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2">
-            <Link to="/anuncie" aria-label="Acessar painel para liberar dados da empresa">
+            <Link to="/anuncie">
               <Unlock className="mr-2 h-4 w-4" aria-hidden="true" />
               Clique aqui para liberar
             </Link>
           </Button>
           <Button asChild className="bg-green-600 text-white hover:bg-green-700 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-2">
-            <Link to="/anuncie" aria-label="Acessar página para atualizar telefone da empresa">
+            <Link to="/anuncie">
               <Phone className="mr-2 h-4 w-4" aria-hidden="true" />
               Atualizar seu telefone
             </Link>
