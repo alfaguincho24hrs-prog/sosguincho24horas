@@ -30,6 +30,47 @@ const REMOTE_CHECKS = [
   { name: "rodovias-exemplo", path: "/guinchos-nas-rodovias-marginal-tiete" },
 ];
 
+const htmlProblemPattern = /Something went wrong|An unexpected error occurred|Failed to fetch dynamically imported module/i;
+
+function extractAssetPaths(html) {
+  const paths = new Set();
+  for (const match of html.matchAll(/(?:href|src)=["'](\/assets\/[^"']+)["']/g)) {
+    paths.add(match[1].replace(/\\$/, ""));
+  }
+  for (const match of html.matchAll(/import\(["'](\/assets\/[^"']+)["']\)/g)) {
+    paths.add(match[1].replace(/\\$/, ""));
+  }
+  return [...paths];
+}
+
+async function validatePageAndAssets(path) {
+  const res = await fetch(`${SITE_URL}${path}`, {
+    redirect: "follow",
+    headers: { "Cache-Control": "no-cache", Pragma: "no-cache" },
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+  const contentType = res.headers.get("content-type") ?? "";
+  if (!contentType.includes("text/html")) return { assets: 0 };
+
+  const html = await res.text();
+  if (htmlProblemPattern.test(html)) throw new Error("página renderizou tela de erro");
+
+  const assets = extractAssetPaths(html);
+  for (const asset of assets) {
+    const assetRes = await fetch(`${SITE_URL}${asset}`, { method: "HEAD", redirect: "follow" });
+    if (!assetRes.ok) throw new Error(`asset ausente ${asset} (${assetRes.status})`);
+  }
+  return { assets: assets.length };
+}
+
+async function getSitemapPaths() {
+  const res = await fetch(`${SITE_URL}/sitemap.xml`, { redirect: "follow" });
+  if (!res.ok) throw new Error(`sitemap HTTP ${res.status}`);
+  const xml = await res.text();
+  return [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(([, url]) => new URL(url).pathname || "/");
+}
+
 const results = [];
 
 console.log(`\n🔎 Monitor pós-deploy — alvo: ${SITE_URL}\n`);
@@ -55,15 +96,32 @@ for (const c of CHECKS) {
 for (const r of REMOTE_CHECKS) {
   process.stdout.write(`🌐 ${r.path}... `);
   try {
-    const res = await fetch(`${SITE_URL}${r.path}`, { redirect: "follow" });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    console.log(`✅ ${res.status}`);
+    const checked = await validatePageAndAssets(r.path);
+    console.log(`✅ (${checked.assets} assets)`);
     results.push({ name: `remote:${r.name}`, ok: true });
   } catch (e) {
     console.log(`❌ ${e.message}`);
     results.push({ name: `remote:${r.name}`, ok: false, error: e.message });
   }
   await wait(150);
+}
+
+// 3) Varredura completa do sitemap publicado: todas as URLs precisam abrir e referenciar assets existentes.
+process.stdout.write("🗺️ todas as rotas do sitemap... ");
+try {
+  const paths = [...new Set(await getSitemapPaths())];
+  let checked = 0;
+  for (const path of paths) {
+    await validatePageAndAssets(path);
+    checked += 1;
+    if (checked % 100 === 0) process.stdout.write(`${checked}/${paths.length} `);
+    await wait(25);
+  }
+  console.log(`✅ ${checked}/${paths.length}`);
+  results.push({ name: "remote:sitemap-all-routes", ok: true });
+} catch (e) {
+  console.log(`❌ ${e.message}`);
+  results.push({ name: "remote:sitemap-all-routes", ok: false, error: e.message });
 }
 
 const failed = results.filter((r) => !r.ok);
