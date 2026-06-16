@@ -84,7 +84,7 @@ export const Route = createFileRoute("/")({
     ],
     links: [
       { rel: "canonical", href: "https://sosguincho24horas.com.br" },
-      { rel: "preload", as: "image", href: heroImgWebp, fetchpriority: "high", type: "image/webp" },
+      { rel: "preload", as: "image", href: heroImgWebp, fetchPriority: "high", type: "image/webp" },
       { rel: "preconnect", href: "https://w.app" },
     ],
   }),
