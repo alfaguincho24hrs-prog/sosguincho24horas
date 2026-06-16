@@ -539,6 +539,7 @@ function ProviderForm({
   isEdit?: boolean;
 }) {
   const [f, setF] = useState<FormState>(initial || emptyForm());
+  const [saving, setSaving] = useState(false);
   const logoInput = useRef<HTMLInputElement>(null);
   const photosInput = useRef<HTMLInputElement>(null);
 
@@ -573,8 +574,9 @@ function ProviderForm({
     update("photos", [...f.photos, ...toAdd]);
   };
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (saving) return;
     const name = f.name.trim();
     if (!name) return toast.error("Informe o nome do anunciante");
     if (!isEdit && !city) return toast.error("Selecione uma cidade");
@@ -589,8 +591,15 @@ function ProviderForm({
     }
 
     const data: FormState = { ...f, name };
-    onSaved(data);
-    if (!isEdit) setF(emptyForm());
+    setSaving(true);
+    try {
+      await onSaved(data);
+      if (!isEdit) setF(emptyForm());
+    } catch {
+      toast.error("Erro ao salvar anunciante");
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -820,8 +829,8 @@ function ProviderForm({
           </div>
 
           <div className="md:col-span-2 flex justify-end">
-            <Button type="submit">
-              <Save className="mr-2 h-4 w-4" /> {isEdit ? "Salvar alterações" : "Adicionar anunciante"}
+            <Button type="submit" disabled={saving}>
+              <Save className="mr-2 h-4 w-4" /> {saving ? "Salvando..." : isEdit ? "Salvar alterações" : "Adicionar anunciante"}
             </Button>
           </div>
         </form>
