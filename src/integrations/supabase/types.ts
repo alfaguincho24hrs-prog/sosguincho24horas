@@ -14,7 +14,78 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      added_providers: {
+        Row: {
+          city_slug: string
+          created_at: string
+          id: string
+          provider: Json
+          updated_at: string
+        }
+        Insert: {
+          city_slug: string
+          created_at?: string
+          id: string
+          provider?: Json
+          updated_at?: string
+        }
+        Update: {
+          city_slug?: string
+          created_at?: string
+          id?: string
+          provider?: Json
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      blog_posts: {
+        Row: {
+          created_at: string
+          post: Json
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          post?: Json
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          post?: Json
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      provider_overrides: {
+        Row: {
+          city_slug: string
+          created_at: string
+          id: string
+          patch: Json
+          provider_id: string
+          updated_at: string
+        }
+        Insert: {
+          city_slug: string
+          created_at?: string
+          id?: string
+          patch?: Json
+          provider_id: string
+          updated_at?: string
+        }
+        Update: {
+          city_slug?: string
+          created_at?: string
+          id?: string
+          patch?: Json
+          provider_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
