@@ -1,4 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { getCityLocalData } from "@/components/city-neighborhoods";
 import {
   Clock,
@@ -12,7 +13,7 @@ import {
   Bike,
   Car,
 } from "lucide-react";
-import { lazy, Suspense, useMemo } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -36,6 +37,7 @@ import { EtaBadge } from "@/components/eta-badge";
 import { LeadFormGeo } from "@/components/lead-form-geo";
 import { CitySocialProof } from "@/components/city-social-proof";
 import { findLocationBySlug, type Location } from "@/data/locations";
+import { getPublicCityProviders } from "@/lib/admin-data.functions";
 
 const SITE_URL = "https://sosguincho24horas.com.br";
 
