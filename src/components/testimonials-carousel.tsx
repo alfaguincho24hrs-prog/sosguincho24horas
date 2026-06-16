@@ -208,7 +208,7 @@ export function TestimonialsCarousel({ citySeed }: { citySeed?: string } = {}) {
               <CarouselItem key={i} className="md:basis-1/2 lg:basis-1/3">
                 <Card className="h-full border-border/60">
                   <CardContent className="flex h-full flex-col gap-4 p-6">
-                    <div className="flex items-center gap-1 text-accent" aria-label="Avaliação 5 de 5 estrelas">
+                    <div className="flex items-center gap-1 text-accent" role="img" aria-label="Avaliação 5 de 5 estrelas">
                       {Array.from({ length: 5 }).map((_, idx) => (
                         <Star key={idx} className="h-4 w-4 fill-current" />
                       ))}
