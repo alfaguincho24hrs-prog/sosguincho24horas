@@ -10,7 +10,6 @@ import { LazyTestimonialsCarousel } from "@/components/lazy-testimonials";
 import { LocationsGrid } from "@/components/locations-grid";
 import heroImg from "@/assets/reboque.webp";
 import heroImgWebp from "@/assets/reboque.webp?url";
-import heroImgAvif from "@/assets/reboque.webp?url"; // Fallback to same if not available or just use webp
 
 
 const PartnersCarousel = lazy(() => import("@/components/partners-carousel"));
