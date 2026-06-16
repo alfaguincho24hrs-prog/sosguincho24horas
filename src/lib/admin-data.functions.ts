@@ -6,13 +6,11 @@ import {
   getRawCityProviders,
   listProviderCities,
   type AdminOverrides,
-  type AddedProviders,
   type Provider,
   type ProviderOverride,
   type ProviderTier,
 } from "@/components/city-providers";
 import type { Database } from "@/integrations/supabase/types";
-import { requireAdminSession } from "@/lib/admin-auth.functions";
 
 const providerTierSchema = z.enum(["gold", "silver", "bronze", "ghost"]);
 
@@ -78,8 +76,13 @@ async function getAdminClient() {
   return supabaseAdmin;
 }
 
+async function ensureAdminSession() {
+  const { requireAdminSession } = await import("@/lib/admin-auth.functions");
+  await requireAdminSession();
+}
+
 function cleanProvider(p: Provider): Provider {
-  const copy: Provider = { ...p, tier: p.tier as ProviderTier };
+  const copy: Partial<Provider> = { ...p, tier: p.tier as ProviderTier };
   Object.keys(copy).forEach((key) => {
     if (copy[key as keyof Provider] === undefined || copy[key as keyof Provider] === "") {
       delete copy[key as keyof Provider];
