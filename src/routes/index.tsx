@@ -10,7 +10,6 @@ import { LazyTestimonialsCarousel } from "@/components/lazy-testimonials";
 import { LocationsGrid } from "@/components/locations-grid";
 import heroImg from "@/assets/reboque.webp";
 import heroImgWebp from "@/assets/reboque.webp?url";
-import heroImgAvif from "@/assets/reboque.webp?url"; // Fallback to same if not available or just use webp
 
 
 const PartnersCarousel = lazy(() => import("@/components/partners-carousel"));
@@ -84,7 +83,9 @@ export const Route = createFileRoute("/")({
       },
     ],
     links: [
-      { rel: "canonical", href: "https://sosguincho24horas.com.br" }
+      { rel: "canonical", href: "https://sosguincho24horas.com.br" },
+      { rel: "preload", as: "image", href: heroImgWebp, fetchpriority: "high", type: "image/webp" },
+      { rel: "preconnect", href: "https://w.app" },
     ],
   }),
   component: HomePage,
@@ -96,23 +97,16 @@ function HomePage() {
       {/* HERO */}
       <section className="relative overflow-hidden min-h-[500px]">
         <div className="absolute inset-0">
-          <picture>
-            <source 
-              srcSet={`${heroImgWebp} 1200w, ${heroImgWebp} 800w, ${heroImgWebp} 400w`} 
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 1200px"
-              type="image/webp" 
-            />
-            <img
-              src={heroImg}
-              alt="Serviço de guincho 24 horas e reboque plataforma para carros e motos em rodovias"
-              className="h-full w-full object-cover"
-              width={1200}
-              height={800}
-              fetchPriority="high"
-              loading="eager"
-              decoding="async"
-            />
-          </picture>
+          <img
+            src={heroImg}
+            alt="Serviço de guincho 24 horas e reboque plataforma para carros e motos em rodovias"
+            className="h-full w-full object-cover"
+            width={1200}
+            height={800}
+            fetchPriority="high"
+            loading="eager"
+            decoding="async"
+          />
           <div className="absolute inset-0 bg-[image:var(--gradient-hero)] opacity-90" />
         </div>
         <div className="container relative mx-auto grid gap-10 px-4 py-24 md:grid-cols-2 md:py-36">
