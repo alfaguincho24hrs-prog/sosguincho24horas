@@ -77,7 +77,7 @@ async function getAdminClient() {
 }
 
 async function ensureAdminSession() {
-  const { requireAdminSession } = await import("@/lib/admin-auth.functions");
+  const { requireAdminSession } = await import("@/lib/admin-auth.server");
   await requireAdminSession();
 }
 
