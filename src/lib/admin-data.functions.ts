@@ -166,7 +166,7 @@ export const getPublicCityProviders = createServerFn({ method: "GET" })
 export const getAdminProviderData = createServerFn({ method: "GET" })
   .inputValidator((data) => z.object({ citySlug: z.string().min(1) }).parse(data))
   .handler(async ({ data }) => {
-    await requireAdminSession();
+    await ensureAdminSession();
     const [providerData, cities] = await Promise.all([readProviderData(data.citySlug, true), readProviderCities()]);
     return { ...providerData, cities };
   });
@@ -176,7 +176,7 @@ export const saveAdminProviderOverride = createServerFn({ method: "POST" })
     z.object({ citySlug: z.string().min(1), providerId: z.string().min(1), patch: providerPatchSchema }).parse(data),
   )
   .handler(async ({ data }) => {
-    await requireAdminSession();
+    await ensureAdminSession();
     const client = await getAdminClient();
     const { error } = await client.from("provider_overrides").upsert(
       {
@@ -193,7 +193,7 @@ export const saveAdminProviderOverride = createServerFn({ method: "POST" })
 export const createAdminProvider = createServerFn({ method: "POST" })
   .inputValidator((data) => z.object({ citySlug: z.string().min(1), provider: providerSchema }).parse(data))
   .handler(async ({ data }) => {
-    await requireAdminSession();
+    await ensureAdminSession();
     const client = await getAdminClient();
     const provider = cleanProvider({
       ...data.provider,
@@ -211,7 +211,7 @@ export const createAdminProvider = createServerFn({ method: "POST" })
 export const deleteAdminProvider = createServerFn({ method: "POST" })
   .inputValidator((data) => z.object({ citySlug: z.string().min(1), providerId: z.string().min(1) }).parse(data))
   .handler(async ({ data }) => {
-    await requireAdminSession();
+    await ensureAdminSession();
     const client = await getAdminClient();
     const [{ error: deleteProviderError }, { error: deleteOverrideError }] = await Promise.all([
       client.from("added_providers").delete().eq("id", data.providerId).eq("city_slug", data.citySlug.toLowerCase()),
@@ -232,14 +232,14 @@ export const getPublicBlogPost = createServerFn({ method: "GET" })
   });
 
 export const getAdminBlogPosts = createServerFn({ method: "GET" }).handler(async () => {
-  await requireAdminSession();
+  await ensureAdminSession();
   return readBlogPosts(true);
 });
 
 export const saveAdminBlogPost = createServerFn({ method: "POST" })
   .inputValidator((data) => blogPostSchema.parse(data))
   .handler(async ({ data }) => {
-    await requireAdminSession();
+    await ensureAdminSession();
     const client = await getAdminClient();
     const post = blogPostSchema.parse(data);
     const { error } = await client.from("blog_posts").upsert({ slug: post.slug, post });
@@ -250,7 +250,7 @@ export const saveAdminBlogPost = createServerFn({ method: "POST" })
 export const deleteAdminBlogPost = createServerFn({ method: "POST" })
   .inputValidator((data) => z.object({ slug: z.string().min(1) }).parse(data))
   .handler(async ({ data }) => {
-    await requireAdminSession();
+    await ensureAdminSession();
     const client = await getAdminClient();
     const isDefaultPost = DEFAULT_POSTS.some((post) => post.slug === data.slug);
     const { error } = isDefaultPost
