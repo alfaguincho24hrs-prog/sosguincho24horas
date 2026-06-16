@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { SITE, SERVICES, PARTNERS, CITIES } from "@/components/site-data";
 import { LazyTestimonialsCarousel } from "@/components/lazy-testimonials";
+import { LocationsGrid } from "@/components/locations-grid";
 import heroImg from "@/assets/reboque.webp";
 import heroImgWebp from "@/assets/reboque.webp?url";
 import heroImgAvif from "@/assets/reboque.webp?url"; // Fallback to same if not available or just use webp
@@ -367,6 +368,8 @@ function HomePage() {
       </section>
 
       <LazyTestimonialsCarousel />
+
+      <LocationsGrid />
 
       {/* CTA ANUNCIE */}
       <section className="container mx-auto px-4 py-20">
