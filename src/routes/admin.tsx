@@ -1,19 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { type Provider, type ProviderOverride, type ProviderTier } from "@/components/city-providers";
+import { slugify, type BlogPost } from "@/components/blog-data";
 import {
-  addProvider,
-  getRawCityProviders,
-  listProviderCities,
-  readAddedProviders,
-  readOverrides,
-  removeAddedProvider,
-  setProviderOverride,
-  type Provider,
-  type ProviderOverride,
-  type ProviderTier,
-} from "@/components/city-providers";
-import { getAllPosts, upsertPost, deletePost, slugify, type BlogPost } from "@/components/blog-data";
+  createAdminProvider,
+  deleteAdminBlogPost,
+  deleteAdminProvider,
+  getAdminBlogPosts,
+  getAdminProviderData,
+  saveAdminBlogPost,
+  saveAdminProviderOverride,
+} from "@/lib/admin-data.functions";
 import { ALL_CITIES } from "@/components/cities-data";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -320,21 +318,35 @@ const ALL_CITY_OPTIONS = ALL_CITIES.map((c) => ({
 function AdminEditor({ initialCity }: { initialCity: string }) {
   const [city, setCity] = useState(initialCity || ALL_CITY_OPTIONS[0]?.value || "");
   const [tick, setTick] = useState(0);
+  const [cadastradas, setCadastradas] = useState<string[]>([]);
+  const [providers, setProviders] = useState<Provider[]>([]);
+  const [addedIds, setAddedIds] = useState<Set<string>>(new Set());
+  const [loading, setLoading] = useState(false);
 
-  const cadastradas = useMemo(() => listProviderCities(), [tick]);
+  const loadProviderData = useServerFn(getAdminProviderData);
+  const createProvider = useServerFn(createAdminProvider);
+  const saveProvider = useServerFn(saveAdminProviderOverride);
+  const deleteProvider = useServerFn(deleteAdminProvider);
 
-  const providers = useMemo<Provider[]>(() => {
-    if (!city) return [];
-    const base = getRawCityProviders(city);
-    const ov = readOverrides()[city] || {};
-    return base.map((p) => (p.id && ov[p.id] ? { ...p, ...ov[p.id] } : p));
-  }, [city, tick]);
-
-  const addedIds = useMemo(() => {
-    const added = readAddedProviders()[city] || [];
-    return new Set(added.map((p) => p.id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [city, tick]);
+  useEffect(() => {
+    if (!city) return;
+    let cancelled = false;
+    setLoading(true);
+    loadProviderData({ data: { citySlug: city } })
+      .then((data) => {
+        if (cancelled) return;
+        setProviders(data.providers);
+        setCadastradas(data.cities);
+        setAddedIds(new Set(data.addedProviderIds));
+      })
+      .catch(() => toast.error("Erro ao carregar anunciantes"))
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [city, tick, loadProviderData]);
 
   return (
     <div className="container mx-auto max-w-5xl px-4 py-10">
@@ -383,8 +395,8 @@ function AdminEditor({ initialCity }: { initialCity: string }) {
       <ProviderForm
         key={`new-${city}`}
         city={city}
-        onSaved={(data) => {
-          addProvider(city, {
+        onSaved={async (data) => {
+          await createProvider({ data: { citySlug: city, provider: {
             name: data.name,
             tier: data.tier,
             area: data.area || undefined,
@@ -398,7 +410,7 @@ function AdminEditor({ initialCity }: { initialCity: string }) {
             verified: data.verified,
             logoUrl: data.logoUrl || undefined,
             photos: data.photos.length ? data.photos : undefined,
-          });
+          } } });
           setTick((t) => t + 1);
           toast.success("Anunciante criado");
         }}
@@ -407,6 +419,7 @@ function AdminEditor({ initialCity }: { initialCity: string }) {
       <h2 className="mb-3 mt-8 text-lg font-semibold">
         Anunciantes desta cidade ({providers.length})
       </h2>
+      {loading && <p className="mb-3 text-sm text-muted-foreground">Carregando anunciantes…</p>}
 
       <div className="space-y-3">
         {providers.map((p) => (
@@ -414,18 +427,18 @@ function AdminEditor({ initialCity }: { initialCity: string }) {
             key={p.id || p.name}
             provider={p}
             isCustom={!!p.id && addedIds.has(p.id)}
-            onSave={(patch) => {
+            onSave={async (patch) => {
               if (!p.id) {
                 toast.error("Anunciante sem ID — não pode ser editado.");
                 return;
               }
-              setProviderOverride(city, p.id, patch);
+              await saveProvider({ data: { citySlug: city, providerId: p.id, patch } });
               setTick((t) => t + 1);
               toast.success("Salvo");
             }}
-            onRemove={() => {
+            onRemove={async () => {
               if (!p.id) return;
-              removeAddedProvider(city, p.id);
+              await deleteProvider({ data: { citySlug: city, providerId: p.id } });
               setTick((t) => t + 1);
               toast.success("Anunciante removido");
             }}
@@ -522,10 +535,11 @@ function ProviderForm({
 }: {
   city: string;
   initial?: FormState;
-  onSaved: (data: FormState) => void;
+  onSaved: (data: FormState) => void | Promise<void>;
   isEdit?: boolean;
 }) {
   const [f, setF] = useState<FormState>(initial || emptyForm());
+  const [saving, setSaving] = useState(false);
   const logoInput = useRef<HTMLInputElement>(null);
   const photosInput = useRef<HTMLInputElement>(null);
 
@@ -560,8 +574,9 @@ function ProviderForm({
     update("photos", [...f.photos, ...toAdd]);
   };
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (saving) return;
     const name = f.name.trim();
     if (!name) return toast.error("Informe o nome do anunciante");
     if (!isEdit && !city) return toast.error("Selecione uma cidade");
@@ -576,8 +591,15 @@ function ProviderForm({
     }
 
     const data: FormState = { ...f, name };
-    onSaved(data);
-    if (!isEdit) setF(emptyForm());
+    setSaving(true);
+    try {
+      await onSaved(data);
+      if (!isEdit) setF(emptyForm());
+    } catch {
+      toast.error("Erro ao salvar anunciante");
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -807,8 +829,8 @@ function ProviderForm({
           </div>
 
           <div className="md:col-span-2 flex justify-end">
-            <Button type="submit">
-              <Save className="mr-2 h-4 w-4" /> {isEdit ? "Salvar alterações" : "Adicionar anunciante"}
+            <Button type="submit" disabled={saving}>
+              <Save className="mr-2 h-4 w-4" /> {saving ? "Salvando..." : isEdit ? "Salvar alterações" : "Adicionar anunciante"}
             </Button>
           </div>
         </form>
@@ -825,8 +847,8 @@ function ProviderRow({
 }: {
   provider: Provider;
   isCustom: boolean;
-  onSave: (patch: ProviderOverride) => void;
-  onRemove: () => void;
+  onSave: (patch: ProviderOverride) => void | Promise<void>;
+  onRemove: () => void | Promise<void>;
 }) {
   const [open, setOpen] = useState(false);
   const tierMeta = TIERS.find((t) => t.value === provider.tier)!;
@@ -922,7 +944,22 @@ function ProviderRow({
 function BlogAdmin() {
   const [tick, setTick] = useState(0);
   const [editing, setEditing] = useState<BlogPost | null>(null);
-  const posts = useMemo(() => getAllPosts(), [tick]);
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const loadPosts = useServerFn(getAdminBlogPosts);
+  const savePost = useServerFn(saveAdminBlogPost);
+  const removePost = useServerFn(deleteAdminBlogPost);
+
+  useEffect(() => {
+    let cancelled = false;
+    loadPosts({})
+      .then((data) => {
+        if (!cancelled) setPosts(data);
+      })
+      .catch(() => toast.error("Erro ao carregar artigos"));
+    return () => {
+      cancelled = true;
+    };
+  }, [tick, loadPosts]);
 
   const blank: BlogPost = {
     slug: "",
@@ -945,8 +982,8 @@ function BlogAdmin() {
         key={editing?.slug || "new"}
         initial={editing || blank}
         isEdit={!!editing}
-        onSaved={(post) => {
-          upsertPost(post);
+        onSaved={async (post) => {
+          await savePost({ data: post });
           setEditing(null);
           setTick((t) => t + 1);
           toast.success(editing ? "Artigo atualizado" : "Artigo criado");
@@ -970,9 +1007,10 @@ function BlogAdmin() {
                   variant="outline"
                   onClick={() => {
                     if (!confirm(`Excluir "${p.title}"?`)) return;
-                    deletePost(p.slug);
-                    setTick((t) => t + 1);
-                    toast.success("Artigo removido");
+                    removePost({ data: { slug: p.slug } }).then(() => {
+                      setTick((t) => t + 1);
+                      toast.success("Artigo removido");
+                    });
                   }}
                 >
                   <Trash2 className="h-4 w-4" />

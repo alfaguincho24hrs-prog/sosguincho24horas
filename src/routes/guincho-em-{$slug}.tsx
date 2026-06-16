@@ -1,4 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { getCityLocalData } from "@/components/city-neighborhoods";
 import {
   Clock,
@@ -12,7 +13,7 @@ import {
   Bike,
   Car,
 } from "lucide-react";
-import { lazy, Suspense, useMemo } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -36,6 +37,7 @@ import { EtaBadge } from "@/components/eta-badge";
 import { LeadFormGeo } from "@/components/lead-form-geo";
 import { CitySocialProof } from "@/components/city-social-proof";
 import { findLocationBySlug, type Location } from "@/data/locations";
+import { getPublicCityProviders } from "@/lib/admin-data.functions";
 
 const SITE_URL = "https://sosguincho24horas.com.br";
 
@@ -363,6 +365,23 @@ function CityPage() {
   const telHref = `tel:${SITE.phone.replace(/\D/g, "")}`;
   const local = getCityLocalData(`${city.slug}-${city.uf.toLowerCase()}`, city.uf);
   const copy = getCityCopy(city.name, city.uf, city.slug);
+  const citySlugUf = `${city.slug}-${city.uf.toLowerCase()}`;
+  const fetchProviders = useServerFn(getPublicCityProviders);
+  const [providers, setProviders] = useState(() => getCityProviders(citySlugUf));
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchProviders({ data: { citySlug: citySlugUf } })
+      .then((data) => {
+        if (!cancelled) setProviders(data);
+      })
+      .catch(() => {
+        if (!cancelled) setProviders(getCityProviders(citySlugUf));
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [citySlugUf, fetchProviders]);
 
   const mapQuery = encodeURIComponent(`Guincho 24h ${city.name} ${city.uf}`);
   const mapEmbedSrc = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
@@ -542,7 +561,7 @@ function CityPage() {
 
       {/* Diretório de prestadores (Cards Ouro + Fantasma) */}
       <ProviderDirectory
-        providers={getCityProviders(`${city.slug}-${city.uf.toLowerCase()}`)}
+        providers={providers}
         cityName={city.name}
         cityUf={city.uf}
       />

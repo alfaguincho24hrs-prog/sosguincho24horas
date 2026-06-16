@@ -1,8 +1,10 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, Pencil } from "lucide-react";
 import { getPostBySlug, type BlogPost } from "@/components/blog-data";
+import { getPublicBlogPost } from "@/lib/admin-data.functions";
 
 export const Route = createFileRoute("/blog/$slug")({
   head: ({ params }) => {
@@ -104,11 +106,22 @@ export const Route = createFileRoute("/blog/$slug")({
 
 function BlogPostPage() {
   const { slug } = Route.useParams();
-  const [post, setPost] = useState<BlogPost | null | undefined>(undefined);
+  const [post, setPost] = useState<BlogPost | null | undefined>(() => getPostBySlug(slug) ?? undefined);
+  const loadPost = useServerFn(getPublicBlogPost);
 
   useEffect(() => {
-    setPost(getPostBySlug(slug) ?? null);
-  }, [slug]);
+    let cancelled = false;
+    loadPost({ data: { slug } })
+      .then((data) => {
+        if (!cancelled) setPost(data);
+      })
+      .catch(() => {
+        if (!cancelled) setPost(getPostBySlug(slug) ?? null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [slug, loadPost]);
 
   if (post === undefined) {
     return <div className="container mx-auto px-4 py-20 text-center text-muted-foreground">Carregando…</div>;
