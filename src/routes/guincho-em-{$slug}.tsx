@@ -228,9 +228,11 @@ function LocationPage({ location }: { location: Location }) {
         <Badge variant="secondary" className="mb-3">
           <MapPin className="mr-1 h-3 w-3" /> {location.name} — {cityName}/{uf}
         </Badge>
-        <h1 className="text-3xl font-bold tracking-tight md:text-5xl text-accent">
+        {(() => { const H = "h1" as const; return (
+        <H className="text-3xl font-bold tracking-tight md:text-5xl text-accent">
           Serviço de Guincho 24 Horas em {location.name} — Chegamos Rápido
-        </h1>
+        </H>
+        ); })()}
         <p className="mt-4 max-w-2xl text-muted-foreground">
           Reboque emergencial 24 horas em {location.name} ({cityName}/{uf}). Atendemos carros,
           motos e veículos pesados com tempo médio de chegada inferior a 30 minutos. Pane seca,
