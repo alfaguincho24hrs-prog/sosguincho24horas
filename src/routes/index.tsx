@@ -141,6 +141,18 @@ export const Route = createFileRoute("/")({
           }
         }),
       },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": FAQ_SP.map((f) => ({
+            "@type": "Question",
+            "name": f.q,
+            "acceptedAnswer": { "@type": "Answer", "text": f.a },
+          })),
+        }),
+      },
     ],
     links: [
       { rel: "canonical", href: "https://sosguincho24horas.com.br" },
