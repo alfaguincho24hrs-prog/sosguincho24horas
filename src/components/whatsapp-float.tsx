@@ -1,6 +1,6 @@
 import { MessageCircle } from "lucide-react";
 
-const WHATSAPP_LINK = "https://w.app/guincho24horas";
+const WHATSAPP_LINK = "https://wa.me/5511996451510";
 
 export function WhatsAppFloat() {
   const href = WHATSAPP_LINK;

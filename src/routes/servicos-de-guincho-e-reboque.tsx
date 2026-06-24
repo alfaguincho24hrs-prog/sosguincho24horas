@@ -116,7 +116,7 @@ function CitiesIndexPage() {
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <Button asChild className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
-            <a href="https://w.app/guincho24horas">
+            <a href="https://wa.me/5511996451510">
               <Phone className="h-4 w-4" /> (11) 99645-1510
             </a>
           </Button>
@@ -196,7 +196,7 @@ function CitiesIndexPage() {
         </p>
         <div className="mt-5 flex flex-wrap justify-center gap-3">
           <Button asChild className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
-            <a href="https://w.app/guincho24horas">
+            <a href="https://wa.me/5511996451510">
               <Phone className="h-4 w-4" /> Ligar agora
             </a>
           </Button>

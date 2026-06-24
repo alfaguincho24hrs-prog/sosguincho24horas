@@ -307,7 +307,7 @@ export const Route = createFileRoute("/guinchos-nas-rodovias-{$slug}")({
 function HighwayPage() {
   const { data } = Route.useLoaderData();
   const telHref = `tel:${SITE.phone.replace(/\D/g, "")}`;
-  const whatsappUrl = `https://w.app/guincho24horas`;
+  const whatsappUrl = `https://wa.me/5511996451510`;
 
   return (
     <div className="min-h-screen bg-background">

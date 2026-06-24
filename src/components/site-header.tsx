@@ -54,7 +54,7 @@ export function SiteHeader() {
           <Link to="/contato" activeProps={{ className: "text-accent" }} className="transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md">Contato</Link>
         </nav>
         <Button asChild size="sm" className="bg-[image:var(--gradient-cta)] text-primary hover:opacity-90 focus-visible:ring-2">
-          <a href="https://w.app/guincho24horas">
+          <a href="https://wa.me/5511996451510">
             <Phone className="h-4 w-4" aria-hidden="true" />
             {SITE.phone}
           </a>

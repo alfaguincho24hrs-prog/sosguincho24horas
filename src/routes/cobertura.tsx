@@ -105,7 +105,7 @@ function CoveragePage() {
                 <h3 className="text-lg font-semibold">{p.name}</h3>
                 <p className="flex items-center gap-2 text-sm text-muted-foreground"><MapPin className="h-4 w-4" /> {p.city}</p>
                 <Button asChild className="w-full bg-[image:var(--gradient-cta)] text-primary hover:opacity-95 shadow-sm">
-                  <a href="https://w.app/guincho24horas"><Phone className="h-4 w-4" /> (11) 99645-1510</a>
+                  <a href="https://wa.me/5511996451510"><Phone className="h-4 w-4" /> (11) 99645-1510</a>
                 </Button>
               </CardContent>
             </Card>
