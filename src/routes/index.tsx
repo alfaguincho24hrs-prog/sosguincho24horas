@@ -14,6 +14,44 @@ import heroImgWebp from "@/assets/reboque.webp?url";
 
 const PartnersCarousel = lazy(() => import("@/components/partners-carousel"));
 
+// FAQ específico para São Paulo capital e principais cidades do Estado de SP
+const FAQ_SP = [
+  {
+    q: "Vocês atendem guincho 24 horas em toda a cidade de São Paulo capital?",
+    a: "Sim. Operamos 24h nas Zonas Norte, Sul, Leste, Oeste e Centro de São Paulo, incluindo Marginal Tietê, Marginal Pinheiros, Av. Paulista, 23 de Maio, Radial Leste, Av. Bandeirantes, Faria Lima e principais bairros como Moema, Pinheiros, Tatuapé, Mooca, Santana, Lapa, Morumbi e Jardins.",
+  },
+  {
+    q: "Quanto tempo leva o guincho para chegar em São Paulo capital?",
+    a: "O tempo médio de chegada em São Paulo capital é de 25 a 40 minutos, dependendo do trânsito e da zona. Em horários de pico ou regiões mais distantes das marginais, pode chegar a 45 minutos. Operamos com bases distribuídas em todas as zonas da cidade.",
+  },
+  {
+    q: "Qual o valor de um guincho na cidade de São Paulo?",
+    a: "Em São Paulo capital, o valor médio do guincho urbano fica entre R$ 180 e R$ 400, conforme distância (KM rodados), tipo de veículo (leve, moto ou pesado) e horário (diurno, noturno ou feriado). O orçamento é informado pelo WhatsApp antes do envio do guincho.",
+  },
+  {
+    q: "Vocês atendem na Grande SP, ABC e Vale do Paraíba?",
+    a: "Sim. Cobrimos toda a Grande São Paulo (Guarulhos, Osasco, Barueri, Mogi das Cruzes), ABC (Santo André, São Bernardo, São Caetano, Diadema, Mauá), Vale do Paraíba (São José dos Campos, Taubaté, Jacareí, Pindamonhangaba, Guaratinguetá) e Litoral Norte (Caraguatatuba, Ubatuba, São Sebastião, Ilhabela).",
+  },
+  {
+    q: "Atendem em Campinas, Sorocaba, Santos, Ribeirão Preto e Bauru?",
+    a: "Sim. Atendemos as principais cidades do interior e litoral paulista: Campinas, Jundiaí, Indaiatuba, Sorocaba, Itu, Santos, São Vicente, Praia Grande, Guarujá, Ribeirão Preto, Franca, São José do Rio Preto, Bauru, Marília, Piracicaba, Limeira, Araraquara e São Carlos.",
+  },
+  {
+    q: "Quais rodovias do Estado de SP têm cobertura prioritária?",
+    a: "Atendemos com prioridade Rodovia Presidente Dutra (BR-116), Ayrton Senna / Carvalho Pinto (SP-070), Tamoios (SP-099), Anhanguera (SP-330), Bandeirantes (SP-348), Castello Branco (SP-280), Raposo Tavares (SP-270), Anchieta (SP-150), Imigrantes (SP-160), Régis Bittencourt e Fernão Dias.",
+  },
+  {
+    q: "Atendem Campos do Jordão e a Serra da Mantiqueira?",
+    a: "Sim. Temos cobertura em Campos do Jordão, Santo Antônio do Pinhal, São Bento do Sapucaí e toda a região serrana, com equipamentos preparados para descidas íngremes e curvas fechadas da Floriano Rodrigues Pinheiro (SP-123) e da Oswaldo Cruz (SP-125).",
+  },
+  {
+    q: "Como solicitar guincho em uma cidade específica de São Paulo?",
+    a: "Basta clicar no botão WhatsApp informando o endereço exato (cidade, bairro, rua e referência) e o tipo de veículo. Você recebe o orçamento na hora e o guincho mais próximo da sua localização é despachado imediatamente.",
+  },
+];
+
+
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
