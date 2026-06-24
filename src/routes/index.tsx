@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { SITE, SERVICES, PARTNERS, CITIES } from "@/components/site-data";
+import { SITE, SERVICES, PARTNERS, CAPITAIS, CIDADES_SP } from "@/components/site-data";
 import { LazyTestimonialsCarousel } from "@/components/lazy-testimonials";
 import { LocationsGrid } from "@/components/locations-grid";
 import heroImg from "@/assets/reboque.webp";
@@ -207,19 +207,38 @@ function HomePage() {
         </Suspense>
       </section>
 
-      {/* COVERAGE */}
+      {/* COVERAGE — foco capitais + SP */}
       <section className="bg-primary py-20 text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
-          <Badge className="mb-4 border-accent/40 bg-accent/15 text-accent">Cobertura nacional</Badge>
+          <Badge className="mb-4 border-accent/40 bg-accent/15 text-accent">Cobertura</Badge>
           <h2 className="mx-auto max-w-2xl text-3xl font-bold tracking-tight md:text-4xl text-accent-foreground">
-            Atendemos as principais capitais e regiões metropolitanas do Brasil
+            Atendimento nas principais capitais e em todo o Estado de São Paulo
           </h2>
-          <div className="mx-auto mt-10 flex max-w-4xl flex-wrap justify-center gap-2">
-            {CITIES.map((c) => (
-              <span key={c} className="rounded-full border border-primary-foreground/15 bg-primary-foreground/5 px-4 py-1.5 text-sm">
-                {c}
-              </span>
-            ))}
+
+          <div className="mx-auto mt-10 max-w-4xl">
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-accent">
+              Principais capitais
+            </h3>
+            <div className="flex flex-wrap justify-center gap-2">
+              {CAPITAIS.map((c) => (
+                <span key={c} className="rounded-full border border-primary-foreground/15 bg-primary-foreground/5 px-4 py-1.5 text-sm">
+                  {c}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="mx-auto mt-10 max-w-4xl">
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-accent">
+              Principais cidades de São Paulo
+            </h3>
+            <div className="flex flex-wrap justify-center gap-2">
+              {CIDADES_SP.map((c) => (
+                <span key={c} className="rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-sm">
+                  {c}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </section>
