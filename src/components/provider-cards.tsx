@@ -12,7 +12,7 @@ type Props = {
   cityUf: string;
 };
 
-const CENTRAL_LINK = "https://w.app/guincho24horas";
+const CENTRAL_LINK = "https://wa.me/5511996451510";
 
 const TIER_ORDER = { gold: 0, silver: 1, bronze: 2, ghost: 3 } as const;
 

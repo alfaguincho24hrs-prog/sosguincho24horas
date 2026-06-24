@@ -120,8 +120,8 @@ const RODOVIAS = [
 ];
 
 function RodoviasVPPage() {
-  const telHref = "https://w.app/guincho24horas";
-  const wppHref = "https://w.app/guincho24horas";
+  const telHref = "https://wa.me/5511996451510";
+  const wppHref = "https://wa.me/5511996451510";
 
   return (
     <div className="min-h-screen bg-background">

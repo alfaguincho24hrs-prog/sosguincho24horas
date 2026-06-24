@@ -242,12 +242,12 @@ function LocationPage({ location }: { location: Location }) {
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
-            <a href="https://w.app/guincho24horas">
+            <a href="https://wa.me/5511996451510">
               <Phone className="h-4 w-4" /> Ligar para {SITE.phone}
             </a>
           </Button>
           <Button asChild size="lg" variant="outline">
-            <a href="https://w.app/guincho24horas" target="_blank" rel="noopener noreferrer">
+            <a href="https://wa.me/5511996451510" target="_blank" rel="noopener noreferrer">
               WhatsApp 24h
             </a>
           </Button>
@@ -532,13 +532,13 @@ function CityPage() {
         </div>
         <div className="mt-6 flex flex-wrap gap-3">
           <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
-            <a href="https://w.app/guincho24horas">
+            <a href="https://wa.me/5511996451510">
               <Phone className="h-4 w-4" /> Ligar para (11) 99645-1510
             </a>
           </Button>
           <Button asChild size="lg" variant="outline">
             <a
-              href="https://w.app/guincho24horas"
+              href="https://wa.me/5511996451510"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -958,10 +958,10 @@ function CityPage() {
         </ul>
         <div className="flex flex-wrap gap-3 pt-4">
           <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary">
-            <a href="https://w.app/guincho24horas"><Phone className="h-5 w-5" /> Ligar agora — (11) 99645-1510</a>
+            <a href="https://wa.me/5511996451510"><Phone className="h-5 w-5" /> Ligar agora — (11) 99645-1510</a>
           </Button>
           <Button asChild size="lg" variant="outline">
-            <a href="https://w.app/guincho24horas" target="_blank" rel="noreferrer">
+            <a href="https://wa.me/5511996451510" target="_blank" rel="noreferrer">
               WhatsApp 24h
             </a>
           </Button>
@@ -977,7 +977,7 @@ function CityPage() {
         </p>
         <div className="mt-5 flex flex-wrap justify-center gap-3">
           <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary">
-            <a href="https://w.app/guincho24horas">
+            <a href="https://wa.me/5511996451510">
               <Phone className="h-4 w-4" /> Ligar agora
             </a>
           </Button>

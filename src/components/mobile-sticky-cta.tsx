@@ -5,7 +5,7 @@ type Props = {
   whatsappMsg?: string;
 };
 
-const WHATSAPP_URL = "https://w.app/guincho24horas";
+const WHATSAPP_URL = "https://wa.me/5511996451510";
 
 export const MobileStickyCTA = memo(({ whatsappMsg = "Olá! Preciso de guincho 24h agora." }: Props) => {
   return (

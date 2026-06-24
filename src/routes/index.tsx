@@ -124,7 +124,7 @@ function HomePage() {
             </p>
             <div className="flex flex-wrap gap-3">
               <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
-                <a href="https://w.app/guincho24horas"><Phone className="h-5 w-5" /> Solicitar guincho agora</a>
+                <a href="https://wa.me/5511996451510"><Phone className="h-5 w-5" /> Solicitar guincho agora</a>
               </Button>
               <Button asChild size="lg" variant="secondary">
                 <Link to="/cobertura">Ver cidades atendidas <ArrowRight className="h-4 w-4" /></Link>
@@ -159,7 +159,7 @@ function HomePage() {
                   asChild
                   className="mt-auto w-full animate-button-pulse bg-[image:var(--gradient-cta)] font-bold text-primary shadow-lg shadow-accent/40 hover:animate-none hover:opacity-90 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 transition-all duration-300"
                 >
-                  <a href="https://w.app/guincho24horas" target="_blank" rel="noreferrer">
+                  <a href="https://wa.me/5511996451510" target="_blank" rel="noreferrer">
                     <MessageCircle className="h-4 w-4" /> CHAMAR GUINCHO
                   </a>
                 </Button>
@@ -283,10 +283,10 @@ function HomePage() {
           </p>
           <div className="flex flex-wrap gap-3 pt-4">
             <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
-              <a href="https://w.app/guincho24horas"><Phone className="h-5 w-5" /> Ligar agora — (11) 99645-1510</a>
+              <a href="https://wa.me/5511996451510"><Phone className="h-5 w-5" /> Ligar agora — (11) 99645-1510</a>
             </Button>
             <Button asChild size="lg" variant="outline">
-              <a href="https://w.app/guincho24horas" target="_blank" rel="noreferrer">WhatsApp 24h</a>
+              <a href="https://wa.me/5511996451510" target="_blank" rel="noreferrer">WhatsApp 24h</a>
             </Button>
             <Button asChild size="lg" variant="secondary">
               <Link to="/servicos-de-guincho-e-reboque">Ver todas as cidades</Link>
