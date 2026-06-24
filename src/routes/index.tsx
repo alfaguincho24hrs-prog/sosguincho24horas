@@ -17,14 +17,18 @@ const PartnersCarousel = lazy(() => import("@/components/partners-carousel"));
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Guincho 24 Horas em Todo o Brasil | Reboque e Auto Socorro" },
-      { name: "description", content: "Seu carro quebrou? Atendimento em até 30 min via WhatsApp. SOS guincho 24 horas para Carros, motos e pesados. Orçamento grátis!" },
-      { property: "og:title", content: "Guincho 24 Horas no Brasil | Reboque e Auto Socorro" },
-      { property: "og:description", content: "Seu carro quebrou? Atendimento em até 30 min via WhatsApp. SOS guincho 24 horas para Carros, motos e pesados. Orçamento grátis!" },
+      { title: "Guincho 24h em São Paulo Capital e Interior | SOS Guincho 24 Horas" },
+      { name: "description", content: "Guincho 24 horas em São Paulo capital, Campinas, Santos, Sorocaba, São José dos Campos, Ribeirão Preto e principais cidades de SP. Chegamos em até 40 min. Orçamento na hora pelo WhatsApp." },
+      { name: "keywords", content: "guincho 24 horas São Paulo, guincho SP capital, reboque São Paulo, guincho Campinas, guincho Santos, guincho Sorocaba, guincho São José dos Campos, guincho Ribeirão Preto, guincho Vale do Paraíba, auto socorro SP" },
+      { property: "og:title", content: "Guincho 24h em São Paulo Capital e Principais Cidades do Estado" },
+      { property: "og:description", content: "Atendimento de guincho 24h na capital paulista e nas principais cidades do Estado de SP — Grande SP, ABC, Litoral, Vale do Paraíba e Interior. Chegada em até 40 minutos." },
       { property: "og:image", content: "https://sosguincho24horas.com.br/og-image.webp" },
       { property: "og:url", content: "https://sosguincho24horas.com.br/" },
-      { name: "twitter:title", content: "Guincho 24 Horas no Brasil | Reboque e Auto Socorro" },
-      { name: "twitter:description", content: "Seu carro quebrou? Atendimento em até 30 min via WhatsApp. SOS guincho 24 horas para Carros, motos e pesados. Orçamento grátis!" },
+      { property: "og:locale", content: "pt_BR" },
+      { name: "twitter:title", content: "Guincho 24h em São Paulo Capital e Principais Cidades de SP" },
+      { name: "twitter:description", content: "SOS guincho 24h na capital paulista, Grande SP, ABC, Litoral, Vale do Paraíba e Interior. Atendimento em até 40 min via WhatsApp." },
+      { name: "geo.region", content: "BR-SP" },
+      { name: "geo.placename", content: "São Paulo" },
     ],
     scripts: [
       {
@@ -59,13 +63,31 @@ export const Route = createFileRoute("/")({
             "closes": "23:59"
           },
           "areaServed": [
-            { "@type": "City", "name": "São Paulo" },
+            { "@type": "City", "name": "São Paulo", "@id": "https://www.wikidata.org/wiki/Q174" },
+            { "@type": "City", "name": "Campinas" },
+            { "@type": "City", "name": "Santos" },
+            { "@type": "City", "name": "Sorocaba" },
+            { "@type": "City", "name": "Ribeirão Preto" },
+            { "@type": "City", "name": "São José do Rio Preto" },
+            { "@type": "City", "name": "Bauru" },
+            { "@type": "City", "name": "Piracicaba" },
+            { "@type": "City", "name": "Jundiaí" },
             { "@type": "City", "name": "São José dos Campos" },
             { "@type": "City", "name": "Taubaté" },
             { "@type": "City", "name": "Jacareí" },
-            { "@type": "City", "name": "Caçapava" },
             { "@type": "City", "name": "Pindamonhangaba" },
-            { "@type": "City", "name": "Guaratinguetá" }
+            { "@type": "City", "name": "Guarulhos" },
+            { "@type": "City", "name": "Osasco" },
+            { "@type": "City", "name": "Barueri" },
+            { "@type": "City", "name": "Santo André" },
+            { "@type": "City", "name": "São Bernardo do Campo" },
+            { "@type": "City", "name": "Mogi das Cruzes" },
+            { "@type": "City", "name": "Caraguatatuba" },
+            { "@type": "City", "name": "Ubatuba" },
+            { "@type": "City", "name": "São Sebastião" },
+            { "@type": "City", "name": "Campos do Jordão" },
+            { "@type": "City", "name": "Atibaia" },
+            { "@type": "AdministrativeArea", "name": "Estado de São Paulo" }
           ],
           "hasOfferCatalog": {
             "@type": "OfferCatalog",
