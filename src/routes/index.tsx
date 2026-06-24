@@ -265,6 +265,104 @@ function HomePage() {
         </div>
       </section>
 
+      {/* SEO — SP CAPITAL */}
+      <section className="container mx-auto px-4 py-20" aria-labelledby="seo-sp-capital">
+        <div className="mx-auto max-w-4xl space-y-6">
+          <Badge variant="secondary">São Paulo — Capital</Badge>
+          <h2 id="seo-sp-capital" className="text-3xl font-bold tracking-tight md:text-4xl text-accent">
+            Guincho 24 horas em São Paulo capital — Zona Norte, Sul, Leste, Oeste e Centro
+          </h2>
+          <p className="text-muted-foreground leading-relaxed">
+            Atendimento de <strong>guincho 24h em toda a cidade de São Paulo</strong>, com bases distribuídas pelas
+            quatro zonas e Centro Expandido. Cobrimos as principais avenidas e marginais — <strong>Marginal Tietê</strong>,{" "}
+            <strong>Marginal Pinheiros</strong>, <strong>Av. Paulista</strong>, <strong>Av. 23 de Maio</strong>,{" "}
+            <strong>Radial Leste</strong>, <strong>Av. dos Bandeirantes</strong> e <strong>Av. Brigadeiro Faria Lima</strong> —
+            além de bairros como Moema, Vila Mariana, Pinheiros, Tatuapé, Mooca, Santana, Lapa, Morumbi, Itaquera,
+            Brás, Bela Vista e Jardins. Chegada média entre <strong>25 e 40 minutos</strong> na capital.
+          </p>
+          <h3 className="text-xl font-bold pt-2 text-accent">Serviços mais acionados na capital</h3>
+          <ul className="grid gap-2 text-muted-foreground sm:grid-cols-2">
+            <li>✅ Guincho leve para carros, SUVs e utilitários</li>
+            <li>✅ Guincho de motos com içamento sem dano</li>
+            <li>✅ Auto socorro mecânico no local</li>
+            <li>✅ Pane seca (combustível emergencial)</li>
+            <li>✅ Bateria descarregada e chave trancada</li>
+            <li>✅ Remoção de veículos batidos e sinistros</li>
+          </ul>
+          <div className="flex flex-wrap gap-3 pt-2">
+            <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
+              <a href="https://wa.me/5511996451510"><Phone className="h-5 w-5" /> Guincho em SP capital — WhatsApp</a>
+            </Button>
+            <Button asChild size="lg" variant="outline">
+              <Link to="/guincho-em-{$slug}" params={{ slug: "sao-paulo-sp" }}>Ver página de São Paulo</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* SEO — PRINCIPAIS CIDADES DE SP */}
+      <section className="bg-secondary/40 py-20" aria-labelledby="seo-sp-interior">
+        <div className="container mx-auto max-w-5xl px-4 space-y-6">
+          <Badge variant="secondary">Estado de São Paulo</Badge>
+          <h2 id="seo-sp-interior" className="text-3xl font-bold tracking-tight md:text-4xl text-accent">
+            Guincho 24 horas nas principais cidades de SP
+          </h2>
+          <p className="text-muted-foreground leading-relaxed">
+            Operamos com cobertura prioritária nas regiões mais movimentadas do Estado de São Paulo:{" "}
+            <strong>Grande São Paulo e ABC</strong> (Guarulhos, Osasco, Santo André, São Bernardo, São Caetano,
+            Diadema, Mauá, Barueri, Mogi das Cruzes), <strong>Vale do Paraíba e Litoral Norte</strong>{" "}
+            (São José dos Campos, Taubaté, Jacareí, Pindamonhangaba, Caraguatatuba, Ubatuba, São Sebastião,
+            Ilhabela), <strong>Baixada Santista</strong> (Santos, São Vicente, Praia Grande, Guarujá, Cubatão),{" "}
+            <strong>Região de Campinas</strong> (Campinas, Jundiaí, Indaiatuba, Hortolândia, Sumaré, Valinhos,
+            Vinhedo, Itu, Atibaia, Bragança Paulista), <strong>Sorocaba</strong> e região,{" "}
+            <strong>Ribeirão Preto, Franca e Barretos</strong>, <strong>São José do Rio Preto e Catanduva</strong>,{" "}
+            <strong>Bauru, Marília, Araçatuba e Presidente Prudente</strong>, além de <strong>Campos do Jordão</strong>{" "}
+            e toda a Serra da Mantiqueira.
+          </p>
+
+          <h3 className="text-xl font-bold pt-2 text-accent">Cidades atendidas em destaque</h3>
+          <div className="grid gap-x-6 gap-y-2 sm:grid-cols-2 md:grid-cols-3 text-sm">
+            {CIDADES_SP.map((c) => {
+              const slug = c
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, "-")
+                .replace(/(^-|-$)/g, "");
+              return (
+                <Link
+                  key={c}
+                  to="/guincho-em-{$slug}"
+                  params={{ slug: `${slug}-sp` }}
+                  className="text-muted-foreground hover:text-primary hover:underline"
+                >
+                  Guincho 24h em {c}
+                </Link>
+              );
+            })}
+          </div>
+
+          <h3 className="text-xl font-bold pt-4 text-accent">Por que somos referência no Estado de SP</h3>
+          <ul className="space-y-2 text-muted-foreground leading-relaxed">
+            <li>📍 Bases operacionais na capital, Grande SP, Vale do Paraíba, Baixada Santista, Campinas, Sorocaba, Ribeirão e Interior.</li>
+            <li>🛣️ Cobertura total nas rodovias paulistas: Dutra, Ayrton Senna, Tamoios, Anchieta, Imigrantes, Anhanguera, Bandeirantes, Castello Branco, Raposo Tavares, Régis Bittencourt.</li>
+            <li>⏱️ Chegada em até 40 min na capital e Grande SP; 40–60 min no Interior e rodovias.</li>
+            <li>💬 Solicitação 100% pelo WhatsApp, com orçamento antes do envio.</li>
+          </ul>
+
+          <div className="flex flex-wrap gap-3 pt-2">
+            <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
+              <a href="https://wa.me/5511996451510"><MessageCircle className="h-5 w-5" /> Chamar guincho no Estado de SP</a>
+            </Button>
+            <Button asChild size="lg" variant="outline">
+              <Link to="/cobertura">Ver todas as cidades atendidas</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+
+
       {/* SEO TEXT — AUTORIDADE */}
       <section className="container mx-auto px-4 py-20">
         <div className="mx-auto max-w-4xl space-y-6">
