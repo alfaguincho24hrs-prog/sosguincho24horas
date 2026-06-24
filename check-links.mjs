@@ -5,7 +5,8 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const TARGET_URL = "https://w.app/guincho24horas";
+const ALLOWED_WA = "https://wa.me/5511996451510";
+const ALLOWED_TEL = "tel:+5511996451510";
 const SRC_DIR = path.join(__dirname, 'src');
 
 function getFiles(dir, files = []) {
@@ -25,30 +26,43 @@ const files = getFiles(SRC_DIR);
 let errors = 0;
 
 const WA_REGEX = /https:\/\/wa\.me\/[0-9]+/g;
-const TEL_REGEX = /tel:[0-9+]+/g;
+const TEL_REGEX = /tel:\+?[0-9]+/g;
+const OLD_WAPP_REGEX = /https:\/\/w\.app\/guincho24horas/g;
 
 console.log('--- Iniciando validação de links de contato ---');
 
 files.forEach(file => {
   const content = fs.readFileSync(file, 'utf8');
-  const waMatches = content.match(WA_REGEX);
-  const telMatches = content.match(TEL_REGEX);
 
-  if (waMatches) {
-    waMatches.forEach(match => {
-      console.error(`ERRO: Link wa.me antigo encontrado em ${file}: ${match}`);
+  const oldWapp = content.match(OLD_WAPP_REGEX);
+  if (oldWapp) {
+    oldWapp.forEach(match => {
+      console.error(`ERRO: Link w.app antigo encontrado em ${file}: ${match}`);
       errors++;
     });
   }
 
+  const waMatches = content.match(WA_REGEX);
+  if (waMatches) {
+    waMatches.forEach(match => {
+      if (match !== ALLOWED_WA) {
+        console.error(`ERRO: Link wa.me incorreto em ${file}: ${match}`);
+        errors++;
+      }
+    });
+  }
+
+  const telMatches = content.match(TEL_REGEX);
   if (telMatches) {
     telMatches.forEach(match => {
-      // Exceção opcional se houver algum motivo legítimo, mas o usuário pediu para garantir o correto
-      console.error(`ERRO: Link de telefone antigo encontrado em ${file}: ${match}`);
-      errors++;
+      if (match !== ALLOWED_TEL) {
+        console.error(`ERRO: Link de telefone incorreto em ${file}: ${match}`);
+        errors++;
+      }
     });
   }
 });
+
 
 if (errors > 0) {
   console.error(`--- Validação falhou: ${errors} links incorretos encontrados ---`);
