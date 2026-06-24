@@ -48,13 +48,34 @@ function generateSeoFiles(): Plugin {
     }
     for (const c of ALL_CITIES) {
       const slug = `${c.slug}-${c.uf.toLowerCase()}`;
-      urls.push(`  <url><loc>${SITE_URL}/guincho-em-${slug}</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>`);
+      // Cidades do Estado de SP recebem prioridade maior e atualização semanal
+      // para serem reindexadas com mais frequência pelo Google.
+      const isSP = c.uf.toUpperCase() === "SP";
+      const priority = isSP ? "0.9" : "0.6";
+      const changefreq = isSP ? "weekly" : "monthly";
+      urls.push(`  <url><loc>${SITE_URL}/guincho-em-${slug}</loc><lastmod>${today}</lastmod><changefreq>${changefreq}</changefreq><priority>${priority}</priority></url>`);
     }
     for (const slug of HIGHWAY_SLUGS) {
       urls.push(`  <url><loc>${SITE_URL}/guinchos-nas-rodovias-${slug}</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>`);
     }
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join("\n")}\n</urlset>\n`;
-    const robots = `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`;
+    const robots = [
+      `User-agent: *`,
+      `Allow: /`,
+      // Garantir indexação explícita das páginas de cidades (especialmente SP) e rodovias
+      `Allow: /guincho-em-`,
+      `Allow: /guinchos-nas-rodovias-`,
+      `Disallow: /admin`,
+      `Disallow: /lovable/`,
+      ``,
+      `# Googlebot — prioridade total nas páginas de cidade`,
+      `User-agent: Googlebot`,
+      `Allow: /`,
+      `Allow: /guincho-em-`,
+      ``,
+      `Sitemap: ${SITE_URL}/sitemap.xml`,
+      ``,
+    ].join("\n");
     const dir = resolve(process.cwd(), "public");
     mkdirSync(dir, { recursive: true });
     writeFileSync(resolve(dir, "sitemap.xml"), sitemap, "utf-8");
