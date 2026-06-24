@@ -362,7 +362,7 @@ function CityPage() {
   const data = Route.useLoaderData();
   if (data.kind !== "city") return null;
   const { city } = data;
-  const telHref = `tel:${SITE.phone.replace(/\D/g, "")}`;
+  const telHref = `https://wa.me/5511996451510`;
   const local = getCityLocalData(`${city.slug}-${city.uf.toLowerCase()}`, city.uf);
   const copy = getCityCopy(city.name, city.uf, city.slug);
   const citySlugUf = `${city.slug}-${city.uf.toLowerCase()}`;

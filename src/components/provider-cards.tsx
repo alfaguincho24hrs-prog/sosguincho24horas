@@ -75,7 +75,9 @@ function PaidCard({ p, cityName }: { p: Provider; cityName: string }) {
     `Olá! Preciso de guincho em ${cityName} agora.`
   )}`;
   const telDigits = p.phone || p.whatsapp;
-  const telHref = telDigits ? `tel:${telDigits}` : CENTRAL_LINK;
+  const telHref = telDigits
+    ? (telDigits === SITE.whatsapp ? `https://wa.me/${SITE.whatsapp}` : `tel:${telDigits}`)
+    : CENTRAL_LINK;
   return (
     <Card className={`relative overflow-hidden ${style.border}`}>
       <div className={`absolute right-0 top-0 rounded-bl-lg px-3 py-1 text-xs font-bold uppercase tracking-wide ${style.chip}`}>
