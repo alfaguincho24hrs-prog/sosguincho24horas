@@ -69,11 +69,19 @@ export const PARTNERS = [
   { name: "Florianópolis Tow", city: "Florianópolis - SC", phone: "(48) 4002-1414", rating: 4.9 },
 ];
 
-export const CITIES = [
-  "São Paulo", "Rio de Janeiro", "Belo Horizonte", "Brasília", "Salvador",
-  "Curitiba", "Fortaleza", "Recife", "Porto Alegre", "Manaus",
-  "Goiânia", "Belém", "Campinas", "São Luís", "Maceió",
-  "Natal", "Teresina", "João Pessoa", "Aracaju", "Cuiabá",
-  "Campo Grande", "Florianópolis", "Vitória", "Macapá", "Rio Branco",
-  "Boa Vista", "Palmas",
+// Foco da home: principais capitais do Brasil + principais cidades do Estado de SP
+export const CAPITAIS = [
+  "São Paulo", "Rio de Janeiro", "Belo Horizonte", "Brasília", "Curitiba",
+  "Porto Alegre", "Florianópolis", "Salvador", "Recife", "Fortaleza",
+  "Goiânia", "Vitória",
 ];
+
+export const CIDADES_SP = [
+  "Campinas", "São José dos Campos", "Taubaté", "Jacareí", "Pindamonhangaba",
+  "Guarulhos", "Santo André", "São Bernardo do Campo", "Osasco", "Sorocaba",
+  "Ribeirão Preto", "Santos", "São José do Rio Preto", "Bauru", "Piracicaba",
+  "Jundiaí", "Mogi das Cruzes", "Barueri", "Limeira", "Americana",
+  "Caraguatatuba", "Ubatuba", "São Sebastião", "Campos do Jordão", "Atibaia",
+];
+
+export const CITIES = [...CAPITAIS, ...CIDADES_SP];
