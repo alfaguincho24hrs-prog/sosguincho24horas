@@ -484,6 +484,36 @@ function HomePage() {
         </div>
       </section>
 
+      {/* FAQ — SÃO PAULO CAPITAL E PRINCIPAIS CIDADES */}
+      <section className="container mx-auto px-4 py-20" aria-labelledby="faq-sp-title">
+        <div className="mx-auto max-w-4xl space-y-6">
+          <Badge variant="secondary">FAQ — São Paulo</Badge>
+          <h2 id="faq-sp-title" className="text-3xl font-bold tracking-tight md:text-4xl text-accent">
+            Perguntas frequentes sobre guincho em SP capital e principais cidades
+          </h2>
+          <p className="text-muted-foreground">
+            Dúvidas mais comuns de quem precisa de guincho 24h na cidade de São Paulo, Grande SP, ABC, Vale do Paraíba, Litoral, Campinas, Sorocaba, Santos, Ribeirão Preto e Interior.
+          </p>
+          <Accordion type="single" collapsible className="w-full">
+            {FAQ_SP.map((f, i) => (
+              <AccordionItem key={i} value={`faq-sp-${i}`}>
+                <AccordionTrigger className="text-lg font-semibold hover:no-underline text-left">
+                  {f.q}
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground text-base">
+                  {f.a}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+          <div className="flex flex-wrap gap-3 pt-2">
+            <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
+              <a href="https://wa.me/5511996451510"><Phone className="h-5 w-5" /> Falar com a central de SP</a>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* FAQ SEO */}
       <section className="bg-secondary/40 py-20">
         <div className="container mx-auto max-w-4xl px-4 space-y-6">
