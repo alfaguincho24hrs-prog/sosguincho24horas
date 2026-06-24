@@ -4,7 +4,9 @@ const COOKIE_NAME = "admin_session";
 const SESSION_TTL_MS = 1000 * 60 * 60 * 8;
 
 function getSecret() {
-  return process.env.SESSION_SECRET || process.env.ADMIN_PASSWORD || "lovable-default-secret";
+  const s = process.env.SESSION_SECRET || process.env.ADMIN_PASSWORD;
+  if (!s) throw new Error("SESSION_SECRET is not configured");
+  return s;
 }
 
 function toHex(buf: ArrayBuffer): string {
