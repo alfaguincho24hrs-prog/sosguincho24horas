@@ -86,6 +86,33 @@ export type Database = {
         }
         Relationships: []
       }
+      whatsapp_clicks: {
+        Row: {
+          button_label: string | null
+          created_at: string
+          id: string
+          referrer: string | null
+          source_path: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          button_label?: string | null
+          created_at?: string
+          id?: string
+          referrer?: string | null
+          source_path?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          button_label?: string | null
+          created_at?: string
+          id?: string
+          referrer?: string | null
+          source_path?: string | null
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
