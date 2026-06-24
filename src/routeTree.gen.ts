@@ -29,7 +29,6 @@ import { Route as AnuncieRouteImport } from './routes/anuncie'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
-import { Route as ApiPublicTrackWhatsappRouteImport } from './routes/api/public/track-whatsapp'
 
 const ServicosDeGuinchoEReboqueRoute =
   ServicosDeGuinchoEReboqueRouteImport.update({
@@ -134,11 +133,6 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => BlogRoute,
 } as any)
-const ApiPublicTrackWhatsappRoute = ApiPublicTrackWhatsappRouteImport.update({
-  id: '/api/public/track-whatsapp',
-  path: '/api/public/track-whatsapp',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -161,7 +155,6 @@ export interface FileRoutesByFullPath {
   '/servicos': typeof ServicosRoute
   '/servicos-de-guincho-e-reboque': typeof ServicosDeGuinchoEReboqueRoute
   '/blog/$slug': typeof BlogSlugRoute
-  '/api/public/track-whatsapp': typeof ApiPublicTrackWhatsappRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -184,7 +177,6 @@ export interface FileRoutesByTo {
   '/servicos': typeof ServicosRoute
   '/servicos-de-guincho-e-reboque': typeof ServicosDeGuinchoEReboqueRoute
   '/blog/$slug': typeof BlogSlugRoute
-  '/api/public/track-whatsapp': typeof ApiPublicTrackWhatsappRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -208,7 +200,6 @@ export interface FileRoutesById {
   '/servicos': typeof ServicosRoute
   '/servicos-de-guincho-e-reboque': typeof ServicosDeGuinchoEReboqueRoute
   '/blog/$slug': typeof BlogSlugRoute
-  '/api/public/track-whatsapp': typeof ApiPublicTrackWhatsappRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -233,7 +224,6 @@ export interface FileRouteTypes {
     | '/servicos'
     | '/servicos-de-guincho-e-reboque'
     | '/blog/$slug'
-    | '/api/public/track-whatsapp'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -256,7 +246,6 @@ export interface FileRouteTypes {
     | '/servicos'
     | '/servicos-de-guincho-e-reboque'
     | '/blog/$slug'
-    | '/api/public/track-whatsapp'
   id:
     | '__root__'
     | '/'
@@ -279,7 +268,6 @@ export interface FileRouteTypes {
     | '/servicos'
     | '/servicos-de-guincho-e-reboque'
     | '/blog/$slug'
-    | '/api/public/track-whatsapp'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -302,7 +290,6 @@ export interface RootRouteChildren {
   RodoviasValeDoParaibaRoute: typeof RodoviasValeDoParaibaRoute
   ServicosRoute: typeof ServicosRoute
   ServicosDeGuinchoEReboqueRoute: typeof ServicosDeGuinchoEReboqueRoute
-  ApiPublicTrackWhatsappRoute: typeof ApiPublicTrackWhatsappRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -447,13 +434,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof BlogRoute
     }
-    '/api/public/track-whatsapp': {
-      id: '/api/public/track-whatsapp'
-      path: '/api/public/track-whatsapp'
-      fullPath: '/api/public/track-whatsapp'
-      preLoaderRoute: typeof ApiPublicTrackWhatsappRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -488,7 +468,6 @@ const rootRouteChildren: RootRouteChildren = {
   RodoviasValeDoParaibaRoute: RodoviasValeDoParaibaRoute,
   ServicosRoute: ServicosRoute,
   ServicosDeGuinchoEReboqueRoute: ServicosDeGuinchoEReboqueRoute,
-  ApiPublicTrackWhatsappRoute: ApiPublicTrackWhatsappRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

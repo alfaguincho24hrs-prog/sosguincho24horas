@@ -4,6 +4,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { LegalNotice } from "@/components/legal-notice";
 import { WhatsAppFloat } from "@/components/whatsapp-float";
 import { MobileStickyCTA } from "@/components/mobile-sticky-cta";
+import { WhatsAppTracker } from "@/components/whatsapp-tracker";
 import { Toaster } from "@/components/ui/sonner";
 import { SITE } from "@/components/site-data";
 
@@ -183,6 +184,7 @@ function RootComponent() {
       <WhatsAppFloat />
       <MobileStickyCTA />
       <Toaster />
+      <WhatsAppTracker />
     </div>
   );
 }

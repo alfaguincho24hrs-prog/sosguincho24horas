@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
-// Public, server-side Google Analytics 4 Measurement ID (safe to expose).
-// Leave empty to disable GA4 tracking.
+// Cole aqui o seu Google Analytics 4 Measurement ID (ex.: "G-XXXXXXXXXX").
+// É um identificador público, pode ficar no código. Deixe vazio para desativar.
 const GA_MEASUREMENT_ID = "";
 
 const WA_NUMBER = "5511996451510";
@@ -34,42 +34,27 @@ function deriveLabel(a: HTMLAnchorElement): string {
   return "WhatsApp";
 }
 
-function sendClick(label: string) {
-  try {
-    const payload = JSON.stringify({
-      source_path: window.location.pathname + window.location.search,
-      button_label: label,
-      referrer: document.referrer || undefined,
-    });
-    const url = "/api/public/track-whatsapp";
-    let sent = false;
-    if (navigator.sendBeacon) {
-      try {
-        const blob = new Blob([payload], { type: "application/json" });
-        sent = navigator.sendBeacon(url, blob);
-      } catch {
-        sent = false;
-      }
-    }
-    if (!sent) {
-      fetch(url, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: payload,
-        keepalive: true,
-      }).catch(() => {});
-    }
-  } catch {
-    // swallow — tracking must never block navigation
-  }
-
+function trackClick(label: string) {
+  if (typeof window === "undefined") return;
+  // Google Analytics 4
   if (typeof window.gtag === "function") {
     try {
       window.gtag("event", "whatsapp_click", {
         event_category: "engagement",
         event_label: label,
         page_path: window.location.pathname,
+        page_location: window.location.href,
       });
+    } catch {
+      // ignore
+    }
+  }
+  // Microsoft Clarity (já carregado no projeto)
+  const w = window as unknown as { clarity?: (...args: unknown[]) => void };
+  if (typeof w.clarity === "function") {
+    try {
+      w.clarity("event", "whatsapp_click");
+      w.clarity("set", "whatsapp_button", label);
     } catch {
       // ignore
     }
@@ -82,7 +67,7 @@ export function WhatsAppTracker() {
     if (window.__waTrackerInstalled) return;
     window.__waTrackerInstalled = true;
 
-    // Load GA4 once if configured
+    // Carrega o GA4 uma única vez quando configurado
     if (GA_MEASUREMENT_ID && !document.getElementById("ga4-loader")) {
       const s = document.createElement("script");
       s.id = "ga4-loader";
@@ -94,16 +79,15 @@ export function WhatsAppTracker() {
         window.dataLayer!.push(args);
       };
       window.gtag("js", new Date());
-      window.gtag("config", GA_MEASUREMENT_ID);
+      window.gtag("config", GA_MEASUREMENT_ID, { send_page_view: true });
     }
 
     const handler = (e: MouseEvent) => {
-      // Only track main-button clicks
       if (e.defaultPrevented) return;
       if (e.button !== 0 && e.button !== 1) return;
       const a = findWhatsAppAnchor(e.target);
       if (!a) return;
-      sendClick(deriveLabel(a));
+      trackClick(deriveLabel(a));
     };
 
     document.addEventListener("click", handler, true);
