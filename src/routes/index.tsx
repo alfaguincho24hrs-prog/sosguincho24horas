@@ -236,7 +236,7 @@ function HomePage() {
             minuto conta. O <strong>{SITE.name}</strong> nasceu para conectar motoristas a empresas de guincho,
             reboque e auto socorro mecânico de forma rápida, transparente e segura, com cobertura nas principais
             cidades do país e em todas as rodovias federais e estaduais. Solicite um <strong>guincho 24 horas</strong>{" "}
-            agora mesmo pelo telefone <a className="underline font-semibold" href={`tel:${SITE.phone}`}>{SITE.phone}</a>{" "}
+            agora mesmo pelo telefone <a className="underline font-semibold" href="https://wa.me/5511996451510">{SITE.phone}</a>{" "}
             ou pelo WhatsApp e fale direto com um operador da nossa central de emergências, sem robôs e sem espera.
           </p>
           <p className="text-muted-foreground leading-relaxed">
@@ -352,7 +352,7 @@ function HomePage() {
           </Accordion>
           <div className="flex flex-wrap gap-3 pt-4">
             <Button asChild size="lg">
-              <a href={`tel:${SITE.phone}`}><Phone className="h-5 w-5" /> Solicitar guincho — {SITE.phone}</a>
+              <a href="https://wa.me/5511996451510"><Phone className="h-5 w-5" /> Solicitar guincho — {SITE.phone}</a>
             </Button>
             <Button asChild size="lg" variant="outline">
               <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noreferrer">Chamar no WhatsApp</a>

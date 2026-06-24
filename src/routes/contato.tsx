@@ -41,7 +41,7 @@ function ContactPage() {
 
         <div className="mt-14 grid gap-6 md:grid-cols-4">
           {[
-            { icon: Phone, title: "Telefone", text: SITE.phone, href: `tel:${SITE.phone}` },
+            { icon: Phone, title: "Telefone", text: SITE.phone, href: "https://wa.me/5511996451510" },
             { icon: Mail, title: "E-mail", text: SITE.email, href: `mailto:${SITE.email}` },
             { icon: MapPin, title: "Cobertura", text: "Todo o Brasil" },
             { icon: Clock, title: "Horário", text: "24h · 7 dias" },
