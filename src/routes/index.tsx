@@ -8,6 +8,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { SITE, SERVICES, PARTNERS, CAPITAIS, CIDADES_SP } from "@/components/site-data";
 import { LazyTestimonialsCarousel } from "@/components/lazy-testimonials";
 import { LocationsGrid } from "@/components/locations-grid";
+import { NearbyCitiesModule } from "@/components/nearby-cities";
 import heroImg from "@/assets/reboque.webp";
 import heroImgWebp from "@/assets/reboque.webp?url";
 
