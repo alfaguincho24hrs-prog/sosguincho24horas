@@ -722,6 +722,81 @@ function CityPage() {
       {/* Prova social por cidade */}
       <CitySocialProof cityName={city.name} neighborhoods={local.neighborhoods} uf={city.uf} />
 
+      {/* Como solicitar — passo a passo visível (espelha o HowTo schema) */}
+      <section className="mt-14" aria-labelledby="como-solicitar-titulo">
+        <h2 id="como-solicitar-titulo" className="text-2xl font-bold md:text-3xl text-accent">
+          Como solicitar um guincho 24h em {city.name}
+        </h2>
+        <p className="mt-3 text-muted-foreground max-w-3xl">
+          Passo a passo simples para acionar nosso atendimento em {city.name} - {city.uf}. Tempo médio de chegada: 25 a 45 minutos.
+        </p>
+        <ol className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3 list-none p-0">
+          {[
+            {
+              n: 1,
+              title: "Sinalize o veículo e mantenha-se seguro",
+              text: `Ative o pisca-alerta, posicione o triângulo a pelo menos 30 metros e afaste-se da pista. Em ${city.name}, se estiver em via expressa, aguarde fora do veículo em local protegido.`,
+            },
+            {
+              n: 2,
+              title: "Acione nossa central 24h",
+              text: `Ligue ou envie mensagem pelo WhatsApp (${SITE.phone}). Nossa central responde 24 horas por dia, incluindo feriados e madrugada.`,
+            },
+            {
+              n: 3,
+              title: "Informe a localização e o tipo de veículo",
+              text: `Envie sua localização em tempo real, descreva o veículo (carro, moto, SUV ou pesado) e o tipo de ocorrência (pane, colisão, pane seca, bateria). Confirmamos o destino e fechamos o preço antes do envio.`,
+            },
+            {
+              n: 4,
+              title: "Aguarde o guincho mais próximo",
+              text: `Despachamos a plataforma mais próxima da sua localização em ${city.name}. Tempo médio: 25 a 45 minutos, conforme trânsito.`,
+            },
+            {
+              n: 5,
+              title: "Acompanhe o reboque até o destino",
+              text: `O motorista se identifica, embarca o veículo com segurança e segue até a oficina, residência ou local indicado. Pagamento à vista no destino, com nota fiscal.`,
+            },
+          ].map((step) => (
+            <li
+              key={step.n}
+              id={`passo-${step.n}`}
+              className="relative rounded-2xl border border-border/60 bg-card p-6 shadow-sm scroll-mt-24"
+            >
+              <div className="flex items-start gap-4">
+                <span
+                  aria-hidden="true"
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[image:var(--gradient-cta)] text-primary font-bold text-lg shadow-[var(--shadow-glow)]"
+                >
+                  {step.n}
+                </span>
+                <div>
+                  <h3 className="font-semibold text-base md:text-lg leading-tight">
+                    <span className="sr-only">Passo {step.n}: </span>
+                    {step.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{step.text}</p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
+            <a href={`tel:+55${SITE.whatsapp}`}>Ligar agora — {SITE.phone}</a>
+          </Button>
+          <Button asChild size="lg" variant="outline">
+            <a
+              href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(`Olá! Preciso de guincho 24h em ${city.name}-${city.uf}.`)}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              WhatsApp 24h
+            </a>
+          </Button>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="mt-14">
         <h2 className="text-2xl font-bold md:text-3xl text-accent">{copy.faqTitle}</h2>
