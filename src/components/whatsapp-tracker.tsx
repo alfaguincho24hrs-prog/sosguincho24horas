@@ -75,20 +75,53 @@ export function WhatsAppTracker() {
     if (window.__waTrackerInstalled) return;
     window.__waTrackerInstalled = true;
 
-    // Carrega o GA4 uma única vez quando configurado
-    if (GA_MEASUREMENT_ID && !document.getElementById("ga4-loader")) {
-      const s = document.createElement("script");
-      s.id = "ga4-loader";
-      s.async = true;
-      s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
-      document.head.appendChild(s);
-      window.dataLayer = window.dataLayer || [];
-      window.gtag = function (...args: unknown[]) {
-        window.dataLayer!.push(args);
-      };
-      window.gtag("js", new Date());
-      window.gtag("config", GA_MEASUREMENT_ID, { send_page_view: true });
-    }
+    let analyticsLoaded = false;
+    const loadAnalytics = () => {
+      if (analyticsLoaded) return;
+      analyticsLoaded = true;
+
+      // GA4
+      if (GA_MEASUREMENT_ID && !document.getElementById("ga4-loader")) {
+        const s = document.createElement("script");
+        s.id = "ga4-loader";
+        s.async = true;
+        s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function (...args: unknown[]) {
+          window.dataLayer!.push(args);
+        };
+        window.gtag("js", new Date());
+        window.gtag("config", GA_MEASUREMENT_ID, { send_page_view: true });
+      }
+
+      // Microsoft Clarity (deferred)
+      if (CLARITY_ID && !document.getElementById("clarity-loader")) {
+        const c = document.createElement("script");
+        c.id = "clarity-loader";
+        c.async = true;
+        c.src = `https://www.clarity.ms/tag/${CLARITY_ID}`;
+        document.head.appendChild(c);
+      }
+    };
+
+    // Defer until idle OR first user interaction (whichever comes first)
+    const onInteract = () => {
+      loadAnalytics();
+      cleanupIdle();
+    };
+    const interactionEvents = ["pointerdown", "keydown", "scroll", "touchstart"] as const;
+    interactionEvents.forEach((ev) =>
+      window.addEventListener(ev, onInteract, { once: true, passive: true })
+    );
+    const cleanupIdle = () => {
+      interactionEvents.forEach((ev) => window.removeEventListener(ev, onInteract));
+    };
+    const ric = (window as unknown as { requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number }).requestIdleCallback;
+    const idleId = ric
+      ? ric(() => { loadAnalytics(); cleanupIdle(); }, { timeout: 4000 })
+      : window.setTimeout(() => { loadAnalytics(); cleanupIdle(); }, 3000);
+
 
     const handler = (e: MouseEvent) => {
       if (e.defaultPrevented) return;
