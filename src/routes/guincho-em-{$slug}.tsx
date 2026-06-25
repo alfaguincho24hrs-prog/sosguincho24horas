@@ -38,6 +38,7 @@ import { LeadFormGeo } from "@/components/lead-form-geo";
 import { CitySocialProof } from "@/components/city-social-proof";
 import { findLocationBySlug, type Location } from "@/data/locations";
 import { getPublicCityProviders } from "@/lib/admin-data.functions";
+import { NearbyCitiesModule } from "@/components/nearby-cities";
 
 const SITE_URL = "https://sosguincho24horas.com.br";
 
