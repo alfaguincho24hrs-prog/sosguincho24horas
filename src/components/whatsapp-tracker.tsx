@@ -177,6 +177,10 @@ export function WhatsAppTracker() {
       document.removeEventListener("click", handler, true);
       document.removeEventListener("auxclick", handler as EventListener, true);
       document.removeEventListener("click", stepHandler);
+      cleanupIdle();
+      const cric = (window as unknown as { cancelIdleCallback?: (id: number) => void }).cancelIdleCallback;
+      if (cric && typeof idleId === "number") cric(idleId);
+      else if (typeof idleId === "number") window.clearTimeout(idleId);
     };
   }, []);
 
