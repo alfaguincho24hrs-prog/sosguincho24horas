@@ -101,13 +101,27 @@ routes.map(route => '  <url>\n' +
 };
 
 const generateRobots = () => {
-  const content = 'User-agent: *\n' +
-'Allow: /\n' +
-'\n' +
-'Sitemap: ' + SITE_URL + '/sitemap.xml\n';
+  const content =
+    'User-agent: *\n' +
+    'Allow: /\n' +
+    'Allow: /guincho-em-\n' +
+    'Allow: /guinchos-nas-rodovias-\n' +
+    'Allow: /blog/\n' +
+    'Disallow: /admin\n' +
+    'Disallow: /lovable/\n' +
+    '\n' +
+    '# Googlebot — prioridade nas páginas de cidade (SP) e rodovias\n' +
+    'User-agent: Googlebot\n' +
+    'Allow: /\n' +
+    'Allow: /guincho-em-\n' +
+    'Allow: /guinchos-nas-rodovias-\n' +
+    'Disallow: /admin\n' +
+    '\n' +
+    'Sitemap: ' + SITE_URL + '/sitemap.xml\n';
   fs.writeFileSync('./public/robots.txt', content);
   console.log('✅ robots.txt generated.');
 };
+
 
 const run = () => {
   const staticRoutes = getStaticRoutes();
