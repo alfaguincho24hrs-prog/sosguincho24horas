@@ -397,99 +397,91 @@ function CityPage() {
   const mapQuery = encodeURIComponent(`Guincho 24h ${city.name} ${city.uf}`);
   const mapEmbedSrc = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
 
+  const cityUrl = `https://sosguincho24horas.com.br/guincho-em-${city.slug}-${city.uf.toLowerCase()}`;
+
+  const faqEntities = [
+    ...copy.faqs.map(f => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": { "@type": "Answer", "text": f.a }
+    })),
+    ...(city.slug === 'sao-paulo' || city.slug === 'sao-paulo-sp' ? [
+      {
+        "@type": "Question",
+        "name": "Vocês atendem guincho nas marginais Tietê e Pinheiros?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sim, temos unidades de prontidão em pontos estratégicos das Marginais Tietê e Pinheiros para atendimento imediato em qualquer horário."
+        }
+      },
+      ...SP_REGIONAL_FAQS.flatMap(reg => reg.faqs).map(f => ({
+        "@type": "Question",
+        "name": f.q,
+        "acceptedAnswer": { "@type": "Answer", "text": f.a }
+      }))
+    ] : [])
+  ];
+
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": `SOS Guincho 24 horas - ${city.name}`,
-    "image": "https://sosguincho24horas.com.br/assets/imagem-do-guincho.webp",
-    "@id": `https://sosguincho24horas.com.br/guincho-em-${city.slug}-${city.uf.toLowerCase()}.html`,
-    "url": `https://sosguincho24horas.com.br/guincho-em-${city.slug}-${city.uf.toLowerCase()}`,
-    "telephone": [
-      "+5511996451510",
-      "+5512992184913"
-    ],
-    "priceRange": "$$",
-    "openingHoursSpecification": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday"
-      ],
-      "opens": "00:00",
-      "closes": "23:59"
-    },
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": city.name,
-      "addressRegion": city.uf,
-      "addressCountry": "BR"
-    },
-    "description": `Serviço de guincho 24 horas em ${city.name}, reboque de carros e motos, auto socorro mecânico, remoção de veículos pesados em toda a região. Atendimento rápido e preço justo.`,
-    "areaServed": {
-      "@type": "City",
-      "name": city.name
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.9",
-      "reviewCount": "64"
-    },
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": `Serviços de Reboque em ${city.name}`,
-      "itemListElement": SERVICE_ITEMS.map((s, i) => ({
-        "@type": "Offer",
-        "position": i + 1,
-        "itemOffered": {
-          "@type": "Service",
-          "name": `${s.title} em ${city.name}${city.slug === 'sao-paulo' ? ' e Marginais' : ''}`,
-          "description": s.desc,
-          "provider": {
-            "@type": "LocalBusiness",
-            "name": SITE.name,
-            "telephone": SITE.phone,
-            "url": SITE_URL
-          }
-        }
-      }))
-    },
-    "mainEntity": {
-      "@type": "FAQPage",
-      "mainEntity": [
-        ...copy.faqs.map(f => ({
-          "@type": "Question",
-          "name": f.q,
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": f.a
-          }
-        })),
-        ...(city.slug === 'sao-paulo' || city.slug === 'sao-paulo-sp' ? [
-          {
-            "@type": "Question",
-            "name": "Vocês atendem guincho nas marginais Tietê e Pinheiros?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Sim, temos unidades de prontidão em pontos estratégicos das Marginais Tietê e Pinheiros para atendimento imediato em qualquer horário."
-            }
-          },
-          ...SP_REGIONAL_FAQS.flatMap(reg => reg.faqs).map(f => ({
-            "@type": "Question",
-            "name": f.q,
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": f.a
+    "@graph": [
+      {
+        "@type": "LocalBusiness",
+        "@id": `${cityUrl}#business`,
+        "name": `SOS Guincho 24 horas - ${city.name}`,
+        "image": "https://sosguincho24horas.com.br/assets/imagem-do-guincho.webp",
+        "url": cityUrl,
+        "telephone": ["+5511996451510", "+5512992184913"],
+        "priceRange": "$$",
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+          "opens": "00:00",
+          "closes": "23:59"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": city.name,
+          "addressRegion": city.uf,
+          "addressCountry": "BR"
+        },
+        "description": `Serviço de guincho 24 horas em ${city.name}, reboque de carros e motos, auto socorro mecânico, remoção de veículos pesados em toda a região. Atendimento rápido e preço justo.`,
+        "areaServed": { "@type": "City", "name": city.name },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.9",
+          "reviewCount": "64"
+        },
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": `Serviços de Reboque em ${city.name}`,
+          "itemListElement": SERVICE_ITEMS.map((s, i) => ({
+            "@type": "Offer",
+            "position": i + 1,
+            "itemOffered": {
+              "@type": "Service",
+              "name": `${s.title} em ${city.name}${city.slug === 'sao-paulo' ? ' e Marginais' : ''}`,
+              "description": s.desc,
+              "areaServed": { "@type": "City", "name": city.name },
+              "provider": {
+                "@type": "LocalBusiness",
+                "name": SITE.name,
+                "telephone": SITE.phone,
+                "url": SITE_URL
+              }
             }
           }))
-        ] : [])
-      ]
-    }
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${cityUrl}#faq`,
+        "url": cityUrl,
+        "mainEntity": faqEntities
+      }
+    ]
   };
+
 
   return (
     <div className="container mx-auto px-4 py-10">
