@@ -11,6 +11,7 @@ import { LocationsGrid } from "@/components/locations-grid";
 import { NearbyCitiesModule } from "@/components/nearby-cities";
 import heroImg from "@/assets/reboque.webp";
 import heroImgWebp from "@/assets/reboque.webp?url";
+import heroImgAvif from "@/assets/reboque.avif?url";
 
 
 const PartnersCarousel = lazy(() => import("@/components/partners-carousel"));
