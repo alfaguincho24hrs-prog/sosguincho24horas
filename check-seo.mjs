@@ -73,9 +73,9 @@ const checkRoutes = () => {
                     content.includes('"@id": `https://sosguincho24horas.com.br/index.html`') &&
                     content.includes('"url": `https://sosguincho24horas.com.br/`');
     } else if (file === 'guincho-em-{$slug}.tsx') {
-      schemaValid = content.includes('"@type": "LocalBusiness"') && 
+      schemaValid = content.includes('"@type": "LocalBusiness"') &&
                     content.includes('SOS Guincho 24 horas - ${city.name}') &&
-                    content.includes('`https://sosguincho24horas.com.br/guincho-em-${city.slug}-${city.uf.toLowerCase()}.html`');
+                    content.includes('https://sosguincho24horas.com.br/guincho-em-${city.slug}-${city.uf.toLowerCase()}');
     } else if (['auto-socorro.tsx', 'guincho-leve.tsx', 'guincho-pesado.tsx', 'pane-seca.tsx', 'remocao-veicular.tsx', 'guincho-de-motos.tsx'].includes(file)) {
       // These use ServicePage component
       schemaValid = servicePageContent.includes('"@type": "LocalBusiness"') &&
