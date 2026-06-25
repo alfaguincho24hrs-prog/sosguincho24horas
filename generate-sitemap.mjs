@@ -80,24 +80,98 @@ const getDynamicRoutes = () => {
   ];
 };
 
-const generateSitemap = (routes) => {
+const buildUrlEntry = (route, { changefreq, priority, now }) =>
+  '  <url>\n' +
+  '    <loc>' + SITE_URL + route + '</loc>\n' +
+  '    <lastmod>' + now + '</lastmod>\n' +
+  '    <changefreq>' + changefreq + '</changefreq>\n' +
+  '    <priority>' + priority + '</priority>\n' +
+  '  </url>';
+
+const writeUrlset = (filename, routes, defaults) => {
   const now = new Date().toISOString().split('T')[0];
-  const xml = '<?xml version="1.0" encoding="UTF-8"?>\n' +
-'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-routes.map(route => '  <url>\n' +
-'    <loc>' + SITE_URL + route + '</loc>\n' +
-'    <lastmod>' + now + '</lastmod>\n' +
-'    <changefreq>' + (route === '/' ? 'daily' : 'weekly') + '</changefreq>\n' +
-'    <priority>' + (route === '/' ? '1.0' : route.includes('guincho-em') ? '0.8' : '0.6') + '</priority>\n' +
-'  </url>').join('\n') +
-'\n</urlset>';
-  
-  if (!fs.existsSync('./public')) {
-    fs.mkdirSync('./public', { recursive: true });
-  }
-  
-  fs.writeFileSync('./public/sitemap.xml', xml);
-  console.log('✅ Sitemap generated with ' + routes.length + ' routes.');
+  const xml =
+    '<?xml version="1.0" encoding="UTF-8"?>\n' +
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+    routes.map(r => buildUrlEntry(r.path, {
+      changefreq: r.changefreq || defaults.changefreq,
+      priority: r.priority || defaults.priority,
+      now,
+    })).join('\n') +
+    '\n</urlset>';
+  fs.writeFileSync('./public/' + filename, xml);
+  console.log('✅ ' + filename + ': ' + routes.length + ' URLs.');
+};
+
+// Tier de prioridade para melhor uso do crawl budget:
+// - capitais e cidades-âncora SP recebem priority alta + changefreq daily
+// - demais cidades SP recebem priority média
+// - cidades fora de SP recebem priority padrão
+const TOP_TIER_CITY_SLUGS = new Set([
+  'sao-paulo','guarulhos','campinas','santos','sao-bernardo-do-campo','santo-andre','sao-caetano-do-sul',
+  'diadema','osasco','ribeirao-preto','sorocaba','sao-jose-dos-campos','taubate','jacarei','pindamonhangaba',
+  'rio-de-janeiro','belo-horizonte','curitiba','porto-alegre','brasilia','salvador','recife','fortaleza'
+]);
+
+const classifyCityRoute = (route) => {
+  // route shape: /guincho-em-<slug>-<uf>
+  const m = route.match(/^\/guincho-em-(.+)-([a-z]{2})$/);
+  if (!m) return { priority: '0.7', changefreq: 'weekly' };
+  const [, slug, uf] = m;
+  if (TOP_TIER_CITY_SLUGS.has(slug)) return { priority: '0.9', changefreq: 'daily' };
+  if (uf === 'sp') return { priority: '0.8', changefreq: 'weekly' };
+  return { priority: '0.6', changefreq: 'monthly' };
+};
+
+const generateSitemap = (allRoutes) => {
+  if (!fs.existsSync('./public')) fs.mkdirSync('./public', { recursive: true });
+
+  const staticRoutes = allRoutes
+    .filter(r => !r.startsWith('/guincho-em-') && !r.startsWith('/guinchos-nas-rodovias-') && !r.startsWith('/blog/'))
+    .map(path => ({
+      path,
+      priority: path === '/' ? '1.0' : '0.7',
+      changefreq: path === '/' ? 'daily' : 'monthly',
+    }));
+
+  const cityRoutes = allRoutes
+    .filter(r => r.startsWith('/guincho-em-'))
+    .map(path => ({ path, ...classifyCityRoute(path) }));
+
+  const highwayRoutes = allRoutes
+    .filter(r => r.startsWith('/guinchos-nas-rodovias-'))
+    .map(path => ({ path, priority: '0.8', changefreq: 'weekly' }));
+
+  const blogRoutes = allRoutes
+    .filter(r => r.startsWith('/blog/'))
+    .map(path => ({ path, priority: '0.6', changefreq: 'monthly' }));
+
+  writeUrlset('sitemap-static.xml', staticRoutes, { priority: '0.7', changefreq: 'monthly' });
+  writeUrlset('sitemap-cities.xml', cityRoutes, { priority: '0.8', changefreq: 'weekly' });
+  writeUrlset('sitemap-highways.xml', highwayRoutes, { priority: '0.8', changefreq: 'weekly' });
+  writeUrlset('sitemap-blog.xml', blogRoutes, { priority: '0.6', changefreq: 'monthly' });
+
+  // Sitemap index agregador
+  const now = new Date().toISOString();
+  const indexXml =
+    '<?xml version="1.0" encoding="UTF-8"?>\n' +
+    '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+    ['sitemap-static.xml','sitemap-cities.xml','sitemap-highways.xml','sitemap-blog.xml']
+      .map(name => '  <sitemap>\n    <loc>' + SITE_URL + '/' + name + '</loc>\n    <lastmod>' + now + '</lastmod>\n  </sitemap>')
+      .join('\n') +
+    '\n</sitemapindex>';
+
+  // Mantemos sitemap.xml como índice E também como urlset completo (compat com check-seo.mjs)
+  // Estratégia: sitemap.xml = urlset plano (validação interna), sitemap-index.xml = índice (Google)
+  const flatRoutes = [
+    ...staticRoutes,
+    ...cityRoutes,
+    ...highwayRoutes,
+    ...blogRoutes,
+  ];
+  writeUrlset('sitemap.xml', flatRoutes, { priority: '0.7', changefreq: 'weekly' });
+  fs.writeFileSync('./public/sitemap-index.xml', indexXml);
+  console.log('✅ sitemap-index.xml gerado (4 sub-sitemaps).');
 };
 
 const generateRobots = () => {
@@ -117,6 +191,7 @@ const generateRobots = () => {
     'Allow: /guinchos-nas-rodovias-\n' +
     'Disallow: /admin\n' +
     '\n' +
+    'Sitemap: ' + SITE_URL + '/sitemap-index.xml\n' +
     'Sitemap: ' + SITE_URL + '/sitemap.xml\n';
   fs.writeFileSync('./public/robots.txt', content);
   console.log('✅ robots.txt generated.');
