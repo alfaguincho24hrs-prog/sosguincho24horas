@@ -1,0 +1,41 @@
+# Cloudflare Pages/Workers static headers
+# Assets versionados (hash no nome) — cache imutável de 1 ano
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/_build/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Imagens estáticas — cache longo, mas revalidável
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+/*.avif
+  Cache-Control: public, max-age=31536000, immutable
+/*.png
+  Cache-Control: public, max-age=2592000
+/*.jpg
+  Cache-Control: public, max-age=2592000
+/*.jpeg
+  Cache-Control: public, max-age=2592000
+/*.svg
+  Cache-Control: public, max-age=2592000
+/*.ico
+  Cache-Control: public, max-age=2592000
+
+# Fontes
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/*.woff
+  Cache-Control: public, max-age=31536000, immutable
+
+# Manifest e Service Worker — sempre revalidar
+/manifest.webmanifest
+  Cache-Control: public, max-age=3600, must-revalidate
+/sw.js
+  Cache-Control: no-cache, no-store, must-revalidate
+
+# Sitemap e robots — cache curto
+/sitemap*.xml
+  Cache-Control: public, max-age=3600
+/robots.txt
+  Cache-Control: public, max-age=3600
