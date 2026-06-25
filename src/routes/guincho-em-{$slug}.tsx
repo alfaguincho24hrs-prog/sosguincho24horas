@@ -38,6 +38,7 @@ import { LeadFormGeo } from "@/components/lead-form-geo";
 import { CitySocialProof } from "@/components/city-social-proof";
 import { findLocationBySlug, type Location } from "@/data/locations";
 import { getPublicCityProviders } from "@/lib/admin-data.functions";
+import { NearbyCitiesModule } from "@/components/nearby-cities";
 
 const SITE_URL = "https://sosguincho24horas.com.br";
 
@@ -919,6 +920,9 @@ function CityPage() {
           </div>
         </div>
       </section>
+
+      {/* Módulo de links internos contextuais — cidades próximas na mesma região */}
+      <NearbyCitiesModule currentSlug={`${city.slug}-${city.uf.toLowerCase()}`} />
 
       {/* SEO LONGO — autoridade local */}
       <section className="mt-14 max-w-4xl space-y-5">
