@@ -79,6 +79,114 @@ const REGIONAL_CONTEXT: Record<string, {
     mainAvenues: ["Engenheiro Davi Monteiro Lino", "Siqueira Campos"],
     localFlow: "Fluxo pendular constante com SJC.",
     landmarks: ["Vila Branca", "Parque dos Eucaliptos", "Rio Paraíba do Sul"]
+  },
+  "campinas-sp": {
+    highways: ["Rodovia Anhanguera (SP-330)", "Rodovia dos Bandeirantes (SP-348)", "Rodovia D. Pedro I (SP-065)", "Rodovia Santos Dumont (SP-075)"],
+    mainAvenues: ["Av. Francisco Glicério", "Av. Norte-Sul", "Av. John Boyd Dunlop", "Av. das Amoreiras"],
+    localFlow: "polo logístico do interior, com fluxo industrial pesado entre Viracopos e os anéis viários.",
+    landmarks: ["Aeroporto de Viracopos", "Unicamp", "Shopping Iguatemi Campinas", "Lagoa do Taquaral"]
+  },
+  "santos-sp": {
+    highways: ["Rodovia Anchieta (SP-150)", "Rodovia dos Imigrantes (SP-160)", "Rodovia Cônego Domênico Rangoni"],
+    mainAvenues: ["Av. Ana Costa", "Av. Conselheiro Nébias", "Av. Presidente Wilson (Orla)"],
+    localFlow: "fluxo portuário 24h e descida da Serra do Mar com neblina frequente.",
+    landmarks: ["Porto de Santos", "Aquário Municipal", "Monte Serrat", "Orla da praia"]
+  },
+  "guarulhos-sp": {
+    highways: ["Rodovia Presidente Dutra (BR-116)", "Rodovia Hélio Smidt", "Rodovia Ayrton Senna (SP-070)", "Rodoanel Mário Covas (trecho Norte)"],
+    mainAvenues: ["Av. Tiradentes", "Av. Salgado Filho", "Av. Monteiro Lobato"],
+    localFlow: "trânsito intenso ligado ao Aeroporto de Cumbica e ao corredor industrial da Dutra.",
+    landmarks: ["Aeroporto Internacional de Guarulhos (GRU)", "Internacional Shopping", "Bosque Maia"]
+  },
+  "osasco-sp": {
+    highways: ["Rodovia Castello Branco (SP-280)", "Rodovia Anhanguera (SP-330)", "Rodoanel Mário Covas (trecho Oeste)"],
+    mainAvenues: ["Av. dos Autonomistas", "Av. Sport Club Corinthians Paulista", "Av. Hilário Pereira de Souza"],
+    localFlow: "corredor empresarial Alphaville–Centro de Osasco com picos no horário comercial.",
+    landmarks: ["Alphaville", "SuperShopping Osasco", "Estação Osasco CPTM"]
+  },
+  "ribeirao-preto-sp": {
+    highways: ["Rodovia Anhanguera (SP-330)", "Rodovia Antônio Machado Sant'Anna (SP-255)", "Anel Viário Sul"],
+    mainAvenues: ["Av. Independência", "Av. Nove de Julho", "Av. Presidente Vargas"],
+    localFlow: "fluxo agroindustrial intenso, com tráfego de máquinas e carretas no entorno da Anhanguera.",
+    landmarks: ["USP Ribeirão", "Shopping Iguatemi", "Theatro Pedro II"]
+  },
+  "sorocaba-sp": {
+    highways: ["Rodovia Castelo Branco (SP-280)", "Rodovia Raposo Tavares (SP-270)", "Rodovia Senador José Ermírio de Moraes (SP-075)"],
+    mainAvenues: ["Av. Itavuvu", "Av. Gisele Constantino", "Av. Ipanema"],
+    localFlow: "polo industrial com trânsito de carga pesada entre Iperó, Votorantim e o anel viário.",
+    landmarks: ["Catedral Metropolitana", "Parque das Águas", "Iguatemi Esplanada"]
+  },
+  "sao-bernardo-do-campo-sp": {
+    highways: ["Rodovia Anchieta (SP-150)", "Rodovia dos Imigrantes (SP-160)", "Rodoanel Mário Covas (trecho Sul)"],
+    mainAvenues: ["Av. Kennedy", "Av. Pereira Barreto", "Av. Lucas Nogueira Garcez"],
+    localFlow: "berço automotivo do ABC com fluxo industrial e operários nos três turnos.",
+    landmarks: ["Paço Municipal", "Represa Billings", "Shopping Metrópole"]
+  },
+  "santo-andre-sp": {
+    highways: ["Rodovia Anchieta (SP-150)", "Av. dos Estados", "Rodoanel Mário Covas"],
+    mainAvenues: ["Av. Pereira Barreto", "Av. Industrial", "Av. Dom Pedro II"],
+    localFlow: "ABC paulista com fluxo metroviário e comercial denso.",
+    landmarks: ["Paço Municipal", "Parque Central", "Shopping ABC"]
+  },
+  "sao-caetano-do-sul-sp": {
+    highways: ["Av. dos Estados", "Rodovia Anchieta (SP-150)"],
+    mainAvenues: ["Av. Goiás", "Av. Presidente Kennedy", "Av. Dr. Augusto de Toledo"],
+    localFlow: "cidade compacta com alto IDH e tráfego pendular para SP/ABC.",
+    landmarks: ["Espaço Cerâmica", "Park Shopping São Caetano"]
+  },
+  "diadema-sp": {
+    highways: ["Rodovia dos Imigrantes (SP-160)", "Av. Piraporinha"],
+    mainAvenues: ["Av. Fábio Eduardo Ramos Esquivel", "Av. Antônio Piranga"],
+    localFlow: "trânsito industrial e residencial denso, com gargalos no acesso à Imigrantes.",
+    landmarks: ["Paço Municipal", "Shopping Praça da Moça"]
+  },
+  "rio-de-janeiro-rj": {
+    highways: ["Linha Vermelha", "Linha Amarela", "Avenida Brasil", "Rodovia Presidente Dutra (BR-116)", "Rodovia Washington Luís (BR-040)"],
+    mainAvenues: ["Av. Brasil", "Av. Atlântica", "Av. Presidente Vargas", "Av. das Américas"],
+    localFlow: "trânsito complexo entre Zona Sul, Centro e Baixada com túneis e viadutos críticos.",
+    landmarks: ["Cristo Redentor", "Aeroporto Santos Dumont", "Maracanã", "Aeroporto do Galeão"]
+  },
+  "belo-horizonte-mg": {
+    highways: ["BR-040", "BR-381 (Fernão Dias)", "BR-262", "Anel Rodoviário"],
+    mainAvenues: ["Av. Afonso Pena", "Av. Antônio Carlos", "Av. Cristiano Machado", "Av. do Contorno"],
+    localFlow: "topografia montanhosa com fluxo intenso no Anel Rodoviário e saídas para o interior.",
+    landmarks: ["Praça da Liberdade", "Mineirão", "Mercado Central", "Pampulha"]
+  },
+  "curitiba-pr": {
+    highways: ["BR-116", "BR-277", "BR-376", "Contorno Norte", "Contorno Sul"],
+    mainAvenues: ["Av. Sete de Setembro", "Linha Verde", "Av. Marechal Floriano Peixoto"],
+    localFlow: "sistema BRT eficiente, mas com gargalos nos contornos em horário de pico.",
+    landmarks: ["Jardim Botânico", "Ópera de Arame", "Aeroporto Afonso Pena"]
+  },
+  "porto-alegre-rs": {
+    highways: ["BR-116", "BR-290 (Freeway)", "BR-386"],
+    mainAvenues: ["Av. Ipiranga", "Av. Bento Gonçalves", "Av. Assis Brasil"],
+    localFlow: "trânsito pendular com a Região Metropolitana, com picos na Freeway.",
+    landmarks: ["Mercado Público", "Arena do Grêmio", "Beira-Rio", "Lago Guaíba"]
+  },
+  "brasilia-df": {
+    highways: ["EPTG", "EPIA", "BR-020", "BR-040", "BR-060"],
+    mainAvenues: ["Eixo Monumental", "Eixão (W3)", "Estrada Parque Indústrias Gráficas"],
+    localFlow: "grandes distâncias entre setores com velocidades elevadas e poucos semáforos.",
+    landmarks: ["Congresso Nacional", "Catedral", "Aeroporto JK", "Esplanada dos Ministérios"]
+  },
+  "salvador-ba": {
+    highways: ["BR-324", "BA-099 (Estrada do Coco)", "Av. Paralela"],
+    mainAvenues: ["Av. Tancredo Neves", "Av. ACM", "Av. Sete de Setembro"],
+    localFlow: "trânsito intenso entre Cidade Alta e Baixa, com gargalos na Paralela e BR-324.",
+    landmarks: ["Pelourinho", "Farol da Barra", "Arena Fonte Nova", "Aeroporto de Salvador"]
+  },
+  "recife-pe": {
+    highways: ["BR-101", "BR-232", "Av. Mascarenhas de Morais"],
+    mainAvenues: ["Av. Boa Viagem", "Av. Agamenon Magalhães", "Av. Caxangá"],
+    localFlow: "trânsito complexo com pontes sobre os rios Capibaribe e Beberibe.",
+    landmarks: ["Marco Zero", "Boa Viagem", "Arena Pernambuco", "Aeroporto do Recife"]
+  },
+  "fortaleza-ce": {
+    highways: ["BR-116", "BR-020", "BR-222", "CE-040"],
+    mainAvenues: ["Av. Beira Mar", "Av. Washington Soares", "Av. Bezerra de Menezes"],
+    localFlow: "fluxo turístico forte na orla e logístico no porto do Mucuripe.",
+    landmarks: ["Praia de Iracema", "Beira Mar", "Arena Castelão", "Aeroporto Pinto Martins"]
   }
 };
 
