@@ -148,7 +148,12 @@ export const Route = createFileRoute("/guincho-em-{$slug}")({
         { name: "twitter:title", content: title },
         { name: "twitter:description", content: description },
       ],
-      links: [{ rel: "canonical", href: url }],
+      links: [
+        { rel: "canonical", href: url },
+        { rel: "alternate", hrefLang: "pt-BR", href: url },
+        { rel: "alternate", hrefLang: "pt", href: url },
+        { rel: "alternate", hrefLang: "x-default", href: url },
+      ],
     };
   },
   notFoundComponent: () => (
