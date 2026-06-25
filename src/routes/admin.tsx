@@ -160,13 +160,89 @@ function LogoutButton() {
   );
 }
 
+function ExportMetricsButton() {
+  const fetchMetrics = useServerFn(getCityMetrics);
+  const [busy, setBusy] = useState(false);
+
+  function toCsv(result: CityMetricsResult): string {
+    const headers = [
+      "city_slug",
+      "city_name",
+      "uf",
+      "source",
+      "added_providers",
+      "overrides",
+      "blog_posts",
+    ];
+    const escape = (v: string | number) => {
+      const s = String(v ?? "");
+      return /[",\n;]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+    };
+    const lines = [headers.join(",")];
+    for (const r of result.rows) {
+      lines.push(
+        [
+          r.city_slug,
+          r.city_name,
+          r.uf,
+          r.source,
+          r.added_providers,
+          r.overrides,
+          r.blog_posts,
+        ]
+          .map(escape)
+          .join(","),
+      );
+    }
+    lines.push("");
+    lines.push(`# generated_at,${result.generated_at}`);
+    lines.push(`# total_cities,${result.totals.cities}`);
+    lines.push(`# total_added_providers,${result.totals.added_providers}`);
+    lines.push(`# total_overrides,${result.totals.overrides}`);
+    lines.push(`# total_blog_posts,${result.totals.blog_posts}`);
+    return lines.join("\n");
+  }
+
+  async function handleClick() {
+    if (busy) return;
+    setBusy(true);
+    try {
+      const result = await fetchMetrics({});
+      const csv = "\uFEFF" + toCsv(result); // BOM para Excel BR
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      const date = new Date().toISOString().slice(0, 10);
+      a.href = url;
+      a.download = `metricas-cidades-${date}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      toast.success(`CSV exportado (${result.totals.cities} cidades)`);
+    } catch (err) {
+      console.error(err);
+      toast.error("Falha ao exportar métricas");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <Button variant="outline" size="sm" onClick={handleClick} disabled={busy}>
+      <Download className="mr-2 h-4 w-4" />
+      {busy ? "Exportando…" : "Exportar CSV"}
+    </Button>
+  );
+}
+
 function AdminTabs({ initialCity, onLogout }: { initialCity: string; onLogout?: () => void }) {
 
   const [tab, setTab] = useState<"providers" | "blog" | "seo">("providers");
   return (
     <div>
       <div className="container mx-auto max-w-5xl px-4 pt-6">
-        <div className="flex gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Button
             variant={tab === "providers" ? "default" : "outline"}
             size="sm"
@@ -188,6 +264,9 @@ function AdminTabs({ initialCity, onLogout }: { initialCity: string; onLogout?: 
           >
             Relatório SEO
           </Button>
+          <div className="ml-auto">
+            <ExportMetricsButton />
+          </div>
         </div>
       </div>
       {tab === "providers" ? (
@@ -200,6 +279,8 @@ function AdminTabs({ initialCity, onLogout }: { initialCity: string; onLogout?: 
     </div>
   );
 }
+
+
 
 function SeoReport() {
   const [loading, setLoading] = useState(false);
