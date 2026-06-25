@@ -783,7 +783,7 @@ function CityPage() {
         </ol>
         <div className="mt-8 flex flex-wrap gap-3">
           <Button asChild size="lg" className="bg-[image:var(--gradient-cta)] text-primary shadow-[var(--shadow-glow)] hover:opacity-95">
-            <a href={`tel:+55${SITE.whatsapp}`}>Ligar agora — {SITE.phone}</a>
+            <a href={`tel:+${SITE.whatsapp}`}>Ligar agora — {SITE.phone}</a>
           </Button>
           <Button asChild size="lg" variant="outline">
             <a
