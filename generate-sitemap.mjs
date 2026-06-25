@@ -191,6 +191,7 @@ const generateRobots = () => {
     'Allow: /guinchos-nas-rodovias-\n' +
     'Disallow: /admin\n' +
     '\n' +
+    'Sitemap: ' + SITE_URL + '/sitemap-index.xml\n' +
     'Sitemap: ' + SITE_URL + '/sitemap.xml\n';
   fs.writeFileSync('./public/robots.txt', content);
   console.log('✅ robots.txt generated.');
