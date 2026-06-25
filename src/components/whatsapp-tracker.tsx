@@ -3,6 +3,7 @@ import { useEffect } from "react";
 // Cole aqui o seu Google Analytics 4 Measurement ID (ex.: "G-XXXXXXXXXX").
 // É um identificador público, pode ficar no código. Deixe vazio para desativar.
 const GA_MEASUREMENT_ID = "G-CFYMPZ1QJT";
+const CLARITY_ID = "wdqmhm3onz";
 
 const WA_NUMBER = "5511996451510";
 
