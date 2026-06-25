@@ -920,6 +920,9 @@ function CityPage() {
         </div>
       </section>
 
+      {/* Módulo de links internos contextuais — cidades próximas na mesma região */}
+      <NearbyCitiesModule currentSlug={`${city.slug}-${city.uf.toLowerCase()}`} />
+
       {/* SEO LONGO — autoridade local */}
       <section className="mt-14 max-w-4xl space-y-5">
         <h2 className="text-2xl font-bold md:text-3xl text-accent">{copy.longTitle}</h2>
