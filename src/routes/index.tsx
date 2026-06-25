@@ -11,6 +11,7 @@ import { LocationsGrid } from "@/components/locations-grid";
 import { NearbyCitiesModule } from "@/components/nearby-cities";
 import heroImg from "@/assets/reboque.webp";
 import heroImgWebp from "@/assets/reboque.webp?url";
+import heroImgAvif from "@/assets/reboque.avif?url";
 
 
 const PartnersCarousel = lazy(() => import("@/components/partners-carousel"));
@@ -157,7 +158,7 @@ export const Route = createFileRoute("/")({
     ],
     links: [
       { rel: "canonical", href: "https://sosguincho24horas.com.br" },
-      { rel: "preload", as: "image", href: heroImgWebp, fetchPriority: "high", type: "image/webp" },
+      { rel: "preload", as: "image", href: heroImgAvif, fetchPriority: "high", type: "image/avif" },
       { rel: "preconnect", href: "https://w.app" },
     ],
   }),
@@ -170,16 +171,20 @@ function HomePage() {
       {/* HERO */}
       <section className="relative overflow-hidden min-h-[500px]">
         <div className="absolute inset-0">
-          <img
-            src={heroImg}
-            alt="Serviço de guincho 24 horas e reboque plataforma para carros e motos em rodovias"
-            className="h-full w-full object-cover"
-            width={1200}
-            height={800}
-            fetchPriority="high"
-            loading="eager"
-            decoding="async"
-          />
+          <picture>
+            <source srcSet={heroImgAvif} type="image/avif" />
+            <source srcSet={heroImgWebp} type="image/webp" />
+            <img
+              src={heroImg}
+              alt="Serviço de guincho 24 horas e reboque plataforma para carros e motos em rodovias"
+              className="h-full w-full object-cover"
+              width={1200}
+              height={800}
+              fetchPriority="high"
+              loading="eager"
+              decoding="async"
+            />
+          </picture>
           <div className="absolute inset-0 bg-[image:var(--gradient-hero)] opacity-90" />
         </div>
         <div className="container relative mx-auto grid gap-10 px-4 py-24 md:grid-cols-2 md:py-36">
