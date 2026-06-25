@@ -484,6 +484,11 @@ function HomePage() {
         </div>
       </section>
 
+      {/* Módulo de links internos contextuais — cidades próximas por região */}
+      <section className="container mx-auto px-4 pt-4">
+        <NearbyCitiesModule />
+      </section>
+
       {/* FAQ — SÃO PAULO CAPITAL E PRINCIPAIS CIDADES */}
       <section className="container mx-auto px-4 py-20" aria-labelledby="faq-sp-title">
         <div className="mx-auto max-w-4xl space-y-6">
