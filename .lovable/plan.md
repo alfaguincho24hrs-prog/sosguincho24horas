@@ -1,26 +1,71 @@
-# Plano de Ação: Fase 2 - EEAT e Estrutura Regional
+## Objetivo
 
-## 1. Implementação de Páginas Estratégicas
-*   **Criar `/frota-guincho`:** Página dedicada à frota com detalhes técnicos, tipos de caminhões e fotos representativas.
-*   **Criar `/areas-atendidas`:** Página de autoridade geográfica com visualização de mapas regionais, listagem de cidades, rodovias (como Dutra) e bairros.
-*   **Refinar `/sobre`:** Atualizar a página de "Sobre" com história da empresa, anos de experiência, missão e diferenciais competitivos (atendimento humano, frota própria/parceira, capilaridade).
+Gerar uma planilha agregada **por cidade** combinando:
+- **Métricas internas** (já no banco): nº de prestadores, prestadores adicionados, overrides, posts de blog relacionados, slug, região, UF.
+- **Métricas GA4** (do Google Analytics): `whatsapp_click`, `call_click`, `howto_step_click`, `howto_step_view_click`, sessões e usuários — todos agregados pela dimensão `city_slug` que já enviamos.
 
-## 2. Estrutura de Blog Semântico
-*   **Configuração de Silos:** Implementar os 4 Silos solicitados (`Rodovias`, `Problemas Automotivos`, `Emergências`, `Conteúdo Local`) no `blog-data.ts`.
-*   **Templates de Artigos:** Garantir que o `blog.$slug.tsx` suporte a estrutura obrigatória (Introdução, Problema, Solução, Segurança, CTA, FAQ, Links internos).
+Destino:
+1. **Download CSV sob demanda** no `/admin` (disponível imediatamente).
+2. **Sync automático para Google Sheets** a cada 6 horas via cron (`pg_cron`).
 
-## 3. Melhorias de Confiança e SEO Semântico
-*   **Rodapé Avançado:** Atualizar `site-footer.tsx` para incluir CNPJ, endereço completo, horário, áreas atendidas e blocos de prova social.
-*   **Schema.org:** Expandir o `SITE_JSONLD` em `__root.tsx` para incluir `FAQPage`, `BreadcrumbList`, e `Review` aggregate.
-*   **Interlinking:** Criar rotas automáticas ou blocos de "Artigos Relacionados" nos posts para conectar o Silo de rodovias com cidades atendidas e serviços específicos.
+## Pré-requisitos do usuário (uma única vez)
 
-## 4. Otimização Técnica e UX
-*   **Responsividade:** Ajustar blocos de CTA em dispositivos de 375px (mobile-first).
-*   **Performance:** Manter as otimizações atuais (lazy loading de componentes e imagens).
-*   **Validação:** Executar o script `check-seo` após as alterações para garantir que a semântica de schema e sitemap continue impecável.
+Para a parte GA4 + Google Sheets eu precisarei de **dois connectors** Lovable:
 
-## 5. Detalhes técnicos
-*   Todas as alterações seguirão o padrão atual de `TanStack Router`.
-*   As novas páginas locais serão baseadas nos componentes de `SeoBlock` e `CitySocialProof` para manter a unicidade semântica.
-*   Nenhuma alteração de URL existente será realizada.
-*   O build e SSR permanecerão inalterados.
+1. **Google Analytics Data API** — para ler os eventos por `city_slug`.
+   - Property ID do GA4 (formato `properties/XXXXXXXXX`).
+2. **Google Sheets** — para escrever a planilha.
+   - URL ou ID da planilha de destino (eu crio uma se preferir).
+
+Sem esses connectors, a parte interna (CSV download) já funciona sozinha.
+
+## Entregáveis
+
+### 1. Server function `exportCityMetrics`
+Arquivo: `src/lib/admin-metrics.functions.ts`
+- Protegida por `requireAdminSession` (só roda autenticada).
+- Lê do banco: `added_providers`, `provider_overrides`, `blog_posts` + dataset estático `src/data/locations.ts` (885 cidades).
+- Lê do GA4 via `runReport` na Data API (dimensão `city_slug` + métricas `eventCount` filtradas por `eventName`).
+- Retorna array `{ city_slug, city_name, uf, region, providers_count, added_count, overrides_count, blog_posts_count, whatsapp_clicks, call_clicks, howto_clicks, sessions, users }`.
+
+### 2. Botão "Exportar métricas (CSV)" no `/admin`
+- Header do painel autenticado.
+- Chama `exportCityMetrics`, converte para CSV (BOM UTF-8 para abrir bem no Excel BR), faz download como `metricas-cidades-YYYY-MM-DD.csv`.
+
+### 3. Endpoint de cron `/api/public/jobs/sync-sheets`
+Arquivo: `src/routes/api/public/jobs/sync-sheets.ts`
+- Autenticado por `apikey` header (Supabase anon key).
+- Roda `exportCityMetrics` e grava na planilha Google via connector Sheets (`values:update` no range `Métricas!A1`).
+- Adiciona linha de timestamp na aba `Histórico` para auditoria.
+
+### 4. Agendamento `pg_cron`
+- Job `sync-city-metrics-sheets` a cada 6 horas, chamando o endpoint via `pg_net`.
+
+## Detalhes técnicos
+
+**Banco (sem mudanças de schema)** — apenas leitura agregada das tabelas existentes (`added_providers`, `provider_overrides`, `blog_posts`).
+
+**Chamadas GA4 Data API** via connector gateway:
+```
+POST /v1beta/{propertyId}:runReport
+body: { dimensions:[{name:"customEvent:city_slug"}],
+        metrics:[{name:"eventCount"}],
+        dimensionFilter:{ filter:{ fieldName:"eventName",
+          inListFilter:{ values:["whatsapp_click","call_click","howto_step_click","howto_step_view_click"] } } },
+        dateRanges:[{ startDate:"30daysAgo", endDate:"today" }] }
+```
+Pivot por `eventName` é feito no servidor (loop sobre rows).
+
+**Failure isolada**: se GA4 falhar (token, quota), o CSV ainda é gerado com colunas GA zeradas + nota no rodapé — não quebra o export interno.
+
+**Janela**: padrão últimos 30 dias; configurável depois via query param.
+
+## Ordem de execução
+
+1. Criar `admin-metrics.functions.ts` + `admin-metrics.server.ts`.
+2. Adicionar botão "Exportar CSV" no `/admin` (funciona sem connectors).
+3. Pedir os 2 connectors (GA4 + Sheets) + IDs.
+4. Criar endpoint de cron e agendar via `pg_cron`.
+5. Validar 1ª execução manual e conferir a planilha.
+
+Os passos 1-2 entregam valor imediato. Os 3-5 dependem dos connectors do usuário.
