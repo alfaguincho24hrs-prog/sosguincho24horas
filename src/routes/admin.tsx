@@ -20,6 +20,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   BadgeCheck,
+  Download,
   Image as ImageIcon,
   Lock,
   LogOut,
@@ -32,6 +33,8 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { checkAdminSession, loginAdmin, logoutAdmin } from "@/lib/admin-auth.functions";
+import { getCityMetrics, type CityMetricsResult } from "@/lib/admin-metrics.functions";
+
 
 
 const MAX_PHOTOS = 4;
