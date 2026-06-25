@@ -39,3 +39,70 @@
   Cache-Control: public, max-age=3600
 /robots.txt
   Cache-Control: public, max-age=3600
+
+# =========================================================
+# HTML por rota — estratégia: navegador sempre revalida
+# (max-age=0) para receber deploys imediatamente, mas a CDN
+# guarda a versão atual (s-maxage) e serve stale enquanto
+# revalida em background (stale-while-revalidate).
+# =========================================================
+
+# Home — mais visitada, conteúdo estável
+/
+  Cache-Control: public, max-age=0, s-maxage=900, stale-while-revalidate=86400
+  Vary: Accept-Encoding
+
+# Páginas institucionais (mudam raramente) — CDN 1h, SWR 1 dia
+/servicos
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+/servicos-de-guincho-e-reboque
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+/cobertura
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+/areas-atendidas
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+/frota-guincho
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+/contato
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+/anuncie
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+
+# Páginas de serviço
+/guincho-leve
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+/guincho-pesado
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+/guincho-de-motos
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+/auto-socorro
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+/pane-seca
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+/remocao-veicular
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+
+# Cidades (885 rotas) — conteúdo programático muito estável
+# CDN cacheia 6h, serve stale por até 7 dias enquanto revalida
+/guincho-em-*
+  Cache-Control: public, max-age=0, s-maxage=21600, stale-while-revalidate=604800
+
+# Rodovias — também muito estáveis
+/guinchos-nas-rodovias-*
+  Cache-Control: public, max-age=0, s-maxage=21600, stale-while-revalidate=604800
+/rodovias-vale-do-paraiba
+  Cache-Control: public, max-age=0, s-maxage=21600, stale-while-revalidate=604800
+
+# Blog — listagem revalida mais cedo (novos posts), artigos longos
+/blog
+  Cache-Control: public, max-age=0, s-maxage=600, stale-while-revalidate=86400
+/blog/*
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=604800
+
+# Admin — NUNCA cachear (dados sensíveis e dinâmicos)
+/admin
+  Cache-Control: private, no-store, no-cache, must-revalidate
+/admin/*
+  Cache-Control: private, no-store, no-cache, must-revalidate
+/api/*
+  Cache-Control: private, no-store, no-cache, must-revalidate
