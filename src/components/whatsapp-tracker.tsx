@@ -14,13 +14,10 @@ declare global {
   }
 }
 
-function findWhatsAppAnchor(target: EventTarget | null): HTMLAnchorElement | null {
+function findAnchor(target: EventTarget | null): HTMLAnchorElement | null {
   let el = target as HTMLElement | null;
   while (el && el.nodeType === 1) {
-    if (el.tagName === "A") {
-      const href = (el as HTMLAnchorElement).getAttribute("href") || "";
-      if (href.includes(`wa.me/${WA_NUMBER}`)) return el as HTMLAnchorElement;
-    }
+    if (el.tagName === "A") return el as HTMLAnchorElement;
     el = el.parentElement;
   }
   return null;
@@ -31,30 +28,40 @@ function deriveLabel(a: HTMLAnchorElement): string {
   if (aria) return aria.trim().slice(0, 120);
   const text = (a.innerText || a.textContent || "").trim().replace(/\s+/g, " ");
   if (text) return text.slice(0, 120);
-  return "WhatsApp";
+  return a.getAttribute("href") || "link";
 }
 
-function trackClick(label: string) {
+function getCityContext(pathname: string): { city_slug: string; page_type: string } {
+  const cityMatch = pathname.match(/^\/guincho-em-(.+)$/);
+  if (cityMatch) return { city_slug: cityMatch[1], page_type: "city" };
+  const hwyMatch = pathname.match(/^\/guinchos-nas-rodovias-(.+)$/);
+  if (hwyMatch) return { city_slug: hwyMatch[1], page_type: "highway" };
+  return { city_slug: "", page_type: pathname === "/" ? "home" : "other" };
+}
+
+function sendEvent(name: string, params: Record<string, unknown>) {
   if (typeof window === "undefined") return;
-  // Google Analytics 4
+  const ctx = getCityContext(window.location.pathname);
+  const payload = {
+    ...params,
+    ...ctx,
+    page_path: window.location.pathname,
+    page_location: window.location.href,
+  };
   if (typeof window.gtag === "function") {
     try {
-      window.gtag("event", "whatsapp_click", {
-        event_category: "engagement",
-        event_label: label,
-        page_path: window.location.pathname,
-        page_location: window.location.href,
-      });
+      window.gtag("event", name, payload);
     } catch {
       // ignore
     }
   }
-  // Microsoft Clarity (já carregado no projeto)
   const w = window as unknown as { clarity?: (...args: unknown[]) => void };
   if (typeof w.clarity === "function") {
     try {
-      w.clarity("event", "whatsapp_click");
-      w.clarity("set", "whatsapp_button", label);
+      w.clarity("event", name);
+      if (typeof params.event_label === "string") {
+        w.clarity("set", name, params.event_label);
+      }
     } catch {
       // ignore
     }
@@ -85,16 +92,57 @@ export function WhatsAppTracker() {
     const handler = (e: MouseEvent) => {
       if (e.defaultPrevented) return;
       if (e.button !== 0 && e.button !== 1) return;
-      const a = findWhatsAppAnchor(e.target);
+      const a = findAnchor(e.target);
       if (!a) return;
-      trackClick(deriveLabel(a));
+      const href = a.getAttribute("href") || "";
+      const label = deriveLabel(a);
+
+      // WhatsApp
+      if (href.includes(`wa.me/${WA_NUMBER}`)) {
+        sendEvent("whatsapp_click", { event_category: "engagement", event_label: label });
+        return;
+      }
+      // Telefone
+      if (href.startsWith("tel:")) {
+        sendEvent("call_click", { event_category: "engagement", event_label: label, phone: href.replace("tel:", "") });
+        return;
+      }
+      // Âncoras de passo (#passo-1 ... #passo-5) — clique direto OU clique num link com href="#passo-N"
+      const stepMatch = href.match(/#passo-(\d+)/);
+      if (stepMatch) {
+        sendEvent("howto_step_click", {
+          event_category: "engagement",
+          event_label: `passo-${stepMatch[1]}`,
+          step_number: Number(stepMatch[1]),
+        });
+        return;
+      }
+    };
+
+    // Rastrear também cliques dentro dos cards de passo (li#passo-N) mesmo sem âncora
+    const stepHandler = (e: MouseEvent) => {
+      let el = e.target as HTMLElement | null;
+      while (el && el.nodeType === 1) {
+        if (el.id && /^passo-\d+$/.test(el.id)) {
+          const n = Number(el.id.replace("passo-", ""));
+          sendEvent("howto_step_view_click", {
+            event_category: "engagement",
+            event_label: el.id,
+            step_number: n,
+          });
+          return;
+        }
+        el = el.parentElement;
+      }
     };
 
     document.addEventListener("click", handler, true);
     document.addEventListener("auxclick", handler as EventListener, true);
+    document.addEventListener("click", stepHandler);
     return () => {
       document.removeEventListener("click", handler, true);
       document.removeEventListener("auxclick", handler as EventListener, true);
+      document.removeEventListener("click", stepHandler);
     };
   }, []);
 
