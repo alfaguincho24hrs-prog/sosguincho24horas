@@ -478,9 +478,66 @@ function CityPage() {
         "@id": `${cityUrl}#faq`,
         "url": cityUrl,
         "mainEntity": faqEntities
+      },
+      {
+        "@type": "HowTo",
+        "@id": `${cityUrl}#howto`,
+        "name": `Como solicitar um guincho 24h em ${city.name}`,
+        "description": `Passo a passo para acionar nosso serviço de guincho e reboque em ${city.name} - ${city.uf}, com atendimento 24 horas e tempo médio de chegada de 25 a 45 minutos.`,
+        "totalTime": "PT35M",
+        "estimatedCost": {
+          "@type": "MonetaryAmount",
+          "currency": "BRL",
+          "value": "0"
+        },
+        "supply": [
+          { "@type": "HowToSupply", "name": "Documento do veículo (CRLV)" },
+          { "@type": "HowToSupply", "name": "Documento pessoal com foto" }
+        ],
+        "tool": [
+          { "@type": "HowToTool", "name": "Celular com WhatsApp ou linha telefônica" }
+        ],
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Sinalize o veículo e mantenha-se seguro",
+            "text": `Ative o pisca-alerta, posicione o triângulo a pelo menos 30 metros e afaste-se da pista. Em ${city.name}, se estiver em via expressa, aguarde fora do veículo em local protegido.`,
+            "url": `${cityUrl}#passo-1`
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Acione nossa central 24h",
+            "text": `Ligue ou envie mensagem pelo WhatsApp (${SITE.phone}). Nossa central de ${city.name} responde 24 horas por dia, incluindo feriados e madrugada.`,
+            "url": `${cityUrl}#passo-2`
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Informe a localização e o tipo de veículo",
+            "text": `Envie sua localização em tempo real, descreva o veículo (carro, moto, SUV ou pesado) e o tipo de ocorrência (pane, colisão, pane seca, bateria). Confirmamos o destino e fechamos o preço antes do envio.`,
+            "url": `${cityUrl}#passo-3`
+          },
+          {
+            "@type": "HowToStep",
+            "position": 4,
+            "name": "Aguarde o guincho mais próximo",
+            "text": `Despachamos a plataforma mais próxima da sua localização em ${city.name}. Tempo médio de chegada: 25 a 45 minutos, conforme trânsito e ponto da ocorrência.`,
+            "url": `${cityUrl}#passo-4`
+          },
+          {
+            "@type": "HowToStep",
+            "position": 5,
+            "name": "Acompanhe o reboque até o destino",
+            "text": `O motorista se identifica, embarca o veículo com segurança e segue até a oficina, residência ou local indicado. Pagamento à vista no destino, com nota fiscal.`,
+            "url": `${cityUrl}#passo-5`
+          }
+        ]
       }
     ]
   };
+
 
 
   return (
