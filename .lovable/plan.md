@@ -1,71 +1,37 @@
-## Objetivo
 
-Gerar uma planilha agregada **por cidade** combinando:
-- **Métricas internas** (já no banco): nº de prestadores, prestadores adicionados, overrides, posts de blog relacionados, slug, região, UF.
-- **Métricas GA4** (do Google Analytics): `whatsapp_click`, `call_click`, `howto_step_click`, `howto_step_view_click`, sessões e usuários — todos agregados pela dimensão `city_slug` que já enviamos.
+# Arquitetura de "ilhas": HTML estável + ilhas dinâmicas
 
-Destino:
-1. **Download CSV sob demanda** no `/admin` (disponível imediatamente).
-2. **Sync automático para Google Sheets** a cada 6 horas via cron (`pg_cron`).
+Hoje o HTML das rotas de cidade/rodovia contém trechos que mudam a cada renderização (datas relativas, ETA "ao vivo", tracker do WhatsApp). Isso força o edge/cliente a tratar a página inteira como potencialmente instável e polui o HTML servido com valores voláteis.
 
-## Pré-requisitos do usuário (uma única vez)
+O objetivo é separar claramente:
+- **Casca estável** (SSR/SSG) — cacheável agressivamente pelo CDN, sem valores que variem por request
+- **Ilhas dinâmicas** — componentes client-only, hidratados no navegador, sem impacto no HTML servido
 
-Para a parte GA4 + Google Sheets eu precisarei de **dois connectors** Lovable:
+## Mudanças
 
-1. **Google Analytics Data API** — para ler os eventos por `city_slug`.
-   - Property ID do GA4 (formato `properties/XXXXXXXXX`).
-2. **Google Sheets** — para escrever a planilha.
-   - URL ou ID da planilha de destino (eu crio uma se preferir).
+### 1. `EtaBadge` → ilha client-only
+Hoje `useState(base)` roda no SSR e imprime um número no HTML. Envolver em `<ClientOnly>` com placeholder estático (ex.: "Guincho mais próximo — em instantes"). O ETA "ao vivo" só aparece após hidratação — o HTML servido fica idêntico entre requests.
 
-Sem esses connectors, a parte interna (CSV download) já funciona sozinha.
+### 2. `CitySocialProof` → datas determinísticas
+`new Date()` dentro do componente faz o `datePublished` do JSON-LD e o "há N dias" mudarem a cada build/SSR, invalidando cache. Trocar por data-base determinística (seed do nome da cidade + offset fixo) — o HTML fica byte-idêntico entre revalidações.
 
-## Entregáveis
+### 3. `WhatsAppTracker` → já é client-only
+Confirmar que não emite nada no HTML SSR (checar `useEffect`-only). Se necessário, envolver em `<ClientOnly>`.
 
-### 1. Server function `exportCityMetrics`
-Arquivo: `src/lib/admin-metrics.functions.ts`
-- Protegida por `requireAdminSession` (só roda autenticada).
-- Lê do banco: `added_providers`, `provider_overrides`, `blog_posts` + dataset estático `src/data/locations.ts` (885 cidades).
-- Lê do GA4 via `runReport` na Data API (dimensão `city_slug` + métricas `eventCount` filtradas por `eventName`).
-- Retorna array `{ city_slug, city_name, uf, region, providers_count, added_count, overrides_count, blog_posts_count, whatsapp_clicks, call_clicks, howto_clicks, sessions, users }`.
+### 4. `MobileStickyCTA` / `WhatsAppFloat` → SSR estável
+Verificar se dependem de `useMobile`/`window`. Se sim, renderizar sempre (CSS media queries decide visibilidade) — sem branch por JS no SSR.
 
-### 2. Botão "Exportar métricas (CSV)" no `/admin`
-- Header do painel autenticado.
-- Chama `exportCityMetrics`, converte para CSV (BOM UTF-8 para abrir bem no Excel BR), faz download como `metricas-cidades-YYYY-MM-DD.csv`.
+### 5. Helper `<ClientOnly>` + `useHydrated`
+Criar `src/components/client-only.tsx` com `useSyncExternalStore` (ou `useEffect + useState`) para renderizar `fallback` no servidor e o filho após hidratação — padrão para novas ilhas.
 
-### 3. Endpoint de cron `/api/public/jobs/sync-sheets`
-Arquivo: `src/routes/api/public/jobs/sync-sheets.ts`
-- Autenticado por `apikey` header (Supabase anon key).
-- Roda `exportCityMetrics` e grava na planilha Google via connector Sheets (`values:update` no range `Métricas!A1`).
-- Adiciona linha de timestamp na aba `Histórico` para auditoria.
+## Resultado
 
-### 4. Agendamento `pg_cron`
-- Job `sync-city-metrics-sheets` a cada 6 horas, chamando o endpoint via `pg_net`.
+- HTML das 885 rotas de cidade + rodovias fica **determinístico**: mesmo deploy = mesmos bytes, cache do CDN raramente invalida
+- CDN pode manter `s-maxage` alto sem risco de servir "há 3 dias" quando o correto seria "há 4 dias"
+- Ilhas (ETA ao vivo, tracker) continuam funcionando, só que 100% no cliente
 
 ## Detalhes técnicos
 
-**Banco (sem mudanças de schema)** — apenas leitura agregada das tabelas existentes (`added_providers`, `provider_overrides`, `blog_posts`).
-
-**Chamadas GA4 Data API** via connector gateway:
-```
-POST /v1beta/{propertyId}:runReport
-body: { dimensions:[{name:"customEvent:city_slug"}],
-        metrics:[{name:"eventCount"}],
-        dimensionFilter:{ filter:{ fieldName:"eventName",
-          inListFilter:{ values:["whatsapp_click","call_click","howto_step_click","howto_step_view_click"] } } },
-        dateRanges:[{ startDate:"30daysAgo", endDate:"today" }] }
-```
-Pivot por `eventName` é feito no servidor (loop sobre rows).
-
-**Failure isolada**: se GA4 falhar (token, quota), o CSV ainda é gerado com colunas GA zeradas + nota no rodapé — não quebra o export interno.
-
-**Janela**: padrão últimos 30 dias; configurável depois via query param.
-
-## Ordem de execução
-
-1. Criar `admin-metrics.functions.ts` + `admin-metrics.server.ts`.
-2. Adicionar botão "Exportar CSV" no `/admin` (funciona sem connectors).
-3. Pedir os 2 connectors (GA4 + Sheets) + IDs.
-4. Criar endpoint de cron e agendar via `pg_cron`.
-5. Validar 1ª execução manual e conferir a planilha.
-
-Os passos 1-2 entregam valor imediato. Os 3-5 dependem dos connectors do usuário.
+- `ClientOnly` usa `const hydrated = useSyncExternalStore(() => () => {}, () => true, () => false)` — sem warning de hidratação
+- `CitySocialProof`: `const daysAgo = 1 + ((seed + i * 11) % 28)`; `datePublished` calculado a partir de uma **época fixa** (ex.: `EPOCH = new Date("2026-01-01")`) + `daysAgo`, não `new Date()`
+- Nenhuma mudança em roteamento, loaders ou `_headers`
