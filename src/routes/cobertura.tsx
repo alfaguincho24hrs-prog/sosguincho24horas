@@ -11,6 +11,7 @@ import { SeoBlock } from "@/components/seo-block";
 import { LazyTestimonialsCarousel } from "@/components/lazy-testimonials";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 import { getFeaturedPartners } from "@/lib/admin-data.functions";
+import { buildResponsiveSources } from "@/lib/responsive-image";
 
 type FeaturedPartner = Awaited<ReturnType<typeof getFeaturedPartners>>[number];
 
