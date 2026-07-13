@@ -39,6 +39,7 @@ import { CitySocialProof } from "@/components/city-social-proof";
 import { findLocationBySlug, type Location } from "@/data/locations";
 import { getPublicCityProviders } from "@/lib/admin-data.functions";
 import { NearbyCitiesModule } from "@/components/nearby-cities";
+import { fetchPublicCityProvidersClient } from "@/lib/public-admin-data.client";
 
 const SITE_URL = "https://sosguincho24horas.com.br";
 
@@ -66,6 +67,11 @@ function findCity(slug: string): City | undefined {
 }
 
 export const Route = createFileRoute("/guincho-em-{$slug}")({
+  headers: () => ({
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "CDN-Cache-Control": "no-store",
+    "Cloudflare-CDN-Cache-Control": "no-store",
+  }),
   loader: async ({ params }) => {
     const slug = params.slug.startsWith("{") ? "sao-paulo-sp" : params.slug;
     // 1) Tenta cidade
@@ -392,7 +398,8 @@ function CityPage() {
 
   useEffect(() => {
     let cancelled = false;
-    fetchProviders({ data: { citySlug: citySlugUf } })
+    fetchPublicCityProvidersClient(citySlugUf)
+      .catch(() => fetchProviders({ data: { citySlug: citySlugUf } }))
       .then((d) => {
         if (!cancelled) setProviders(d);
       })

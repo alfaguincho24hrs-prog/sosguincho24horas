@@ -5,8 +5,14 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, Pencil } from "lucide-react";
 import { getPostBySlug, type BlogPost } from "@/components/blog-data";
 import { getPublicBlogPost } from "@/lib/admin-data.functions";
+import { fetchPublicBlogPostClient } from "@/lib/public-admin-data.client";
 
 export const Route = createFileRoute("/blog/$slug")({
+  headers: () => ({
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "CDN-Cache-Control": "no-store",
+    "Cloudflare-CDN-Cache-Control": "no-store",
+  }),
   loader: async ({ params }) => {
     try {
       const post = await getPublicBlogPost({ data: { slug: params.slug } });
@@ -120,7 +126,8 @@ function BlogPostPage() {
 
   useEffect(() => {
     let cancelled = false;
-    loadPost({ data: { slug } })
+    fetchPublicBlogPostClient(slug)
+      .catch(() => loadPost({ data: { slug } }))
       .then((data) => {
         if (!cancelled) setPost(data);
       })

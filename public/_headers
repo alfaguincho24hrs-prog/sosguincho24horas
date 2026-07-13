@@ -86,7 +86,9 @@
 # HTML precisa refletir edições imediatamente: sem cache no navegador,
 # CDN só serve stale enquanto revalida em background.
 /guincho-em-*
-  Cache-Control: public, max-age=0, s-maxage=0, must-revalidate, stale-while-revalidate=60
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+  CDN-Cache-Control: no-store
+  Cloudflare-CDN-Cache-Control: no-store
 
 # Rodovias — conteúdo estático
 /guinchos-nas-rodovias-*
@@ -96,9 +98,13 @@
 
 # Blog — editável pelo admin, sempre revalidar
 /blog
-  Cache-Control: public, max-age=0, s-maxage=0, must-revalidate, stale-while-revalidate=60
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+  CDN-Cache-Control: no-store
+  Cloudflare-CDN-Cache-Control: no-store
 /blog/*
-  Cache-Control: public, max-age=0, s-maxage=0, must-revalidate, stale-while-revalidate=60
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+  CDN-Cache-Control: no-store
+  Cloudflare-CDN-Cache-Control: no-store
 
 # Admin — NUNCA cachear (dados sensíveis e dinâmicos)
 /admin
