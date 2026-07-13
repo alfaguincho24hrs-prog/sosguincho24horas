@@ -11,6 +11,7 @@ import { SeoBlock } from "@/components/seo-block";
 import { LazyTestimonialsCarousel } from "@/components/lazy-testimonials";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 import { getFeaturedPartners } from "@/lib/admin-data.functions";
+import { buildResponsiveSources } from "@/lib/responsive-image";
 
 type FeaturedPartner = Awaited<ReturnType<typeof getFeaturedPartners>>[number];
 
@@ -155,16 +156,37 @@ function CoveragePage() {
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-primary text-primary-foreground">
                       {p.logoUrl ? (
-                        <img
-                          src={p.logoUrl}
-                          alt={`Logotipo ${p.name}`}
-                          className="h-full w-full object-cover"
-                          loading="lazy"
-                          decoding="async"
-                          width={44}
-                          height={44}
-                          sizes="44px"
-                        />
+                        (() => {
+                          const sources = buildResponsiveSources(p.logoUrl, [44, 64], "44px");
+                          if (sources) {
+                            return (
+                              <picture>
+                                <source type="image/avif" srcSet={sources.avif} sizes={sources.sizesAttr} />
+                                <source type="image/webp" srcSet={sources.webp} sizes={sources.sizesAttr} />
+                                <img
+                                  src={sources.fallback}
+                                  alt={`Logotipo ${p.name}`}
+                                  className="h-full w-full object-cover"
+                                  loading="lazy"
+                                  decoding="async"
+                                  width={44}
+                                  height={44}
+                                />
+                              </picture>
+                            );
+                          }
+                          return (
+                            <img
+                              src={p.logoUrl}
+                              alt={`Logotipo ${p.name}`}
+                              className="h-full w-full object-cover"
+                              loading="lazy"
+                              decoding="async"
+                              width={44}
+                              height={44}
+                            />
+                          );
+                        })()
                       ) : (
                         <Truck className="h-5 w-5" />
                       )}
