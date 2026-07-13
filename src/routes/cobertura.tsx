@@ -5,6 +5,7 @@ import { Link } from "@tanstack/react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { PARTNERS, CITIES } from "@/components/site-data";
 import { SeoBlock } from "@/components/seo-block";
 import { LazyTestimonialsCarousel } from "@/components/lazy-testimonials";
