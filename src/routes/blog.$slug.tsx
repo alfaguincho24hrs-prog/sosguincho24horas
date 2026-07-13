@@ -7,6 +7,14 @@ import { getPostBySlug, type BlogPost } from "@/components/blog-data";
 import { getPublicBlogPost } from "@/lib/admin-data.functions";
 
 export const Route = createFileRoute("/blog/$slug")({
+  loader: async ({ params }) => {
+    try {
+      const post = await getPublicBlogPost({ data: { slug: params.slug } });
+      return { post: post ?? getPostBySlug(params.slug) ?? null };
+    } catch {
+      return { post: getPostBySlug(params.slug) ?? null };
+    }
+  },
   head: ({ params }) => {
     const post = getPostBySlug(params.slug);
     const url = `https://sosguincho24horas.com.br/blog/${params.slug}`;
