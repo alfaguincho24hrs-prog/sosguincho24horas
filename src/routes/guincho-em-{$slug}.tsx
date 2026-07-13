@@ -66,11 +66,20 @@ function findCity(slug: string): City | undefined {
 }
 
 export const Route = createFileRoute("/guincho-em-{$slug}")({
-  loader: ({ params }) => {
+  loader: async ({ params }) => {
     const slug = params.slug.startsWith("{") ? "sao-paulo-sp" : params.slug;
     // 1) Tenta cidade
     const city = findCity(slug);
-    if (city) return { kind: "city" as const, city };
+    if (city) {
+      const citySlugUf = `${city.slug}-${city.uf.toLowerCase()}`;
+      let providers = getCityProviders(citySlugUf);
+      try {
+        providers = await getPublicCityProviders({ data: { citySlug: citySlugUf } });
+      } catch {
+        // fallback silencioso para dados estáticos
+      }
+      return { kind: "city" as const, city, providers };
+    }
     // 2) Tenta bairro/localidade (SEO programático)
     const location = findLocationBySlug(slug);
     if (location) return { kind: "location" as const, location };
