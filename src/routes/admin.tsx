@@ -52,11 +52,26 @@ export const Route = createFileRoute("/admin")({
   component: AdminPage,
 });
 
+const CANONICAL_ADMIN_HOST = "sosguincho24horas.lovable.app";
+
 function AdminPage() {
   const search = Route.useSearch();
   const [authed, setAuthed] = useState<boolean | null>(null);
   const [pwd, setPwd] = useState("");
   const [submitting, setSubmitting] = useState(false);
+
+  // Se o admin for aberto em um domínio que não é o canônico (ex.: proxy
+  // externo servindo build antigo), redireciona para o domínio Lovable onde
+  // os assets e server functions estão sempre atualizados.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const host = window.location.hostname;
+    const isLovable = host.endsWith(".lovable.app") || host === "localhost" || host === "127.0.0.1";
+    if (isLovable) return;
+    const qs = search.city ? `?city=${encodeURIComponent(search.city)}` : "";
+    window.location.replace(`https://${CANONICAL_ADMIN_HOST}/admin${qs}`);
+  }, [search.city]);
+
 
   const checkSession = useServerFn(checkAdminSession);
   const login = useServerFn(loginAdmin);
