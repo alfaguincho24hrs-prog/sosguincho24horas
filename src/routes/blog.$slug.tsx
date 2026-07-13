@@ -15,8 +15,8 @@ export const Route = createFileRoute("/blog/$slug")({
       return { post: getPostBySlug(params.slug) ?? null };
     }
   },
-  head: ({ params }) => {
-    const post = getPostBySlug(params.slug);
+  head: ({ params, loaderData }) => {
+    const post = loaderData?.post ?? getPostBySlug(params.slug);
     const url = `https://sosguincho24horas.com.br/blog/${params.slug}`;
     const title = `${post?.title || params.slug} | Blog SOS Guincho 24 horas`;
     const description = post?.excerpt || "Leia dicas sobre guincho, reboque e auto socorro no blog SOS Guincho 24 horas.";
