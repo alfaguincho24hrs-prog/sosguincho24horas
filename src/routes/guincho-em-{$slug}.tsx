@@ -39,7 +39,7 @@ import { CitySocialProof } from "@/components/city-social-proof";
 import { findLocationBySlug, type Location } from "@/data/locations";
 import { getPublicCityProviders } from "@/lib/admin-data.functions";
 import { NearbyCitiesModule } from "@/components/nearby-cities";
-import { fetchPublicCityProvidersClient } from "@/lib/public-admin-data.client";
+import { fetchPublicCityProvidersClient } from "@/lib/public-admin-data";
 
 const SITE_URL = "https://sosguincho24horas.com.br";
 
