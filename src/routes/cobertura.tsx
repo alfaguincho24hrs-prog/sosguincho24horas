@@ -130,7 +130,7 @@ function CoveragePage() {
               <div className="flex items-center gap-2">
                 <ArrowUpDown className="h-4 w-4 text-muted-foreground" aria-hidden />
                 <Select value={sortBy} onValueChange={(v) => setSortBy(v as "priority" | "date")}>
-                  <SelectTrigger size="sm" className="w-[180px]" aria-label="Ordenar empresas parceiras">
+                  <SelectTrigger className="h-9 w-[170px]" aria-label="Ordenar empresas parceiras">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
