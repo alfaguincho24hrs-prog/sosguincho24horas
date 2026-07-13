@@ -82,22 +82,23 @@
 /remocao-veicular
   Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
 
-# Cidades (885 rotas) — conteúdo programático muito estável
-# CDN cacheia 6h, serve stale por até 7 dias enquanto revalida
+# Cidades (885 rotas) — conteúdo editável pelo admin
+# HTML precisa refletir edições imediatamente: sem cache no navegador,
+# CDN só serve stale enquanto revalida em background.
 /guincho-em-*
-  Cache-Control: public, max-age=0, s-maxage=21600, stale-while-revalidate=604800
+  Cache-Control: public, max-age=0, s-maxage=0, must-revalidate, stale-while-revalidate=60
 
-# Rodovias — também muito estáveis
+# Rodovias — conteúdo estático
 /guinchos-nas-rodovias-*
   Cache-Control: public, max-age=0, s-maxage=21600, stale-while-revalidate=604800
 /rodovias-vale-do-paraiba
   Cache-Control: public, max-age=0, s-maxage=21600, stale-while-revalidate=604800
 
-# Blog — listagem revalida mais cedo (novos posts), artigos longos
+# Blog — editável pelo admin, sempre revalidar
 /blog
-  Cache-Control: public, max-age=0, s-maxage=600, stale-while-revalidate=86400
+  Cache-Control: public, max-age=0, s-maxage=0, must-revalidate, stale-while-revalidate=60
 /blog/*
-  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=604800
+  Cache-Control: public, max-age=0, s-maxage=0, must-revalidate, stale-while-revalidate=60
 
 # Admin — NUNCA cachear (dados sensíveis e dinâmicos)
 /admin
