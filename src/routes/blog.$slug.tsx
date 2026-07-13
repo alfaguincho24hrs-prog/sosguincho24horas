@@ -7,8 +7,16 @@ import { getPostBySlug, type BlogPost } from "@/components/blog-data";
 import { getPublicBlogPost } from "@/lib/admin-data.functions";
 
 export const Route = createFileRoute("/blog/$slug")({
-  head: ({ params }) => {
-    const post = getPostBySlug(params.slug);
+  loader: async ({ params }) => {
+    try {
+      const post = await getPublicBlogPost({ data: { slug: params.slug } });
+      return { post: post ?? getPostBySlug(params.slug) ?? null };
+    } catch {
+      return { post: getPostBySlug(params.slug) ?? null };
+    }
+  },
+  head: ({ params, loaderData }) => {
+    const post = loaderData?.post ?? getPostBySlug(params.slug);
     const url = `https://sosguincho24horas.com.br/blog/${params.slug}`;
     const title = `${post?.title || params.slug} | Blog SOS Guincho 24 horas`;
     const description = post?.excerpt || "Leia dicas sobre guincho, reboque e auto socorro no blog SOS Guincho 24 horas.";
@@ -106,7 +114,8 @@ export const Route = createFileRoute("/blog/$slug")({
 
 function BlogPostPage() {
   const { slug } = Route.useParams();
-  const [post, setPost] = useState<BlogPost | null | undefined>(() => getPostBySlug(slug) ?? undefined);
+  const { post: initialPost } = Route.useLoaderData();
+  const [post, setPost] = useState<BlogPost | null | undefined>(initialPost ?? undefined);
   const loadPost = useServerFn(getPublicBlogPost);
 
   useEffect(() => {

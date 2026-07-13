@@ -66,11 +66,20 @@ function findCity(slug: string): City | undefined {
 }
 
 export const Route = createFileRoute("/guincho-em-{$slug}")({
-  loader: ({ params }) => {
+  loader: async ({ params }) => {
     const slug = params.slug.startsWith("{") ? "sao-paulo-sp" : params.slug;
     // 1) Tenta cidade
     const city = findCity(slug);
-    if (city) return { kind: "city" as const, city };
+    if (city) {
+      const citySlugUf = `${city.slug}-${city.uf.toLowerCase()}`;
+      let providers = getCityProviders(citySlugUf);
+      try {
+        providers = await getPublicCityProviders({ data: { citySlug: citySlugUf } });
+      } catch {
+        // fallback silencioso para dados estáticos
+      }
+      return { kind: "city" as const, city, providers };
+    }
     // 2) Tenta bairro/localidade (SEO programático)
     const location = findLocationBySlug(slug);
     if (location) return { kind: "location" as const, location };
@@ -378,13 +387,14 @@ function CityPage() {
   const copy = getCityCopy(city.name, city.uf, city.slug);
   const citySlugUf = `${city.slug}-${city.uf.toLowerCase()}`;
   const fetchProviders = useServerFn(getPublicCityProviders);
-  const [providers, setProviders] = useState(() => getCityProviders(citySlugUf));
+  const initialProviders = "providers" in data ? data.providers : getCityProviders(citySlugUf);
+  const [providers, setProviders] = useState(initialProviders);
 
   useEffect(() => {
     let cancelled = false;
     fetchProviders({ data: { citySlug: citySlugUf } })
-      .then((data) => {
-        if (!cancelled) setProviders(data);
+      .then((d) => {
+        if (!cancelled) setProviders(d);
       })
       .catch(() => {
         if (!cancelled) setProviders(getCityProviders(citySlugUf));

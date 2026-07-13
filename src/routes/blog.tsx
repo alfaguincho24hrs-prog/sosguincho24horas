@@ -9,6 +9,14 @@ import { getPublicBlogPosts } from "@/lib/admin-data.functions";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 
 export const Route = createFileRoute("/blog")({
+  loader: async () => {
+    try {
+      const posts = await getPublicBlogPosts();
+      return { posts };
+    } catch {
+      return { posts: getAllPosts() };
+    }
+  },
   head: () => ({
     meta: [
       { title: "Blog — Dicas de Guincho, Reboque e Auto Socorro | SOS Guincho 24 horas" },
@@ -25,7 +33,8 @@ export const Route = createFileRoute("/blog")({
 });
 
 function BlogPage() {
-  const [posts, setPosts] = useState<BlogPost[]>(() => getAllPosts());
+  const { posts: initialPosts } = Route.useLoaderData();
+  const [posts, setPosts] = useState<BlogPost[]>(initialPosts);
   const loadPosts = useServerFn(getPublicBlogPosts);
 
   useEffect(() => {
