@@ -10,13 +10,15 @@ import { LazyTestimonialsCarousel } from "@/components/lazy-testimonials";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 import { getFeaturedPartners } from "@/lib/admin-data.functions";
 
+type FeaturedPartner = Awaited<ReturnType<typeof getFeaturedPartners>>[number];
+
 export const Route = createFileRoute("/cobertura")({
-  loader: async () => {
+  loader: async (): Promise<{ featured: FeaturedPartner[] }> => {
     try {
       const featured = await getFeaturedPartners();
       return { featured };
     } catch {
-      return { featured: [] as Awaited<ReturnType<typeof getFeaturedPartners>> };
+      return { featured: [] };
     }
   },
   head: () => ({
