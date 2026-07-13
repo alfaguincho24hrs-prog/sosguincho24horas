@@ -163,6 +163,31 @@ export const getPublicCityProviders = createServerFn({ method: "GET" })
     return readProviderData(data.citySlug, false).then((result) => result.providers);
   });
 
+export const getFeaturedPartners = createServerFn({ method: "GET" }).handler(async () => {
+  const client = getPublicClient();
+  const { data, error } = await client
+    .from("added_providers")
+    .select("id, city_slug, provider")
+    .order("updated_at", { ascending: false });
+  if (error) throw error;
+  return (data ?? []).map((row) => {
+    const p = row.provider as Provider;
+    return {
+      id: row.id,
+      citySlug: row.city_slug,
+      name: p.name,
+      area: p.area,
+      phone: p.phone,
+      phoneMasked: p.phoneMasked,
+      whatsapp: p.whatsapp,
+      rating: p.rating,
+      logoUrl: p.logoUrl,
+      verified: p.verified,
+      tier: p.tier,
+    };
+  });
+});
+
 export const getAdminProviderData = createServerFn({ method: "GET" })
   .inputValidator((data) => z.object({ citySlug: z.string().min(1) }).parse(data))
   .handler(async ({ data }) => {

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { MapPin, Phone, Star, Truck, Pencil } from "lucide-react";
+import { MapPin, Phone, Star, Truck, Pencil, BadgeCheck } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,8 +8,19 @@ import { PARTNERS, CITIES } from "@/components/site-data";
 import { SeoBlock } from "@/components/seo-block";
 import { LazyTestimonialsCarousel } from "@/components/lazy-testimonials";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
+import { getFeaturedPartners } from "@/lib/admin-data.functions";
+
+type FeaturedPartner = Awaited<ReturnType<typeof getFeaturedPartners>>[number];
 
 export const Route = createFileRoute("/cobertura")({
+  loader: async (): Promise<{ featured: FeaturedPartner[] }> => {
+    try {
+      const featured = await getFeaturedPartners();
+      return { featured };
+    } catch {
+      return { featured: [] };
+    }
+  },
   head: () => ({
     meta: [
       { title: "Cobertura Nacional de Guincho | Cidades Atendidas em Todo o Brasil" },
@@ -70,6 +81,11 @@ export const Route = createFileRoute("/cobertura")({
 });
 
 function CoveragePage() {
+  const { featured } = Route.useLoaderData();
+  const waLink = (phone?: string) => {
+    const digits = (phone || "5511996451510").replace(/\D/g, "");
+    return `https://wa.me/${digits.length >= 12 ? digits : "5511996451510"}`;
+  };
   return (
     <div>
       <BreadcrumbJsonLd items={[{ name: "Início", url: "/" }, { name: "Cobertura", url: "/cobertura" }]} />
@@ -91,26 +107,64 @@ function CoveragePage() {
           </Button>
         </div>
         <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {PARTNERS.map((p) => (
-            <Card key={p.name} className="border-border/60 transition-all hover:border-accent/60 hover:shadow-[var(--shadow-elegant)]">
-              <CardContent className="space-y-3 p-6">
-                <div className="flex items-start justify-between">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                    <Truck className="h-5 w-5" />
+          {featured.length > 0 ? (
+            featured.map((p: FeaturedPartner) => (
+              <Card key={p.id} className="border-border/60 transition-all hover:border-accent/60 hover:shadow-[var(--shadow-elegant)]">
+                <CardContent className="space-y-3 p-6">
+                  <div className="flex items-start justify-between">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary text-primary-foreground overflow-hidden">
+                      {p.logoUrl ? (
+                        <img src={p.logoUrl} alt={p.name} className="h-full w-full object-cover" />
+                      ) : (
+                        <Truck className="h-5 w-5" />
+                      )}
+                    </div>
+                    {typeof p.rating === "number" && (
+                      <div className="flex items-center gap-1 text-sm font-medium">
+                        <Star className="h-4 w-4 fill-accent text-accent" /> {p.rating}
+                      </div>
+                    )}
                   </div>
-                  <div className="flex items-center gap-1 text-sm font-medium">
-                    <Star className="h-4 w-4 fill-accent text-accent" /> {p.rating}
+                  <h3 className="flex items-center gap-1 text-lg font-semibold">
+                    {p.name}
+                    {p.verified && <BadgeCheck className="h-4 w-4 text-primary" />}
+                  </h3>
+                  {(p.area || p.citySlug) && (
+                    <p className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <MapPin className="h-4 w-4" /> {p.area || p.citySlug}
+                    </p>
+                  )}
+                  <Button asChild className="w-full bg-[image:var(--gradient-cta)] text-primary hover:opacity-95 shadow-sm">
+                    <a href={waLink(p.whatsapp || p.phone)}>
+                      <Phone className="h-4 w-4" /> {p.phoneMasked || p.phone || "(11) 99645-1510"}
+                    </a>
+                  </Button>
+                </CardContent>
+              </Card>
+            ))
+          ) : (
+            PARTNERS.map((p) => (
+              <Card key={p.name} className="border-border/60 transition-all hover:border-accent/60 hover:shadow-[var(--shadow-elegant)]">
+                <CardContent className="space-y-3 p-6">
+                  <div className="flex items-start justify-between">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                      <Truck className="h-5 w-5" />
+                    </div>
+                    <div className="flex items-center gap-1 text-sm font-medium">
+                      <Star className="h-4 w-4 fill-accent text-accent" /> {p.rating}
+                    </div>
                   </div>
-                </div>
-                <h3 className="text-lg font-semibold">{p.name}</h3>
-                <p className="flex items-center gap-2 text-sm text-muted-foreground"><MapPin className="h-4 w-4" /> {p.city}</p>
-                <Button asChild className="w-full bg-[image:var(--gradient-cta)] text-primary hover:opacity-95 shadow-sm">
-                  <a href="https://wa.me/5511996451510"><Phone className="h-4 w-4" /> (11) 99645-1510</a>
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
+                  <h3 className="text-lg font-semibold">{p.name}</h3>
+                  <p className="flex items-center gap-2 text-sm text-muted-foreground"><MapPin className="h-4 w-4" /> {p.city}</p>
+                  <Button asChild className="w-full bg-[image:var(--gradient-cta)] text-primary hover:opacity-95 shadow-sm">
+                    <a href="https://wa.me/5511996451510"><Phone className="h-4 w-4" /> (11) 99645-1510</a>
+                  </Button>
+                </CardContent>
+              </Card>
+            ))
+          )}
         </div>
+
 
         <h2 className="mt-16 text-2xl font-bold">Capitais atendidas</h2>
         <div className="mt-6 flex flex-wrap gap-2">
