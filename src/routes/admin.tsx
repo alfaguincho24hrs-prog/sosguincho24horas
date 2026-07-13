@@ -88,7 +88,8 @@ function AdminPage() {
     return () => {
       cancelled = true;
     };
-  }, [checkSession]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (authed === null) {
     return (
