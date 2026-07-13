@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { MapPin, Phone, Star, Truck, Pencil } from "lucide-react";
+import { MapPin, Phone, Star, Truck, Pencil, BadgeCheck } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,8 +8,17 @@ import { PARTNERS, CITIES } from "@/components/site-data";
 import { SeoBlock } from "@/components/seo-block";
 import { LazyTestimonialsCarousel } from "@/components/lazy-testimonials";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
+import { getFeaturedPartners } from "@/lib/admin-data.functions";
 
 export const Route = createFileRoute("/cobertura")({
+  loader: async () => {
+    try {
+      const featured = await getFeaturedPartners();
+      return { featured };
+    } catch {
+      return { featured: [] as Awaited<ReturnType<typeof getFeaturedPartners>> };
+    }
+  },
   head: () => ({
     meta: [
       { title: "Cobertura Nacional de Guincho | Cidades Atendidas em Todo o Brasil" },
