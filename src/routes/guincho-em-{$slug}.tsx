@@ -387,13 +387,14 @@ function CityPage() {
   const copy = getCityCopy(city.name, city.uf, city.slug);
   const citySlugUf = `${city.slug}-${city.uf.toLowerCase()}`;
   const fetchProviders = useServerFn(getPublicCityProviders);
-  const [providers, setProviders] = useState(() => getCityProviders(citySlugUf));
+  const initialProviders = "providers" in data ? data.providers : getCityProviders(citySlugUf);
+  const [providers, setProviders] = useState(initialProviders);
 
   useEffect(() => {
     let cancelled = false;
     fetchProviders({ data: { citySlug: citySlugUf } })
-      .then((data) => {
-        if (!cancelled) setProviders(data);
+      .then((d) => {
+        if (!cancelled) setProviders(d);
       })
       .catch(() => {
         if (!cancelled) setProviders(getCityProviders(citySlugUf));
