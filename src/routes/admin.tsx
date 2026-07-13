@@ -446,7 +446,8 @@ function AdminEditor({ initialCity }: { initialCity: string }) {
     return () => {
       cancelled = true;
     };
-  }, [city, tick, loadProviderData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [city, tick]);
 
   return (
     <div className="container mx-auto max-w-5xl px-4 py-10">
