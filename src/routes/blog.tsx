@@ -33,7 +33,8 @@ export const Route = createFileRoute("/blog")({
 });
 
 function BlogPage() {
-  const [posts, setPosts] = useState<BlogPost[]>(() => getAllPosts());
+  const { posts: initialPosts } = Route.useLoaderData();
+  const [posts, setPosts] = useState<BlogPost[]>(initialPosts);
   const loadPosts = useServerFn(getPublicBlogPosts);
 
   useEffect(() => {
