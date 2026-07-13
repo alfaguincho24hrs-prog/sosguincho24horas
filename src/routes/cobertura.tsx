@@ -108,7 +108,7 @@ function CoveragePage() {
         </div>
         <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {featured.length > 0 ? (
-            featured.map((p) => (
+            featured.map((p: FeaturedPartner) => (
               <Card key={p.id} className="border-border/60 transition-all hover:border-accent/60 hover:shadow-[var(--shadow-elegant)]">
                 <CardContent className="space-y-3 p-6">
                   <div className="flex items-start justify-between">
