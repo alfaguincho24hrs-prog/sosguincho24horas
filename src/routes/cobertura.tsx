@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { MapPin, Phone, Star, Truck, Pencil, BadgeCheck } from "lucide-react";
+import { useMemo, useState } from "react";
+import { MapPin, Phone, Star, Truck, Pencil, BadgeCheck, ArrowUpDown } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { PARTNERS, CITIES } from "@/components/site-data";
 import { SeoBlock } from "@/components/seo-block";
 import { LazyTestimonialsCarousel } from "@/components/lazy-testimonials";
@@ -80,8 +82,31 @@ export const Route = createFileRoute("/cobertura")({
   component: CoveragePage,
 });
 
+const TIER_PRIORITY: Record<string, number> = { gold: 0, silver: 1, bronze: 2, ghost: 3 };
+
 function CoveragePage() {
   const { featured } = Route.useLoaderData();
+  const [sortBy, setSortBy] = useState<"priority" | "date">("priority");
+
+  const sortedFeatured = useMemo(() => {
+    const list = [...featured];
+    if (sortBy === "date") {
+      list.sort((a, b) => {
+        const da = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
+        const db = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
+        return db - da;
+      });
+    } else {
+      list.sort((a, b) => {
+        const pa = TIER_PRIORITY[a.tier ?? "ghost"] ?? 99;
+        const pb = TIER_PRIORITY[b.tier ?? "ghost"] ?? 99;
+        if (pa !== pb) return pa - pb;
+        return (b.rating ?? 0) - (a.rating ?? 0);
+      });
+    }
+    return list;
+  }, [featured, sortBy]);
+
   const waLink = (phone?: string) => {
     const digits = (phone || "5511996451510").replace(/\D/g, "");
     return `https://wa.me/${digits.length >= 12 ? digits : "5511996451510"}`;
@@ -98,21 +123,37 @@ function CoveragePage() {
           </p>
         </div>
 
-        <div className="mt-16 flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-2xl font-bold">Empresas parceiras em destaque</h2>
-          <Button asChild variant="outline" size="sm">
-            <Link to="/admin" search={{ city: "" }}>
-              <Pencil className="h-4 w-4" /> Editar empresas parceiras
-            </Link>
-          </Button>
+        <div className="mt-16 grid grid-cols-1 gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
+          <h2 className="min-w-0 text-2xl font-bold">Empresas parceiras em destaque</h2>
+          <div className="flex flex-wrap items-center gap-2">
+            {featured.length > 0 && (
+              <div className="flex items-center gap-2">
+                <ArrowUpDown className="h-4 w-4 text-muted-foreground" aria-hidden />
+                <Select value={sortBy} onValueChange={(v) => setSortBy(v as "priority" | "date")}>
+                  <SelectTrigger className="h-9 w-[170px]" aria-label="Ordenar empresas parceiras">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="priority">Por prioridade</SelectItem>
+                    <SelectItem value="date">Mais recentes</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+            <Button asChild variant="outline" size="sm">
+              <Link to="/admin" search={{ city: "" }}>
+                <Pencil className="h-4 w-4" /> Editar empresas parceiras
+              </Link>
+            </Button>
+          </div>
         </div>
-        <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.length > 0 ? (
-            featured.map((p: FeaturedPartner) => (
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+          {sortedFeatured.length > 0 ? (
+            sortedFeatured.map((p: FeaturedPartner) => (
               <Card key={p.id} className="border-border/60 transition-all hover:border-accent/60 hover:shadow-[var(--shadow-elegant)]">
-                <CardContent className="space-y-3 p-6">
-                  <div className="flex items-start justify-between">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary text-primary-foreground overflow-hidden">
+                <CardContent className="space-y-3 p-4 sm:p-6">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-primary text-primary-foreground">
                       {p.logoUrl ? (
                         <img src={p.logoUrl} alt={p.name} className="h-full w-full object-cover" />
                       ) : (
@@ -120,18 +161,19 @@ function CoveragePage() {
                       )}
                     </div>
                     {typeof p.rating === "number" && (
-                      <div className="flex items-center gap-1 text-sm font-medium">
+                      <div className="flex shrink-0 items-center gap-1 text-sm font-medium">
                         <Star className="h-4 w-4 fill-accent text-accent" /> {p.rating}
                       </div>
                     )}
                   </div>
-                  <h3 className="flex items-center gap-1 text-lg font-semibold">
-                    {p.name}
-                    {p.verified && <BadgeCheck className="h-4 w-4 text-primary" />}
+                  <h3 className="flex min-w-0 items-center gap-1 text-base font-semibold sm:text-lg">
+                    <span className="truncate">{p.name}</span>
+                    {p.verified && <BadgeCheck className="h-4 w-4 shrink-0 text-primary" />}
                   </h3>
                   {(p.area || p.citySlug) && (
-                    <p className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <MapPin className="h-4 w-4" /> {p.area || p.citySlug}
+                    <p className="flex min-w-0 items-center gap-2 text-sm text-muted-foreground">
+                      <MapPin className="h-4 w-4 shrink-0" />
+                      <span className="truncate">{p.area || p.citySlug}</span>
                     </p>
                   )}
                   <Button asChild className="w-full bg-[image:var(--gradient-cta)] text-primary hover:opacity-95 shadow-sm">
@@ -145,17 +187,20 @@ function CoveragePage() {
           ) : (
             PARTNERS.map((p) => (
               <Card key={p.name} className="border-border/60 transition-all hover:border-accent/60 hover:shadow-[var(--shadow-elegant)]">
-                <CardContent className="space-y-3 p-6">
-                  <div className="flex items-start justify-between">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                <CardContent className="space-y-3 p-4 sm:p-6">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
                       <Truck className="h-5 w-5" />
                     </div>
-                    <div className="flex items-center gap-1 text-sm font-medium">
+                    <div className="flex shrink-0 items-center gap-1 text-sm font-medium">
                       <Star className="h-4 w-4 fill-accent text-accent" /> {p.rating}
                     </div>
                   </div>
-                  <h3 className="text-lg font-semibold">{p.name}</h3>
-                  <p className="flex items-center gap-2 text-sm text-muted-foreground"><MapPin className="h-4 w-4" /> {p.city}</p>
+                  <h3 className="truncate text-base font-semibold sm:text-lg">{p.name}</h3>
+                  <p className="flex min-w-0 items-center gap-2 text-sm text-muted-foreground">
+                    <MapPin className="h-4 w-4 shrink-0" />
+                    <span className="truncate">{p.city}</span>
+                  </p>
                   <Button asChild className="w-full bg-[image:var(--gradient-cta)] text-primary hover:opacity-95 shadow-sm">
                     <a href="https://wa.me/5511996451510"><Phone className="h-4 w-4" /> (11) 99645-1510</a>
                   </Button>
@@ -164,6 +209,7 @@ function CoveragePage() {
             ))
           )}
         </div>
+
 
 
         <h2 className="mt-16 text-2xl font-bold">Capitais atendidas</h2>

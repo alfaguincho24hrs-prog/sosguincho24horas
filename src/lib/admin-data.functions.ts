@@ -167,7 +167,7 @@ export const getFeaturedPartners = createServerFn({ method: "GET" }).handler(asy
   const client = getPublicClient();
   const { data, error } = await client
     .from("added_providers")
-    .select("id, city_slug, provider")
+    .select("id, city_slug, provider, created_at, updated_at")
     .order("updated_at", { ascending: false });
   if (error) throw error;
   return (data ?? []).map((row) => {
@@ -184,6 +184,8 @@ export const getFeaturedPartners = createServerFn({ method: "GET" }).handler(asy
       logoUrl: p.logoUrl,
       verified: p.verified,
       tier: p.tier,
+      createdAt: row.created_at,
+      updatedAt: row.updated_at,
     };
   });
 });
