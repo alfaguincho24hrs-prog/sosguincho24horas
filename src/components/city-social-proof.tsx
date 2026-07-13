@@ -67,10 +67,11 @@ export function CitySocialProof({ cityName, neighborhoods, uf }: Props) {
     
     const text = template.replaceAll("{city}", cityName).replaceAll("{hood}", hood);
     const days = 1 + ((seed + i * 11) % 28);
-    // Para o Schema, precisamos de uma data real aproximada
-    const datePublished = new Date();
-    datePublished.setDate(datePublished.getDate() - days);
-    
+    // Época fixa determinística: mantém o HTML/JSON-LD byte-idêntico entre
+    // revalidações do CDN (não depende de `new Date()` no momento do render).
+    const EPOCH_MS = Date.UTC(2026, 0, 1); // 2026-01-01
+    const datePublished = new Date(EPOCH_MS - days * 86400000);
+
     return { name, hood: useHighway ? highway : hood, text, days, datePublished: datePublished.toISOString().split('T')[0] };
   });
 
