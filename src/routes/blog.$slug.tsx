@@ -114,7 +114,8 @@ export const Route = createFileRoute("/blog/$slug")({
 
 function BlogPostPage() {
   const { slug } = Route.useParams();
-  const [post, setPost] = useState<BlogPost | null | undefined>(() => getPostBySlug(slug) ?? undefined);
+  const { post: initialPost } = Route.useLoaderData();
+  const [post, setPost] = useState<BlogPost | null | undefined>(initialPost ?? undefined);
   const loadPost = useServerFn(getPublicBlogPost);
 
   useEffect(() => {
