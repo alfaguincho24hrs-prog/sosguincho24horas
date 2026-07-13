@@ -7,8 +7,14 @@ import { Calendar, ArrowRight, Pencil } from "lucide-react";
 import { getAllPosts, type BlogPost } from "@/components/blog-data";
 import { getPublicBlogPosts } from "@/lib/admin-data.functions";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
+import { fetchPublicBlogPostsClient } from "@/lib/public-admin-data.client";
 
 export const Route = createFileRoute("/blog")({
+  headers: () => ({
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "CDN-Cache-Control": "no-store",
+    "Cloudflare-CDN-Cache-Control": "no-store",
+  }),
   loader: async () => {
     try {
       const posts = await getPublicBlogPosts();
@@ -39,7 +45,8 @@ function BlogPage() {
 
   useEffect(() => {
     let cancelled = false;
-    loadPosts({})
+    fetchPublicBlogPostsClient()
+      .catch(() => loadPosts({}))
       .then((data) => {
         if (!cancelled) setPosts(data);
       })

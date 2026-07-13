@@ -187,6 +187,13 @@ export function getCityProviders(slugWithUf: string): Provider[] {
   return [...withOv, ...addedWithOv];
 }
 
+export function getStaticCityProviders(slugWithUf: string): Provider[] {
+  const key = slugWithUf.toLowerCase();
+  const direct = CITY_PROVIDERS[key];
+  const base = direct && direct.length ? direct : FALLBACK;
+  return base.map((provider) => ({ ...provider }));
+}
+
 // Lista cidades com cadastro próprio (file) + cidades com providers adicionados
 export function listProviderCities(): string[] {
   const fileCities = Object.keys(CITY_PROVIDERS);
