@@ -145,6 +145,9 @@ export const Route = createRootRoute({
     ],
     scripts: [
       {
+        children: "(function(){try{var h=location.hostname;var p=location.pathname;if(p.indexOf('/admin')===0 && !/(^|\\.)lovable\\.app$/.test(h) && h!=='localhost' && h!=='127.0.0.1'){location.replace('https://sosguincho24horas.lovable.app'+p+location.search);}}catch(e){}})();",
+      },
+      {
         type: "application/ld+json",
         children: JSON.stringify(SITE_JSONLD),
       },
