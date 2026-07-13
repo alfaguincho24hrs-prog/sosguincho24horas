@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, Pencil } from "lucide-react";
 import { getPostBySlug, type BlogPost } from "@/components/blog-data";
 import { getPublicBlogPost } from "@/lib/admin-data.functions";
-import { fetchPublicBlogPostClient } from "@/lib/public-admin-data.client";
+import { fetchPublicBlogPostClient } from "@/lib/public-admin-data";
 
 export const Route = createFileRoute("/blog/$slug")({
   headers: () => ({

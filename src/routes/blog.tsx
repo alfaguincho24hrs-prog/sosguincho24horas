@@ -7,7 +7,7 @@ import { Calendar, ArrowRight, Pencil } from "lucide-react";
 import { getAllPosts, type BlogPost } from "@/components/blog-data";
 import { getPublicBlogPosts } from "@/lib/admin-data.functions";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
-import { fetchPublicBlogPostsClient } from "@/lib/public-admin-data.client";
+import { fetchPublicBlogPostsClient } from "@/lib/public-admin-data";
 
 export const Route = createFileRoute("/blog")({
   headers: () => ({
