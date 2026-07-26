@@ -201,15 +201,20 @@ const checkRoutes = () => {
       process.exit(1);
     }
 
-    // Sitemap Validation
-    const sitemapPath = './public/sitemap.xml';
-    if (!fs.existsSync(sitemapPath)) {
+    // Sitemap Validation — sitemap.xml é um índice; as URLs vivem nos sub-sitemaps
+    const sitemapIndexPath = './public/sitemap.xml';
+    if (!fs.existsSync(sitemapIndexPath)) {
       console.error('\n❌ Sitemap Check failed: sitemap.xml not found in public/');
       process.exit(1);
     }
-    const sitemapContent = fs.readFileSync(sitemapPath, 'utf-8');
+    const sitemapContent = fs
+      .readdirSync('./public')
+      .filter(f => f.startsWith('sitemap') && f.endsWith('.xml'))
+      .map(f => fs.readFileSync(path.join('./public', f), 'utf-8'))
+      .join('\n');
     const missingInSitemap = results.filter(r => {
-      if (r.route.includes('$slug')) return false;
+      if (r.route.includes('$')) return false;
+
 
       // Special case for homepage: it might appear as / or with a trailing slash in sitemap
       if (r.route === '/') {
