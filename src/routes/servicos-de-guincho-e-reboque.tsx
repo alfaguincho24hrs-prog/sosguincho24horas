@@ -77,6 +77,45 @@ export const Route = createFileRoute("/servicos-de-guincho-e-reboque")({
             ]
           }
         })
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: "Início", item: "https://sosguincho24horas.com.br/" },
+                {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: "Serviços de guincho e reboque",
+                  item: "https://sosguincho24horas.com.br/servicos-de-guincho-e-reboque",
+                },
+              ],
+            },
+            {
+              "@type": "ItemList",
+              name: "Cidades atendidas com guincho e reboque 24h",
+              numberOfItems: ALL_CITIES.length,
+              itemListElement: ALL_CITIES.slice(0, 200).map((c, i) => ({
+                "@type": "ListItem",
+                position: i + 1,
+                name: `Guincho 24h em ${c.name} - ${c.uf}`,
+                url: `https://sosguincho24horas.com.br/guincho-em-${c.slug}-${c.uf.toLowerCase()}`,
+              })),
+            },
+            {
+              "@type": "FAQPage",
+              mainEntity: PAGE_FAQS.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
+            },
+          ],
+        })
       }
     ],
     links: [
