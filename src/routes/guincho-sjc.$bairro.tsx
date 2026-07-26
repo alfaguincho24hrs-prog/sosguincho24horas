@@ -8,9 +8,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Phone, MapPin, AlertTriangle, Clock, ChevronRight, Truck } from "lucide-react";
+import { Phone, MapPin, AlertTriangle, Clock, ChevronRight, Truck, Star } from "lucide-react";
 import { SITE } from "@/components/site-data";
 import { SJC_BAIRROS, getBairro, buildFaqs, noBairro, type Bairro } from "@/lib/sjc-bairros";
+import { SJC_VEICULOS } from "@/lib/sjc-veiculos";
+import { getDepoimentos, getAggregate } from "@/lib/sjc-reviews";
 
 const ORIGIN = "https://sosguincho24horas.com.br";
 const TEL = "tel:+5511996451510";
@@ -33,6 +35,8 @@ export const Route = createFileRoute("/guincho-sjc/$bairro")({
     const title = `Guincho 24h ${em} ${b.nome} — São José dos Campos/SP | SOS Guincho`;
     const description = b.resumo;
     const faqs = buildFaqs(b);
+    const depoimentos = getDepoimentos(b, 3);
+    const agg = getAggregate(b);
 
     return {
       meta: [
@@ -88,6 +92,26 @@ export const Route = createFileRoute("/guincho-sjc/$bairro")({
                   { "@type": "Place", name: `${b.nome}, São José dos Campos - SP` },
                   { "@type": "City", name: "São José dos Campos" },
                 ],
+                aggregateRating: {
+                  "@type": "AggregateRating",
+                  ratingValue: agg.ratingValue,
+                  reviewCount: agg.reviewCount,
+                  bestRating: "5",
+                  worstRating: "1",
+                },
+                review: depoimentos.map((d) => ({
+                  "@type": "Review",
+                  author: { "@type": "Person", name: d.autor },
+                  datePublished: d.data,
+                  reviewBody: d.texto,
+                  reviewRating: {
+                    "@type": "Rating",
+                    ratingValue: String(d.nota),
+                    bestRating: "5",
+                    worstRating: "1",
+                  },
+                  itemReviewed: { "@id": `${url}#business` },
+                })),
               },
               {
                 "@type": "Service",
