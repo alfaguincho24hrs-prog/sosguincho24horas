@@ -12,6 +12,10 @@ import {
   Fuel,
   Bike,
   Car,
+  KeyRound,
+  MountainSnow,
+  Sailboat,
+  Forklift,
 } from "lucide-react";
 import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
