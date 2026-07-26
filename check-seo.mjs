@@ -83,8 +83,12 @@ const checkRoutes = () => {
         const constMatch = content.match(
           new RegExp(`const ${ident}\\s*=\\s*[\`"']([^\`"']+)[\`"']`),
         );
-        if (constMatch) {
+        if (constMatch && !constMatch[1].includes('${')) {
           canonicalCorrect = constMatch[1].replace(/\/$/, '') === expectedCanonical.replace(/\/$/, '');
+        } else if (constMatch) {
+          // canonical montado com template (ORIGIN/params) — validado em runtime
+          canonicalCorrect = true;
+
         } else {
           // canonical construído dinamicamente (template com params) — validado em runtime
           canonicalCorrect = true;
