@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { SITE } from "@/components/site-data";
 import { ALL_CITIES, ALPHABET, CITIES_BY_LETTER } from "@/components/cities-data";
+import { TIPOS_VEICULO } from "@/lib/city-veiculos";
 
 export const Route = createFileRoute("/servicos-de-guincho-e-reboque")({
   head: () => ({
@@ -172,7 +173,7 @@ function CitiesIndexPage() {
       {!filtered && (
         <div className="mt-12 space-y-12">
           {ALPHABET.map((letter) => (
-            <section key={letter} id={`letra-${letter}`} className="scroll-mt-24">
+            <section key={letter} id={`letra-${letter}`} className="defer-paint scroll-mt-24">
               <div className="mb-4 flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[image:var(--gradient-cta)] text-primary">
                   <span className="text-lg font-bold">{letter}</span>
@@ -216,29 +217,47 @@ function CitiesGrid({
 }) {
   return (
     <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {cities.map((c) => (
-        <Link
-          key={`${c.slug}-${c.uf}`}
-          to="/guincho-em-{$slug}"
-          params={{ slug: `${c.slug}-${c.uf.toLowerCase()}` }}
-          className="block"
-        >
-          <Card className="border-border/60 transition-all hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-[var(--shadow-elegant)]">
-            <CardContent className="flex items-center gap-3 p-4">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-secondary">
-                <Truck className="h-5 w-5 text-primary" />
+      {cities.map((c) => {
+        const slugUf = `${c.slug}-${c.uf.toLowerCase()}`;
+        return (
+          <Card
+            key={`${c.slug}-${c.uf}`}
+            className="border-border/60 transition-all hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-[var(--shadow-elegant)]"
+          >
+            <CardContent className="p-4">
+              <Link
+                to="/guincho-em-{$slug}"
+                params={{ slug: slugUf }}
+                className="flex items-center gap-3"
+              >
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-secondary">
+                  <Truck className="h-5 w-5 text-primary" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate font-semibold">Guincho 24h em {c.name}</p>
+                  <p className="flex items-center gap-1 text-xs text-muted-foreground">
+                    <MapPin className="h-3 w-3" /> {c.name} - {c.uf}
+                  </p>
+                </div>
+                <Phone className="h-4 w-4 text-primary" />
+              </Link>
+              <div className="mt-3 flex flex-wrap gap-1.5 border-t border-border/50 pt-3">
+                {TIPOS_VEICULO.map((t) => (
+                  <Link
+                    key={t.slug}
+                    to="/guincho-{$tipo}-em-{$slug}"
+                    params={{ tipo: t.slug, slug: slugUf }}
+                    className="rounded-full bg-secondary px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:text-primary"
+                    title={`${t.rotulo} em ${c.name} - ${c.uf}`}
+                  >
+                    {t.slug === "transporte-de-veiculos" ? "Transporte" : t.nome}
+                  </Link>
+                ))}
               </div>
-              <div className="min-w-0 flex-1">
-                <p className="truncate font-semibold">Guincho 24h em {c.name}</p>
-                <p className="flex items-center gap-1 text-xs text-muted-foreground">
-                  <MapPin className="h-3 w-3" /> {c.name} - {c.uf}
-                </p>
-              </div>
-              <Phone className="h-4 w-4 text-primary" />
             </CardContent>
           </Card>
-        </Link>
-      ))}
+        );
+      })}
     </div>
   );
 }
