@@ -726,6 +726,37 @@ function CityPage() {
         </section>
       )}
 
+      {city.slug === "sao-jose-dos-campos" && (
+        <section className="mt-14">
+          <h2 className="text-2xl font-bold text-accent md:text-3xl">
+            Guincho por bairro em São José dos Campos
+          </h2>
+          <p className="mt-2 max-w-3xl text-muted-foreground">
+            Cada região de SJC tem uma página própria com as vias atendidas, o tempo médio de
+            chegada e os chamados mais comuns. Escolha o seu bairro:
+          </p>
+          <div className="mt-6 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
+            {SJC_BAIRROS.map((b) => (
+              <Link
+                key={b.slug}
+                to="/guincho-sjc/$bairro"
+                params={{ bairro: b.slug }}
+                className="rounded-lg border bg-background px-3 py-2 text-sm font-medium transition-colors hover:border-primary hover:text-primary"
+              >
+                Guincho no {b.nome}
+              </Link>
+            ))}
+          </div>
+          <div className="mt-4">
+            <Button asChild variant="outline">
+              <Link to="/guincho-sjc">Ver todos os bairros de SJC →</Link>
+            </Button>
+          </div>
+        </section>
+      )}
+
+
+
 
 
       {/* Bairros e CEPs - SEO local hiper-segmentado */}
