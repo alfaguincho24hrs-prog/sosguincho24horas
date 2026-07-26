@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 import { SITE } from "@/components/site-data";
 import { ALL_CITIES, type City } from "@/components/cities-data";
-import { TIPOS_VEICULO, findTipo, tituloRotulo } from "@/lib/city-veiculos";
+import { TIPOS_VEICULO, findTipo, tituloRotulo, type TipoVeiculoBase } from "@/lib/city-veiculos";
 import { getCityDepoimentos, getCityAggregate } from "@/lib/city-reviews";
 
 const ORIGIN = "https://sosguincho24horas.com.br";
@@ -212,7 +212,9 @@ function TipoCidadeNotFound() {
 }
 
 function TipoCidadePage() {
-  const { tipo: v, city } = Route.useLoaderData();
+  const data = Route.useLoaderData() as { tipo: TipoVeiculoBase; city: City };
+  const v = data.tipo;
+  const city = data.city;
   const citySlugUf = `${city.slug}-${city.uf.toLowerCase()}`;
   const cidade = `${city.name} - ${city.uf}`;
   const faqs = v.faqs(city.name);
