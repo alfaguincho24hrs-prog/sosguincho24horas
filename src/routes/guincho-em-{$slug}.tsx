@@ -484,7 +484,7 @@ function CityPage() {
         "hasOfferCatalog": {
           "@type": "OfferCatalog",
           "name": `Serviços de Reboque em ${city.name}`,
-          "itemListElement": SERVICE_ITEMS.map((s, i) => ({
+          "itemListElement": [...SERVICE_ITEMS, ...SPECIALTY_ITEMS].map((s, i) => ({
             "@type": "Offer",
             "position": i + 1,
             "itemOffered": {
@@ -662,6 +662,32 @@ function CityPage() {
         <p className="mt-2 max-w-3xl text-muted-foreground">{copy.servicesIntro}</p>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICE_ITEMS.map((s) => (
+            <Card key={s.title} className="border-border/60">
+              <CardContent className="p-5">
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-md bg-secondary">
+                  <s.icon className="h-5 w-5 text-primary" />
+                </div>
+                <h4 className="font-semibold">
+                  {s.title} em {city.name}
+                </h4>
+                <p className="mt-1 text-sm text-muted-foreground">{s.desc}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Serviços especializados na cidade */}
+      <section className="mt-14">
+        <h2 className="text-2xl font-bold md:text-3xl text-accent">
+          Serviços especializados em {city.name}
+        </h2>
+        <p className="mt-2 max-w-3xl text-muted-foreground">
+          Além do reboque convencional, atendemos ocorrências que exigem equipamento
+          e operador específicos em {city.name}/{city.uf} — sempre 24 horas por dia.
+        </p>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {SPECIALTY_ITEMS.map((s) => (
             <Card key={s.title} className="border-border/60">
               <CardContent className="p-5">
                 <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-md bg-secondary">
