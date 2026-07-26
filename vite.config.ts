@@ -29,6 +29,8 @@ const STATIC_ROUTES = [
   "/remocao-veicular",
   "/guincho-postos-dutra-sao-jose-dos-campos",
   "/guincho-sjc",
+  "/anuncie",
+  "/marketing-para-guinchos",
 ];
 
 const HIGHWAY_SLUGS = [

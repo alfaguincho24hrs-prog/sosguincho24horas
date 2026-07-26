@@ -98,6 +98,8 @@ const SiteFooter = memo(() => {
           </div>
           <div className="flex flex-wrap justify-center gap-6 text-xs text-primary-foreground/40 uppercase tracking-widest font-bold">
             <Link to="/contato" className="hover:text-accent transition-colors">Contato</Link>
+            <Link to="/anuncie" className="hover:text-accent transition-colors">Anuncie</Link>
+            <Link to="/marketing-para-guinchos" className="hover:text-accent transition-colors">Marketing para Guinchos</Link>
             <a href="#" className="hover:text-accent transition-colors">Termos de Uso</a>
             <a href="#" className="hover:text-accent transition-colors">Privacidade</a>
           </div>

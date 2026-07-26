@@ -50,6 +50,7 @@ export function SiteHeader() {
           <Link to="/cobertura" activeProps={{ className: "text-accent" }} className="transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md">Cobertura</Link>
           <Link to="/servicos-de-guincho-e-reboque" activeProps={{ className: "text-accent" }} className="transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md">Cidades Atendidas</Link>
           <Link to="/anuncie" activeProps={{ className: "text-accent" }} className="transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md">Anuncie</Link>
+          <Link to="/marketing-para-guinchos" activeProps={{ className: "text-accent" }} className="transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md">Marketing</Link>
           <Link to="/blog" activeProps={{ className: "text-accent" }} className="transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md">Blog</Link>
           <Link to="/contato" activeProps={{ className: "text-accent" }} className="transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md">Contato</Link>
         </nav>
