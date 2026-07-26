@@ -168,6 +168,7 @@ function generateSeoFiles(): Plugin {
       `Disallow: /api/`,
       ``,
       `Sitemap: ${SITE_URL}/sitemap.xml`,
+      `Sitemap: ${SITE_URL}/sitemap-index.xml`,
       ``,
     ].join("\n");
     writeFileSync(resolve(dir, "robots.txt"), robots, "utf-8");
