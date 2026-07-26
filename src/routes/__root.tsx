@@ -27,7 +27,7 @@ const SITE_JSONLD = {
         "height": "512"
       },
       "email": SITE.email,
-      "telephone": SITE.phone,
+      "telephone": `+${SITE.whatsapp}`,
       "address": {
         "@type": "PostalAddress",
         "streetAddress": SITE.address.street,
@@ -55,7 +55,7 @@ const SITE_JSONLD = {
       "name": SITE.name,
       "description": "Rede nacional de guincho, reboque e auto socorro 24h em todo o Brasil.",
       "url": `${SITE_URL}/`,
-      "telephone": SITE.phone,
+      "telephone": `+${SITE.whatsapp}`,
       "email": SITE.email,
       "priceRange": "$$",
       "image": {
