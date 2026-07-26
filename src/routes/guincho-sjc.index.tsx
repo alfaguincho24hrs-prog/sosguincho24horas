@@ -7,9 +7,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Phone, MapPin, ChevronRight } from "lucide-react";
+import { Phone, MapPin, ChevronRight, Truck } from "lucide-react";
 import { SITE } from "@/components/site-data";
 import { SJC_BAIRROS } from "@/lib/sjc-bairros";
+import { SJC_VEICULOS } from "@/lib/sjc-veiculos";
 
 const ORIGIN = "https://sosguincho24horas.com.br";
 const URL = `${ORIGIN}/guincho-sjc`;
@@ -195,6 +196,32 @@ function GuinchoSjcHub() {
       </section>
 
       <section className="border-t bg-muted/30 py-12">
+        <div className="container max-w-5xl">
+          <h2 className="mb-6 text-3xl font-bold text-accent">
+            Guincho por tipo de veículo em São José dos Campos
+          </h2>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {SJC_VEICULOS.map((v) => (
+              <Link
+                key={v.slug}
+                to="/guincho-{$tipo}-sjc"
+                params={{ tipo: v.slug }}
+                className="group flex items-start justify-between gap-2 rounded-lg border bg-background p-4 transition-all hover:border-primary hover:shadow-md"
+              >
+                <span>
+                  <span className="flex items-center gap-1.5 font-semibold">
+                    <Truck className="h-4 w-4 shrink-0 text-primary" /> Guincho para {v.nome} em SJC
+                  </span>
+                  <span className="mt-1 block text-xs text-muted-foreground">{v.eta}</span>
+                </span>
+                <ChevronRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground group-hover:text-primary" />
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-12">
         <div className="container max-w-4xl">
           <h2 className="mb-6 text-3xl font-bold text-accent">
             Perguntas frequentes sobre guincho em SJC
