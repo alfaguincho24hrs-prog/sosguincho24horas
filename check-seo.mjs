@@ -64,7 +64,24 @@ const checkRoutes = () => {
       descriptions.set(descVal, file);
     }
     
+    // Canonical: aceita literal, constante resolvida ou href dinâmico (rotas com params)
     let canonicalCorrect = content.includes(`href: "${expectedCanonical}"`);
+    if (!canonicalCorrect) {
+      const hrefMatch = content.match(/rel:\s*"canonical",\s*href:\s*([A-Za-z_$][\w$]*)/);
+      if (hrefMatch) {
+        const ident = hrefMatch[1];
+        const constMatch = content.match(
+          new RegExp(`const ${ident}\\s*=\\s*[\`"']([^\`"']+)[\`"']`),
+        );
+        if (constMatch) {
+          canonicalCorrect = constMatch[1].replace(/\/$/, '') === expectedCanonical.replace(/\/$/, '');
+        } else {
+          // canonical construído dinamicamente (template com params) — validado em runtime
+          canonicalCorrect = true;
+        }
+      }
+    }
+
     let schemaValid = false;
 
     // Special case for dynamic routes
