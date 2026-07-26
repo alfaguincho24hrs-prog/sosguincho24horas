@@ -22,7 +22,8 @@ const checkRoutes = () => {
     let content = fs.readFileSync(path.join(ROUTES_DIR, file), 'utf-8');
 
     // Rotas de layout (apenas <Outlet />) não têm metadados próprios
-    if (/component:\s*(\(\)\s*=>\s*<Outlet|RouteLayout)/.test(content) && !content.includes('head:')) return;
+    if (/component:\s*\(\)\s*=>\s*<Outlet/.test(content)) return;
+
 
     // Nome do arquivo -> caminho de rota (pontos viram barras, index é folha)
     const slug = file
