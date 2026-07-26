@@ -32,6 +32,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as GuinchoChar123tipoChar125SjcIndexRouteImport } from './routes/guincho-{$tipo}-sjc.index'
 import { Route as GuinchoSjcIndexRouteImport } from './routes/guincho-sjc.index'
+import { Route as GuinchoChar123tipoChar125SjcBairroRouteImport } from './routes/guincho-{$tipo}-sjc.$bairro'
 import { Route as GuinchoSjcBairroRouteImport } from './routes/guincho-sjc.$bairro'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
@@ -156,6 +157,12 @@ const GuinchoSjcIndexRoute = GuinchoSjcIndexRouteImport.update({
   path: '/guincho-sjc/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuinchoChar123tipoChar125SjcBairroRoute =
+  GuinchoChar123tipoChar125SjcBairroRouteImport.update({
+    id: '/$bairro',
+    path: '/$bairro',
+    getParentRoute: () => GuinchoChar123tipoChar125SjcRoute,
+  } as any)
 const GuinchoSjcBairroRoute = GuinchoSjcBairroRouteImport.update({
   id: '/guincho-sjc/$bairro',
   path: '/guincho-sjc/$bairro',
@@ -191,6 +198,7 @@ export interface FileRoutesByFullPath {
   '/servicos-de-guincho-e-reboque': typeof ServicosDeGuinchoEReboqueRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/guincho-sjc/$bairro': typeof GuinchoSjcBairroRoute
+  '/guincho-{$tipo}-sjc/$bairro': typeof GuinchoChar123tipoChar125SjcBairroRoute
   '/guincho-sjc/': typeof GuinchoSjcIndexRoute
   '/guincho-{$tipo}-sjc/': typeof GuinchoChar123tipoChar125SjcIndexRoute
 }
@@ -217,6 +225,7 @@ export interface FileRoutesByTo {
   '/servicos-de-guincho-e-reboque': typeof ServicosDeGuinchoEReboqueRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/guincho-sjc/$bairro': typeof GuinchoSjcBairroRoute
+  '/guincho-{$tipo}-sjc/$bairro': typeof GuinchoChar123tipoChar125SjcBairroRoute
   '/guincho-sjc': typeof GuinchoSjcIndexRoute
   '/guincho-{$tipo}-sjc': typeof GuinchoChar123tipoChar125SjcIndexRoute
 }
@@ -245,6 +254,7 @@ export interface FileRoutesById {
   '/servicos-de-guincho-e-reboque': typeof ServicosDeGuinchoEReboqueRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/guincho-sjc/$bairro': typeof GuinchoSjcBairroRoute
+  '/guincho-{$tipo}-sjc/$bairro': typeof GuinchoChar123tipoChar125SjcBairroRoute
   '/guincho-sjc/': typeof GuinchoSjcIndexRoute
   '/guincho-{$tipo}-sjc/': typeof GuinchoChar123tipoChar125SjcIndexRoute
 }
@@ -274,6 +284,7 @@ export interface FileRouteTypes {
     | '/servicos-de-guincho-e-reboque'
     | '/blog/$slug'
     | '/guincho-sjc/$bairro'
+    | '/guincho-{$tipo}-sjc/$bairro'
     | '/guincho-sjc/'
     | '/guincho-{$tipo}-sjc/'
   fileRoutesByTo: FileRoutesByTo
@@ -300,6 +311,7 @@ export interface FileRouteTypes {
     | '/servicos-de-guincho-e-reboque'
     | '/blog/$slug'
     | '/guincho-sjc/$bairro'
+    | '/guincho-{$tipo}-sjc/$bairro'
     | '/guincho-sjc'
     | '/guincho-{$tipo}-sjc'
   id:
@@ -327,6 +339,7 @@ export interface FileRouteTypes {
     | '/servicos-de-guincho-e-reboque'
     | '/blog/$slug'
     | '/guincho-sjc/$bairro'
+    | '/guincho-{$tipo}-sjc/$bairro'
     | '/guincho-sjc/'
     | '/guincho-{$tipo}-sjc/'
   fileRoutesById: FileRoutesById
@@ -520,6 +533,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuinchoSjcIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/guincho-{$tipo}-sjc/$bairro': {
+      id: '/guincho-{$tipo}-sjc/$bairro'
+      path: '/$bairro'
+      fullPath: '/guincho-{$tipo}-sjc/$bairro'
+      preLoaderRoute: typeof GuinchoChar123tipoChar125SjcBairroRouteImport
+      parentRoute: typeof GuinchoChar123tipoChar125SjcRoute
+    }
     '/guincho-sjc/$bairro': {
       id: '/guincho-sjc/$bairro'
       path: '/guincho-sjc/$bairro'
@@ -548,11 +568,14 @@ const BlogRouteChildren: BlogRouteChildren = {
 const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
 interface GuinchoChar123tipoChar125SjcRouteChildren {
+  GuinchoChar123tipoChar125SjcBairroRoute: typeof GuinchoChar123tipoChar125SjcBairroRoute
   GuinchoChar123tipoChar125SjcIndexRoute: typeof GuinchoChar123tipoChar125SjcIndexRoute
 }
 
 const GuinchoChar123tipoChar125SjcRouteChildren: GuinchoChar123tipoChar125SjcRouteChildren =
   {
+    GuinchoChar123tipoChar125SjcBairroRoute:
+      GuinchoChar123tipoChar125SjcBairroRoute,
     GuinchoChar123tipoChar125SjcIndexRoute:
       GuinchoChar123tipoChar125SjcIndexRoute,
   }
