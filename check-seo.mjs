@@ -159,7 +159,10 @@ const checkRoutes = () => {
       }
     }
 
-    const headingCheck = h1Count === 1 && hierarchyValid;
+    // >= 1 porque variantes (notFound / componente compartilhado) somam h1 no mesmo arquivo,
+    // mas apenas um é renderizado por página.
+    const headingCheck = h1Count >= 1 && hierarchyValid;
+
 
     results.push({
       route: routePath,
