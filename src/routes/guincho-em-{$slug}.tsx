@@ -44,6 +44,8 @@ import { findLocationBySlug, type Location } from "@/data/locations";
 import { getPublicCityProviders } from "@/lib/admin-data.functions";
 import { NearbyCitiesModule } from "@/components/nearby-cities";
 import { fetchPublicCityProvidersClient } from "@/lib/public-admin-data";
+import { SJC_BAIRROS } from "@/lib/sjc-bairros";
+
 
 const SITE_URL = "https://sosguincho24horas.com.br";
 
