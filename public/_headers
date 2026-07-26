@@ -123,6 +123,16 @@
 /guincho-transporte-de-veiculos-sjc/*
   Cache-Control: public, max-age=0, s-maxage=21600, stale-while-revalidate=604800
 
+# Páginas por tipo de veículo × cidade — conteúdo estático gerado do código
+/guincho-carro-em-*
+  Cache-Control: public, max-age=0, s-maxage=21600, stale-while-revalidate=604800
+/guincho-moto-em-*
+  Cache-Control: public, max-age=0, s-maxage=21600, stale-while-revalidate=604800
+/guincho-caminhao-em-*
+  Cache-Control: public, max-age=0, s-maxage=21600, stale-while-revalidate=604800
+/guincho-transporte-de-veiculos-em-*
+  Cache-Control: public, max-age=0, s-maxage=21600, stale-while-revalidate=604800
+
 # Admin — NUNCA cachear (dados sensíveis e dinâmicos)
 /admin
   Cache-Control: private, no-store, no-cache, must-revalidate

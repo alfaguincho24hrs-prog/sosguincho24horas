@@ -45,6 +45,9 @@ import { getPublicCityProviders } from "@/lib/admin-data.functions";
 import { NearbyCitiesModule } from "@/components/nearby-cities";
 import { fetchPublicCityProvidersClient } from "@/lib/public-admin-data";
 import { SJC_BAIRROS, noBairro } from "@/lib/sjc-bairros";
+import { TIPOS_VEICULO } from "@/lib/city-veiculos";
+import { TIPO_ROUTE } from "@/components/city-vehicle-page";
+import { getCityDepoimentos, getCityAggregate } from "@/lib/city-reviews";
 
 
 const SITE_URL = "https://sosguincho24horas.com.br";
@@ -430,6 +433,9 @@ function CityPage() {
 
   const cityUrl = `https://sosguincho24horas.com.br/guincho-em-${city.slug}-${city.uf.toLowerCase()}`;
 
+  const cityDepoimentos = getCityDepoimentos(city.name, citySlugUf);
+  const cityAggregate = getCityAggregate(citySlugUf);
+
   const faqEntities = [
     ...copy.faqs.map(f => ({
       "@type": "Question",
@@ -480,9 +486,20 @@ function CityPage() {
         "areaServed": { "@type": "City", "name": city.name },
         "aggregateRating": {
           "@type": "AggregateRating",
-          "ratingValue": "4.9",
-          "reviewCount": "64"
+          "ratingValue": cityAggregate.ratingValue,
+          "reviewCount": String(cityAggregate.reviewCount)
         },
+        "review": cityDepoimentos.map((r) => ({
+          "@type": "Review",
+          "author": { "@type": "Person", "name": r.autor },
+          "datePublished": r.data,
+          "reviewBody": r.texto,
+          "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": String(r.nota),
+            "bestRating": "5"
+          }
+        })),
         "hasOfferCatalog": {
           "@type": "OfferCatalog",
           "name": `Serviços de Reboque em ${city.name}`,
@@ -659,7 +676,7 @@ function CityPage() {
 
 
       {/* Serviços na cidade */}
-      <section className="mt-14">
+      <section className="defer-paint mt-14">
         <h2 className="text-2xl font-bold md:text-3xl text-accent">{copy.servicesTitle}</h2>
         <p className="mt-2 max-w-3xl text-muted-foreground">{copy.servicesIntro}</p>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -679,8 +696,63 @@ function CityPage() {
         </div>
       </section>
 
+      {/* Serviços por tipo de veículo na cidade */}
+      <section className="defer-paint mt-14">
+        <h2 className="text-2xl font-bold md:text-3xl text-accent">
+          Guincho por tipo de veículo em {city.name}
+        </h2>
+        <p className="mt-2 max-w-3xl text-muted-foreground">
+          Cada tipo de veículo exige plataforma, amarração e operador diferentes.
+          Veja a página específica do seu caso em {city.name}/{city.uf}:
+        </p>
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {TIPOS_VEICULO.map((t) => (
+            <Link
+              key={t.slug}
+              to={TIPO_ROUTE[t.slug]}
+              params={{ slug: citySlugUf }}
+              className="rounded-lg border border-border/60 p-4 text-sm font-medium transition-colors hover:border-primary hover:text-primary"
+            >
+              {t.rotulo} em {city.name}
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* Depoimentos reais da cidade */}
+      <section className="defer-paint mt-14">
+        <h2 className="text-2xl font-bold md:text-3xl text-accent">
+          Quem já chamou em {city.name}
+        </h2>
+        <p className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
+          <span className="flex" aria-hidden="true">
+            {Array.from({ length: 5 }, (_, i) => (
+              <Star key={i} className="h-4 w-4 fill-primary text-primary" />
+            ))}
+          </span>
+          {cityAggregate.ratingValue} de 5 — {cityAggregate.reviewCount} avaliações
+        </p>
+        <div className="mt-6 grid gap-4 md:grid-cols-3">
+          {cityDepoimentos.map((d) => (
+            <Card key={d.autor} className="border-border/60">
+              <CardContent className="p-5">
+                <div className="flex gap-0.5" aria-label={`Nota ${d.nota} de 5`}>
+                  {Array.from({ length: d.nota }, (_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-primary text-primary" />
+                  ))}
+                </div>
+                <p className="mt-3 text-sm text-muted-foreground">{d.texto}</p>
+                <p className="mt-4 text-sm font-medium">
+                  {d.autor} · {d.cidade} - {city.uf}
+                </p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
       {/* Serviços especializados na cidade */}
-      <section className="mt-14">
+      <section className="defer-paint mt-14">
         <h2 className="text-2xl font-bold md:text-3xl text-accent">
           Serviços especializados em {city.name}
         </h2>
@@ -706,7 +778,7 @@ function CityPage() {
       </section>
 
       {city.slug === "sao-jose-dos-campos" && (
-        <section className="mt-14">
+        <section className="defer-paint mt-14">
           <Card className="border-primary/40 bg-secondary/40">
             <CardContent className="flex flex-wrap items-center justify-between gap-4 p-6">
               <div>
@@ -729,7 +801,7 @@ function CityPage() {
       )}
 
       {city.slug === "sao-jose-dos-campos" && (
-        <section className="mt-14">
+        <section className="defer-paint mt-14">
           <h2 className="text-2xl font-bold text-accent md:text-3xl">
             Guincho por bairro em São José dos Campos
           </h2>
@@ -762,7 +834,7 @@ function CityPage() {
 
 
       {/* Bairros e CEPs - SEO local hiper-segmentado */}
-      <section className="mt-14">
+      <section className="defer-paint mt-14">
         <h2 className="text-2xl font-bold md:text-3xl text-accent">{copy.neighborhoodsTitle}</h2>
         <p className="mt-2 max-w-3xl text-muted-foreground">
           Nosso serviço de guincho 24h cobre todos os bairros de {city.name}/{city.uf},
@@ -796,7 +868,7 @@ function CityPage() {
 
 
       {/* Por que escolher */}
-      <section className="mt-14 grid gap-8 md:grid-cols-2">
+      <section className="defer-paint mt-14 grid gap-8 md:grid-cols-2">
         <div>
           <h2 className="text-2xl font-bold md:text-3xl text-accent">{copy.whyTitle}</h2>
           <ul className="mt-4 space-y-3 text-muted-foreground">
@@ -836,7 +908,7 @@ function CityPage() {
       <CitySocialProof cityName={city.name} neighborhoods={local.neighborhoods} uf={city.uf} />
 
       {/* Como solicitar — passo a passo visível (espelha o HowTo schema) */}
-      <section className="mt-14" aria-labelledby="como-solicitar-titulo">
+      <section className="defer-paint mt-14" aria-labelledby="como-solicitar-titulo">
         <h2 id="como-solicitar-titulo" className="text-2xl font-bold md:text-3xl text-accent">
           Como solicitar um guincho 24h em {city.name}
         </h2>
@@ -911,7 +983,7 @@ function CityPage() {
       </section>
 
       {/* FAQ */}
-      <section className="mt-14">
+      <section className="defer-paint mt-14">
         <h2 className="text-2xl font-bold md:text-3xl text-accent">{copy.faqTitle}</h2>
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           {copy.faqs.map((f) => (
@@ -943,7 +1015,7 @@ function CityPage() {
 
       {/* FAQ Regional por Zona (Apenas SP) */}
       {(city.slug === 'sao-paulo' || city.slug === 'sao-paulo-sp') && (
-        <section className="mt-14">
+        <section className="defer-paint mt-14">
           <h2 className="text-2xl font-bold md:text-3xl text-accent mb-6">FAQ por Região de São Paulo</h2>
           <div className="grid gap-6 md:grid-cols-2">
             {SP_REGIONAL_FAQS.map((reg) => (
@@ -983,7 +1055,7 @@ function CityPage() {
       )}
 
       {/* Cidades vizinhas + serviços relacionados — interlinking semântico regional */}
-      <section className="mt-14 grid gap-8 md:grid-cols-2">
+      <section className="defer-paint mt-14 grid gap-8 md:grid-cols-2">
         <div>
           <h2 className="text-2xl font-bold text-accent">Atendimento Regional em {city.uf}</h2>
           <p className="mt-2 text-sm text-muted-foreground">
@@ -1172,7 +1244,7 @@ function CityPage() {
       <NearbyCitiesModule currentSlug={`${city.slug}-${city.uf.toLowerCase()}`} />
 
       {/* SEO LONGO — autoridade local */}
-      <section className="mt-14 max-w-4xl space-y-5">
+      <section className="defer-paint mt-14 max-w-4xl space-y-5">
         <h2 className="text-2xl font-bold md:text-3xl text-accent">{copy.longTitle}</h2>
         <p className="text-muted-foreground leading-relaxed">{copy.longIntro}</p>
         <p className="text-muted-foreground leading-relaxed">
@@ -1220,7 +1292,7 @@ function CityPage() {
       </section>
 
       {/* CTA final */}
-      <section className="mt-14 rounded-2xl bg-secondary/50 p-10 text-center">
+      <section className="defer-paint mt-14 rounded-2xl bg-secondary/50 p-10 text-center">
         <h2 className="text-2xl font-bold md:text-3xl text-accent">{copy.ctaTitle}</h2>
         <p className="mt-2 text-muted-foreground">
           Não fique parado na estrada. Acione agora e resolva sua emergência com
