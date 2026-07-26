@@ -404,27 +404,33 @@ export function getBairro(slug: string): Bairro | undefined {
   return BAIRRO_MAP.get(slug);
 }
 
+/** Artigo/preposição correta: "no Centro", "na Zona Leste", "na Vila Adyana" */
+export function noBairro(b: Bairro): string {
+  return /^(Zona|Vila)\s/.test(b.nome) ? "na" : "no";
+}
+
 export function buildFaqs(b: Bairro) {
+  const em = noBairro(b);
   return [
     {
-      q: `Vocês têm guincho 24 horas no ${b.nome} em São José dos Campos?`,
+      q: `Vocês têm guincho 24 horas ${em} ${b.nome} em São José dos Campos?`,
       a: `Sim. Atendemos ${b.regiao} 24 horas por dia, todos os dias, incluindo madrugada, fins de semana e feriados. A central despacha a plataforma mais próxima assim que você liga ou chama no WhatsApp.`,
     },
     {
-      q: `Quanto tempo o guincho leva para chegar no ${b.nome}?`,
-      a: `O tempo médio de chegada no ${b.nome} é de ${b.eta}, variando conforme o trânsito e o ponto exato da ocorrência. Trabalhamos com bases distribuídas em São José dos Campos para reduzir a espera.`,
+      q: `Quanto tempo o guincho leva para chegar ${em} ${b.nome}?`,
+      a: `O tempo médio de chegada ${em} ${b.nome} é de ${b.eta}, variando conforme o trânsito e o ponto exato da ocorrência. Trabalhamos com bases distribuídas em São José dos Campos para reduzir a espera.`,
     },
     {
-      q: `Quanto custa um guincho no ${b.nome}?`,
+      q: `Quanto custa um guincho ${em} ${b.nome}?`,
       a: `O valor depende do tipo de veículo, da distância até o destino e da complexidade do resgate. Informamos o preço fechado por telefone ou WhatsApp antes de enviar a plataforma — sem cobrança de taxa de deslocamento surpresa.`,
     },
     {
-      q: `Que tipos de veículo vocês rebocam no ${b.nome}?`,
+      q: `Que tipos de veículo vocês rebocam ${em} ${b.nome}?`,
       a: `Carros de passeio, SUVs, motos, utilitários, veículos blindados e rebaixados, caminhões e ônibus com guincho pesado, além de empilhadeiras, tratores, barcos e jet skis com prancha rebaixada.`,
     },
     {
       q: `É possível fazer o socorro no local em vez de rebocar?`,
-      a: `Sim. Em muitos chamados no ${b.nome} resolvemos no local: carga de bateria, troca de pneu, pane seca com combustível, chaveiro automotivo e pequenos reparos elétricos. Só rebocamos quando o veículo realmente não tem condição de rodar.`,
+      a: `Sim. Em muitos chamados ${em} ${b.nome} resolvemos no local: carga de bateria, troca de pneu, pane seca com combustível, chaveiro automotivo e pequenos reparos elétricos. Só rebocamos quando o veículo realmente não tem condição de rodar.`,
     },
   ];
 }

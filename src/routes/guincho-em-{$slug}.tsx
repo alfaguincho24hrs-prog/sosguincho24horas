@@ -44,7 +44,7 @@ import { findLocationBySlug, type Location } from "@/data/locations";
 import { getPublicCityProviders } from "@/lib/admin-data.functions";
 import { NearbyCitiesModule } from "@/components/nearby-cities";
 import { fetchPublicCityProvidersClient } from "@/lib/public-admin-data";
-import { SJC_BAIRROS } from "@/lib/sjc-bairros";
+import { SJC_BAIRROS, noBairro } from "@/lib/sjc-bairros";
 
 
 const SITE_URL = "https://sosguincho24horas.com.br";
@@ -745,7 +745,7 @@ function CityPage() {
                 params={{ bairro: b.slug }}
                 className="rounded-lg border bg-background px-3 py-2 text-sm font-medium transition-colors hover:border-primary hover:text-primary"
               >
-                Guincho no {b.nome}
+                Guincho {noBairro(b)} {b.nome}
               </Link>
             ))}
           </div>

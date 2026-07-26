@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/accordion";
 import { Phone, MapPin, AlertTriangle, Clock, ChevronRight, Truck } from "lucide-react";
 import { SITE } from "@/components/site-data";
-import { SJC_BAIRROS, getBairro, buildFaqs, type Bairro } from "@/lib/sjc-bairros";
+import { SJC_BAIRROS, getBairro, buildFaqs, noBairro, type Bairro } from "@/lib/sjc-bairros";
 
 const ORIGIN = "https://sosguincho24horas.com.br";
 const TEL = "tel:+5511996451510";
@@ -29,9 +29,11 @@ export const Route = createFileRoute("/guincho-sjc/$bairro")({
       };
     }
     const b = loaderData.bairro;
-    const title = `Guincho 24h no ${b.nome} — São José dos Campos/SP | SOS Guincho`;
+    const em = noBairro(b);
+    const title = `Guincho 24h ${em} ${b.nome} — São José dos Campos/SP | SOS Guincho`;
     const description = b.resumo;
     const faqs = buildFaqs(b);
+  const em = noBairro(b);
     return {
       meta: [
         { title },
@@ -89,7 +91,7 @@ export const Route = createFileRoute("/guincho-sjc/$bairro")({
               },
               {
                 "@type": "Service",
-                name: `Guincho e reboque 24 horas no ${b.nome}`,
+                name: `Guincho e reboque 24 horas ${em} ${b.nome}`,
                 serviceType: "Guincho, reboque e auto socorro 24 horas",
                 provider: { "@id": `${url}#business` },
                 areaServed: { "@type": "Place", name: `${b.nome}, São José dos Campos - SP` },
@@ -143,11 +145,12 @@ function BairroNotFound() {
 function BairroPage() {
   const { bairro: b } = Route.useLoaderData() as { bairro: Bairro };
   const faqs = buildFaqs(b);
+  const em = noBairro(b);
   const vizinhos = b.vizinhos
     .map((slug) => SJC_BAIRROS.find((x) => x.slug === slug))
     .filter((x): x is (typeof SJC_BAIRROS)[number] => Boolean(x));
   const wa = `https://wa.me/5511996451510?text=${encodeURIComponent(
-    `Olá! Preciso de guincho no ${b.nome}, São José dos Campos.`,
+    `Olá! Preciso de guincho ${noBairro(b)} ${b.nome}, São José dos Campos.`,
   )}`;
 
   return (
@@ -167,7 +170,7 @@ function BairroPage() {
           </nav>
           <Badge className="mb-4">{b.regiao}</Badge>
           <h1 className="mb-4 text-3xl font-bold tracking-tight text-accent md:text-5xl">
-            Guincho 24h no {b.nome} — São José dos Campos
+            Guincho 24h {em} {b.nome} — São José dos Campos
           </h1>
           <p className="mb-6 max-w-3xl text-lg text-muted-foreground">{b.resumo}</p>
           <div className="mb-6 flex flex-wrap items-center gap-3 text-sm">
@@ -202,7 +205,7 @@ function BairroPage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-2xl">
-                <MapPin className="h-5 w-5 text-primary" /> Onde atendemos no {b.nome}
+                <MapPin className="h-5 w-5 text-primary" /> Onde atendemos {em} {b.nome}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -233,7 +236,7 @@ function BairroPage() {
       <section className="border-t bg-muted/30 py-12">
         <div className="container max-w-4xl space-y-4">
           <h2 className="text-3xl font-bold text-accent">
-            Serviços disponíveis no {b.nome} 24 horas
+            Serviços disponíveis {em} {b.nome} 24 horas
           </h2>
           <div className="grid gap-3 sm:grid-cols-2">
             {[
@@ -260,7 +263,7 @@ function BairroPage() {
       <section className="py-12">
         <div className="container max-w-4xl">
           <h2 className="mb-6 text-3xl font-bold text-accent">
-            Perguntas frequentes sobre guincho no {b.nome}
+            Perguntas frequentes sobre guincho {em} {b.nome}
           </h2>
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((f, i) => (
@@ -277,7 +280,7 @@ function BairroPage() {
         <div className="container max-w-5xl space-y-8">
           <div>
             <h2 className="mb-3 text-2xl font-bold text-accent">
-              Bairros vizinhos ao {b.nome} que também atendemos
+              Bairros vizinhos {em === "na" ? "à" : "ao"} {b.nome} que também atendemos
             </h2>
             <div className="flex flex-wrap gap-2">
               {vizinhos.map((v) => (
@@ -287,7 +290,7 @@ function BairroPage() {
                   params={{ bairro: v.slug }}
                   className="inline-flex items-center rounded-full border bg-background px-3 py-1.5 text-sm transition-colors hover:bg-primary hover:text-primary-foreground"
                 >
-                  Guincho no {v.nome}
+                  Guincho {noBairro(v)} {v.nome}
                 </Link>
               ))}
             </div>
