@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/accordion";
 import { Phone, Clock, Truck, CheckCircle2, AlertTriangle, ChevronRight } from "lucide-react";
 import { SITE } from "@/components/site-data";
-import { SJC_VEICULOS, getTipoVeiculo } from "@/lib/sjc-veiculos";
+import { SJC_VEICULOS, getTipoVeiculo, type TipoVeiculo } from "@/lib/sjc-veiculos";
 
 const ORIGIN = "https://sosguincho24horas.com.br";
 const TEL = "tel:+5511996451510";
@@ -152,7 +152,7 @@ function TipoNotFound() {
 }
 
 function TipoVeiculoPage() {
-  const { tipo: v } = Route.useLoaderData();
+  const { tipo: v } = Route.useLoaderData() as { tipo: TipoVeiculo };
   const outros = SJC_VEICULOS.filter((o) => o.slug !== v.slug);
   const waText = encodeURIComponent(
     `Olá! Preciso de guincho para ${v.nome} em São José dos Campos.`,
