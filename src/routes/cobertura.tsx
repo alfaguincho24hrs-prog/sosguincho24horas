@@ -97,6 +97,23 @@ export const Route = createFileRoute("/cobertura")({
             ]
           }
         })
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          "name": "Cidades do Estado de São Paulo com guincho 24 horas",
+          "description":
+            "Municípios paulistas atendidos por guincho e reboque 24h, agrupados por região administrativa.",
+          "numberOfItems": SP_CITIES.length,
+          "itemListElement": SP_CITIES.slice(0, 200).map((c, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: `Guincho 24h em ${c.name} - SP`,
+            url: `https://sosguincho24horas.com.br/guincho-em-${c.slug}-sp`,
+          })),
+        })
       }
     ],
     links: [{ rel: "canonical", href: "https://sosguincho24horas.com.br/cobertura" }],
