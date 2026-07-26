@@ -106,31 +106,13 @@ export const Route = createFileRoute("/guincho-{$tipo}-sjc/$bairro")({
                     addressCountry: "BR",
                   },
                 },
-                provider: {
-                  "@type": "LocalBusiness",
-                  "@id": `${url}#business`,
-                  name: `${SITE.name} — ${b.nome}, São José dos Campos`,
-                  telephone: "+5511996451510",
-                  url,
-                  priceRange: "$$",
-                  areaServed: { "@type": "Place", name: `${b.nome}, São José dos Campos - SP` },
-                  openingHoursSpecification: [
-                    {
-                      "@type": "OpeningHoursSpecification",
-                      dayOfWeek: [
-                        "Monday",
-                        "Tuesday",
-                        "Wednesday",
-                        "Thursday",
-                        "Friday",
-                        "Saturday",
-                        "Sunday",
-                      ],
-                      opens: "00:00",
-                      closes: "23:59",
-                    },
-                  ],
+                provider: { "@id": `${url}#business` },
+                availableChannel: {
+                  "@type": "ServiceChannel",
+                  serviceUrl: url,
+                  servicePhone: { "@type": "ContactPoint", telephone: TEL_E164 },
                 },
+                hoursAvailable: OPENING_HOURS_24_7,
                 hasOfferCatalog: {
                   "@type": "OfferCatalog",
                   name: `Serviços de guincho para ${v.nome} ${em} ${b.nome}`,
@@ -140,6 +122,20 @@ export const Route = createFileRoute("/guincho-{$tipo}-sjc/$bairro")({
                   })),
                 },
               },
+              buildLocalBusiness({
+                url,
+                areaLabel: `${b.nome}, São José dos Campos - SP`,
+                areaServed: {
+                  "@type": "Place",
+                  name: `${b.nome}, São José dos Campos - SP`,
+                  address: {
+                    "@type": "PostalAddress",
+                    addressLocality: "São José dos Campos",
+                    addressRegion: "SP",
+                    addressCountry: "BR",
+                  },
+                },
+              }),
               {
                 "@type": "BreadcrumbList",
                 itemListElement: [
@@ -161,12 +157,15 @@ export const Route = createFileRoute("/guincho-{$tipo}-sjc/$bairro")({
               },
               {
                 "@type": "FAQPage",
+                "@id": `${url}#faq`,
+                url,
                 mainEntity: faqs.map((f) => ({
                   "@type": "Question",
                   name: f.q,
                   acceptedAnswer: { "@type": "Answer", text: f.a },
                 })),
               },
+
             ],
           }),
         },
