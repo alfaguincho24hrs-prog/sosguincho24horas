@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -36,15 +36,25 @@ function findCity(slug: string): City | undefined {
   return city;
 }
 
-export const Route = createFileRoute("/guincho-{$tipo}-em-{$slug}")({
-  loader: ({ params }) => {
-    console.log("PARAMS", JSON.stringify(params));
-    const tipo = findTipo(params.tipo);
-    const city = findCity(params.slug);
-    if (!tipo || !city) throw notFound();
-    return { tipo, city };
-  },
-  head: ({ params, loaderData }) => {
+
+export type LoaderData = { tipo: TipoVeiculoBase; city: City };
+
+export const TIPO_ROUTE: Record<string, "/guincho-carro-em-{$slug}" | "/guincho-moto-em-{$slug}" | "/guincho-caminhao-em-{$slug}" | "/guincho-transporte-de-veiculos-em-{$slug}"> = {
+  carro: "/guincho-carro-em-{$slug}",
+  moto: "/guincho-moto-em-{$slug}",
+  caminhao: "/guincho-caminhao-em-{$slug}",
+  "transporte-de-veiculos": "/guincho-transporte-de-veiculos-em-{$slug}",
+};
+
+/** Loader compartilhado pelas 4 rotas por tipo de veículo */
+export function loadVehicleCity(tipoSlug: string, slug: string): LoaderData | null {
+  const tipo = findTipo(tipoSlug);
+  const city = findCity(slug);
+  if (!tipo || !city) return null;
+  return { tipo, city };
+}
+
+export function buildVehicleCityHead(loaderData: LoaderData | undefined) {
     if (!loaderData) {
       return {
         meta: [
@@ -193,12 +203,9 @@ export const Route = createFileRoute("/guincho-{$tipo}-em-{$slug}")({
         },
       ],
     };
-  },
-  component: TipoCidadePage,
-  notFoundComponent: TipoCidadeNotFound,
-});
+  }
 
-function TipoCidadeNotFound() {
+export function VehicleCityNotFound() {
   return (
     <main className="mx-auto max-w-3xl px-4 py-24 text-center">
       <h1 className="text-3xl font-bold">Página não encontrada</h1>
@@ -212,8 +219,7 @@ function TipoCidadeNotFound() {
   );
 }
 
-function TipoCidadePage() {
-  const data = Route.useLoaderData() as { tipo: TipoVeiculoBase; city: City };
+export function VehicleCityPage({ data }: { data: LoaderData }) {
   const v = data.tipo;
   const city = data.city;
   const citySlugUf = `${city.slug}-${city.uf.toLowerCase()}`;
@@ -374,8 +380,8 @@ function TipoCidadePage() {
           {outros.map((t) => (
             <Link
               key={t.slug}
-              to="/guincho-{$tipo}-em-{$slug}"
-              params={{ tipo: t.slug, slug: citySlugUf }}
+              to={TIPO_ROUTE[t.slug]}
+              params={{ slug: citySlugUf }}
               className="rounded-lg border p-4 text-sm font-medium hover:border-primary hover:text-primary"
             >
               {t.rotulo} em {city.name}
@@ -400,8 +406,8 @@ function TipoCidadePage() {
             {vizinhas.map((c) => (
               <Link
                 key={c.slug}
-                to="/guincho-{$tipo}-em-{$slug}"
-                params={{ tipo: v.slug, slug: `${c.slug}-${c.uf.toLowerCase()}` }}
+                to={TIPO_ROUTE[v.slug]}
+                params={{ slug: `${c.slug}-${c.uf.toLowerCase()}` }}
                 className="inline-flex items-center gap-1 rounded-full border px-3 py-1.5 text-sm hover:border-primary hover:text-primary"
               >
                 <MapPin className="h-3.5 w-3.5" /> {c.name}
