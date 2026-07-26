@@ -1,6 +1,7 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { OtherPages } from "@/components/other-pages";
 import { LegalNotice } from "@/components/legal-notice";
 import { WhatsAppFloat } from "@/components/whatsapp-float";
 import { MobileStickyCTA } from "@/components/mobile-sticky-cta";
@@ -180,6 +181,7 @@ function RootComponent() {
         <Outlet />
       </main>
       <LegalNotice />
+      <OtherPages />
       <SiteFooter />
       <WhatsAppFloat />
       <MobileStickyCTA />
