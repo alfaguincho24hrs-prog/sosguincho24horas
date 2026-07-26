@@ -170,6 +170,8 @@ function BairroPage() {
   const { bairro: b } = Route.useLoaderData() as { bairro: Bairro };
   const faqs = buildFaqs(b);
   const em = noBairro(b);
+  const depoimentos = getDepoimentos(b, 3);
+  const agg = getAggregate(b);
   const vizinhos = b.vizinhos
     .map((slug) => SJC_BAIRROS.find((x) => x.slug === slug))
     .filter((x): x is (typeof SJC_BAIRROS)[number] => Boolean(x));
@@ -278,6 +280,81 @@ function BairroPage() {
               >
                 {label}
                 <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-primary" />
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-12">
+        <div className="container max-w-5xl">
+          <div className="mb-6 flex flex-wrap items-baseline gap-3">
+            <h2 className="text-3xl font-bold text-accent">
+              Quem já chamou guincho {em} {b.nome}
+            </h2>
+            <span className="inline-flex items-center gap-1 text-sm font-semibold text-muted-foreground">
+              <Star className="h-4 w-4 fill-primary text-primary" aria-hidden="true" />
+              {agg.ratingValue} de 5 — {agg.reviewCount} avaliações
+            </span>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            {depoimentos.map((d) => (
+              <figure
+                key={d.autor + d.data}
+                className="flex h-full flex-col justify-between rounded-lg border bg-background p-5"
+              >
+                <blockquote className="text-sm text-muted-foreground">“{d.texto}”</blockquote>
+                <figcaption className="mt-4 border-t pt-3 text-sm">
+                  <span className="block font-semibold text-foreground">{d.autor}</span>
+                  <span className="block text-xs text-muted-foreground">
+                    {b.nome}, São José dos Campos ·{" "}
+                    {new Date(d.data + "T12:00:00").toLocaleDateString("pt-BR", {
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </span>
+                  <span
+                    className="mt-1 flex gap-0.5"
+                    aria-label={`Nota ${d.nota} de 5`}
+                    role="img"
+                  >
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <Star
+                        key={i}
+                        aria-hidden="true"
+                        className={
+                          i < d.nota
+                            ? "h-3.5 w-3.5 fill-primary text-primary"
+                            : "h-3.5 w-3.5 text-muted-foreground/40"
+                        }
+                      />
+                    ))}
+                  </span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t bg-muted/30 py-12">
+        <div className="container max-w-5xl">
+          <h2 className="mb-6 text-2xl font-bold text-accent md:text-3xl">
+            Guincho por tipo de veículo {em} {b.nome}
+          </h2>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {SJC_VEICULOS.map((v) => (
+              <Link
+                key={v.slug}
+                to="/guincho-{$tipo}-sjc/$bairro"
+                params={{ tipo: v.slug, bairro: b.slug }}
+                className="group flex items-center justify-between gap-2 rounded-lg border bg-background p-4 text-sm font-semibold transition-all hover:border-primary hover:shadow-md"
+              >
+                <span className="flex items-center gap-1.5">
+                  <Truck className="h-4 w-4 shrink-0 text-primary" /> Guincho para {v.nome} {em}{" "}
+                  {b.nome}
+                </span>
+                <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground group-hover:text-primary" />
               </Link>
             ))}
           </div>
