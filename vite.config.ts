@@ -69,7 +69,7 @@ function generateSeoFiles(): Plugin {
   const generate = async () => {
     // Dynamic imports so the SSR/edge bundle doesn't pull in these data modules
     const { ALL_CITIES } = await import("./src/components/cities-data");
-    const { BLOG_POSTS } = await import("./src/components/blog-data");
+    const { DEFAULT_POSTS } = await import("./src/components/blog-data");
     const { SJC_BAIRROS } = await import("./src/lib/sjc-bairros");
 
     const statics: Entry[] = STATIC_ROUTES.map((path) => ({
@@ -103,7 +103,7 @@ function generateSeoFiles(): Plugin {
       priority: "0.8",
     }));
 
-    const blog: Entry[] = (BLOG_POSTS ?? []).map((p: { slug: string }) => ({
+    const blog: Entry[] = DEFAULT_POSTS.map((p: { slug: string }) => ({
       path: `/blog/${p.slug}`,
       changefreq: "monthly",
       priority: "0.6",
