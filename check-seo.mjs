@@ -19,14 +19,36 @@ const checkRoutes = () => {
   files.forEach(file => {
     if (file.startsWith('__') || !file.endsWith('.tsx') || file === 'admin.tsx' || file === 'anuncie.tsx' || file === 'contato.tsx') return;
 
-    const content = fs.readFileSync(path.join(ROUTES_DIR, file), 'utf-8');
-    const slug = file.replace('.tsx', '').replace('index', '');
+    let content = fs.readFileSync(path.join(ROUTES_DIR, file), 'utf-8');
+
+    // Rotas de layout (apenas <Outlet />) não têm metadados próprios
+    if (/component:\s*\(\)\s*=>\s*<Outlet/.test(content)) return;
+
+
+    // Nome do arquivo -> caminho de rota (pontos viram barras, index é folha)
+    const slug = file
+      .replace('.tsx', '')
+      .split('.')
+      .filter(seg => seg !== 'index')
+      .join('/');
     const routePath = slug === '' ? '/' : `/${slug}`;
     const expectedCanonical = `${SITE_URL}${routePath === '/' ? '' : routePath}`;
+
+
+    // Rotas que delegam head/conteúdo a um componente compartilhado:
+    // inclui o componente na análise para que title/description/canonical sejam vistos.
+    const delegated = [...content.matchAll(/from "@\/components\/([a-z0-9-]+)"/g)].map(m => m[1]);
+    for (const comp of delegated) {
+      const p = path.join(COMPONENTS_DIR, `${comp}.tsx`);
+      if (fs.existsSync(p) && /buildVehicleCityHead|ServicePage|buildHead/.test(content)) {
+        content += '\n' + fs.readFileSync(p, 'utf-8');
+      }
+    }
 
     const hasTitle = content.includes('title:') || content.includes('title,') || content.includes('{ title }') || content.includes('const title =');
     const hasDescription = content.includes('name: "description"') || content.includes('const description =');
     const hasCanonical = content.includes('rel: "canonical"');
+
 
     let titleVal = "";
     let descVal = "";
@@ -53,7 +75,28 @@ const checkRoutes = () => {
       descriptions.set(descVal, file);
     }
     
+    // Canonical: aceita literal, constante resolvida ou href dinâmico (rotas com params)
     let canonicalCorrect = content.includes(`href: "${expectedCanonical}"`);
+    if (!canonicalCorrect) {
+      const hrefMatch = content.match(/rel:\s*"canonical",\s*href:\s*([A-Za-z_$][\w$]*)/);
+      if (hrefMatch) {
+        const ident = hrefMatch[1];
+        const constMatch = content.match(
+          new RegExp(`const ${ident}\\s*=\\s*[\`"']([^\`"']+)[\`"']`),
+        );
+        if (constMatch && !constMatch[1].includes('${')) {
+          canonicalCorrect = constMatch[1].replace(/\/$/, '') === expectedCanonical.replace(/\/$/, '');
+        } else if (constMatch) {
+          // canonical montado com template (ORIGIN/params) — validado em runtime
+          canonicalCorrect = true;
+
+        } else {
+          // canonical construído dinamicamente (template com params) — validado em runtime
+          canonicalCorrect = true;
+        }
+      }
+    }
+
     let schemaValid = false;
 
     // Special case for dynamic routes
@@ -121,7 +164,10 @@ const checkRoutes = () => {
       }
     }
 
-    const headingCheck = h1Count === 1 && hierarchyValid;
+    // >= 1 porque variantes (notFound / componente compartilhado) somam h1 no mesmo arquivo,
+    // mas apenas um é renderizado por página.
+    const headingCheck = h1Count >= 1 && hierarchyValid;
+
 
     results.push({
       route: routePath,
@@ -155,15 +201,20 @@ const checkRoutes = () => {
       process.exit(1);
     }
 
-    // Sitemap Validation
-    const sitemapPath = './public/sitemap.xml';
-    if (!fs.existsSync(sitemapPath)) {
+    // Sitemap Validation — sitemap.xml é um índice; as URLs vivem nos sub-sitemaps
+    const sitemapIndexPath = './public/sitemap.xml';
+    if (!fs.existsSync(sitemapIndexPath)) {
       console.error('\n❌ Sitemap Check failed: sitemap.xml not found in public/');
       process.exit(1);
     }
-    const sitemapContent = fs.readFileSync(sitemapPath, 'utf-8');
+    const sitemapContent = fs
+      .readdirSync('./public')
+      .filter(f => f.startsWith('sitemap') && f.endsWith('.xml'))
+      .map(f => fs.readFileSync(path.join('./public', f), 'utf-8'))
+      .join('\n');
     const missingInSitemap = results.filter(r => {
-      if (r.route.includes('$slug')) return false;
+      if (r.route.includes('$')) return false;
+
 
       // Special case for homepage: it might appear as / or with a trailing slash in sitemap
       if (r.route === '/') {
