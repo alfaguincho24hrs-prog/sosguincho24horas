@@ -12,6 +12,26 @@ import { LazyTestimonialsCarousel } from "@/components/lazy-testimonials";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 import { getFeaturedPartners } from "@/lib/admin-data.functions";
 import { buildResponsiveSources } from "@/lib/responsive-image";
+import { ALL_CITIES } from "@/components/cities-data";
+import { TIPOS_VEICULO } from "@/lib/city-veiculos";
+
+const norm = (v: string) =>
+  v.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+
+/** Casa o nome exibido em CITIES com a base completa de cidades */
+function cityBySlug(label: string) {
+  const clean = norm(label.split("-")[0].split("/")[0]);
+  return ALL_CITIES.find((c) => norm(c.name) === clean);
+}
+
+/** Cidades usadas como vitrine nos blocos por tipo de veículo */
+const DESTAQUE_CIDADES = [
+  "sao-paulo", "sao-jose-dos-campos", "taubate", "jacarei", "campinas",
+  "guarulhos", "santo-andre", "sao-bernardo-do-campo", "santos", "sorocaba",
+  "rio-de-janeiro", "belo-horizonte",
+]
+  .map((slug) => ALL_CITIES.find((c) => c.slug === slug))
+  .filter((c): c is (typeof ALL_CITIES)[number] => Boolean(c));
 
 type FeaturedPartner = Awaited<ReturnType<typeof getFeaturedPartners>>[number];
 
@@ -245,10 +265,64 @@ function CoveragePage() {
 
         <h2 className="mt-16 text-2xl font-bold">Capitais atendidas</h2>
         <div className="mt-6 flex flex-wrap gap-2">
-          {CITIES.map((c) => (
-            <span key={c} className="rounded-full border bg-secondary/40 px-4 py-1.5 text-sm">{c}</span>
-          ))}
+          {CITIES.map((c) => {
+            const match = cityBySlug(c);
+            if (!match) {
+              return (
+                <span key={c} className="rounded-full border bg-secondary/40 px-4 py-1.5 text-sm">{c}</span>
+              );
+            }
+            return (
+              <Link
+                key={c}
+                to="/guincho-em-{$slug}"
+                params={{ slug: `${match.slug}-${match.uf.toLowerCase()}` }}
+                className="rounded-full border bg-secondary/40 px-4 py-1.5 text-sm transition-colors hover:border-primary hover:text-primary"
+              >
+                {c}
+              </Link>
+            );
+          })}
         </div>
+
+        {/* Serviços por tipo de veículo nas principais cidades */}
+        <section className="defer-paint mt-16">
+          <h2 className="text-2xl font-bold">Guincho por tipo de veículo</h2>
+          <p className="mt-2 max-w-3xl text-muted-foreground">
+            Cada veículo exige plataforma, amarração e operador diferentes.
+            Escolha o serviço e a cidade para ver a página com tempo de chegada,
+            equipamento e perguntas frequentes daquela região.
+          </p>
+          <div className="mt-6 grid gap-6 md:grid-cols-2">
+            {TIPOS_VEICULO.map((t) => (
+              <div key={t.slug} className="rounded-xl border border-border/60 p-5">
+                <h3 className="font-semibold">{t.rotulo}</h3>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Chegada média: {t.eta}
+                </p>
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {DESTAQUE_CIDADES.map((c) => (
+                    <Link
+                      key={`${t.slug}-${c.slug}`}
+                      to="/guincho-{$tipo}-em-{$slug}"
+                      params={{ tipo: t.slug, slug: `${c.slug}-${c.uf.toLowerCase()}` }}
+                      className="rounded-full bg-secondary px-2.5 py-1 text-xs transition-colors hover:text-primary"
+                    >
+                      {c.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="mt-5 text-sm text-muted-foreground">
+            Sua cidade não está aqui?{" "}
+            <Link to="/servicos-de-guincho-e-reboque" className="text-primary underline">
+              Veja a lista completa de cidades de A a Z
+            </Link>{" "}
+            — cada uma tem página própria para carro, moto, caminhão e transporte.
+          </p>
+        </section>
       </div>
 
       <SeoBlock
