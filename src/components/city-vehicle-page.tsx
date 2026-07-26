@@ -22,6 +22,11 @@ import { SITE } from "@/components/site-data";
 import { ALL_CITIES, type City } from "@/components/cities-data";
 import { TIPOS_VEICULO, findTipo, tituloRotulo, type TipoVeiculoBase } from "@/lib/city-veiculos";
 import { getCityDepoimentos, getCityAggregate } from "@/lib/city-reviews";
+import {
+  buildLocalBusiness,
+  OPENING_HOURS_24_7,
+  TEL_E164,
+} from "@/lib/local-business-schema";
 
 const ORIGIN = "https://sosguincho24horas.com.br";
 const TEL = "tel:+5511996451510";
