@@ -29,6 +29,8 @@ import { Route as AreasAtendidasRouteImport } from './routes/areas-atendidas'
 import { Route as AnuncieRouteImport } from './routes/anuncie'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as GuinchoSjcIndexRouteImport } from './routes/guincho-sjc.index'
+import { Route as GuinchoSjcBairroRouteImport } from './routes/guincho-sjc.$bairro'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
 const ServicosDeGuinchoEReboqueRoute =
@@ -135,6 +137,16 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuinchoSjcIndexRoute = GuinchoSjcIndexRouteImport.update({
+  id: '/guincho-sjc/',
+  path: '/guincho-sjc/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuinchoSjcBairroRoute = GuinchoSjcBairroRouteImport.update({
+  id: '/guincho-sjc/$bairro',
+  path: '/guincho-sjc/$bairro',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -163,6 +175,8 @@ export interface FileRoutesByFullPath {
   '/servicos': typeof ServicosRoute
   '/servicos-de-guincho-e-reboque': typeof ServicosDeGuinchoEReboqueRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/guincho-sjc/$bairro': typeof GuinchoSjcBairroRoute
+  '/guincho-sjc/': typeof GuinchoSjcIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -186,6 +200,8 @@ export interface FileRoutesByTo {
   '/servicos': typeof ServicosRoute
   '/servicos-de-guincho-e-reboque': typeof ServicosDeGuinchoEReboqueRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/guincho-sjc/$bairro': typeof GuinchoSjcBairroRoute
+  '/guincho-sjc': typeof GuinchoSjcIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -210,6 +226,8 @@ export interface FileRoutesById {
   '/servicos': typeof ServicosRoute
   '/servicos-de-guincho-e-reboque': typeof ServicosDeGuinchoEReboqueRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/guincho-sjc/$bairro': typeof GuinchoSjcBairroRoute
+  '/guincho-sjc/': typeof GuinchoSjcIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -235,6 +253,8 @@ export interface FileRouteTypes {
     | '/servicos'
     | '/servicos-de-guincho-e-reboque'
     | '/blog/$slug'
+    | '/guincho-sjc/$bairro'
+    | '/guincho-sjc/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -258,6 +278,8 @@ export interface FileRouteTypes {
     | '/servicos'
     | '/servicos-de-guincho-e-reboque'
     | '/blog/$slug'
+    | '/guincho-sjc/$bairro'
+    | '/guincho-sjc'
   id:
     | '__root__'
     | '/'
@@ -281,6 +303,8 @@ export interface FileRouteTypes {
     | '/servicos'
     | '/servicos-de-guincho-e-reboque'
     | '/blog/$slug'
+    | '/guincho-sjc/$bairro'
+    | '/guincho-sjc/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -304,6 +328,8 @@ export interface RootRouteChildren {
   RodoviasValeDoParaibaRoute: typeof RodoviasValeDoParaibaRoute
   ServicosRoute: typeof ServicosRoute
   ServicosDeGuinchoEReboqueRoute: typeof ServicosDeGuinchoEReboqueRoute
+  GuinchoSjcBairroRoute: typeof GuinchoSjcBairroRoute
+  GuinchoSjcIndexRoute: typeof GuinchoSjcIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -448,6 +474,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/guincho-sjc/': {
+      id: '/guincho-sjc/'
+      path: '/guincho-sjc'
+      fullPath: '/guincho-sjc/'
+      preLoaderRoute: typeof GuinchoSjcIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guincho-sjc/$bairro': {
+      id: '/guincho-sjc/$bairro'
+      path: '/guincho-sjc/$bairro'
+      fullPath: '/guincho-sjc/$bairro'
+      preLoaderRoute: typeof GuinchoSjcBairroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog/$slug': {
       id: '/blog/$slug'
       path: '/$slug'
@@ -491,6 +531,8 @@ const rootRouteChildren: RootRouteChildren = {
   RodoviasValeDoParaibaRoute: RodoviasValeDoParaibaRoute,
   ServicosRoute: ServicosRoute,
   ServicosDeGuinchoEReboqueRoute: ServicosDeGuinchoEReboqueRoute,
+  GuinchoSjcBairroRoute: GuinchoSjcBairroRoute,
+  GuinchoSjcIndexRoute: GuinchoSjcIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

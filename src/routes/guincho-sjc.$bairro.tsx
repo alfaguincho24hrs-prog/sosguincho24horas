@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/accordion";
 import { Phone, MapPin, AlertTriangle, Clock, ChevronRight, Truck } from "lucide-react";
 import { SITE } from "@/components/site-data";
-import { SJC_BAIRROS, getBairro, buildFaqs } from "@/lib/sjc-bairros";
+import { SJC_BAIRROS, getBairro, buildFaqs, type Bairro } from "@/lib/sjc-bairros";
 
 const ORIGIN = "https://sosguincho24horas.com.br";
 const TEL = "tel:+5511996451510";
@@ -141,7 +141,7 @@ function BairroNotFound() {
 }
 
 function BairroPage() {
-  const { bairro: b } = Route.useLoaderData();
+  const { bairro: b } = Route.useLoaderData() as { bairro: Bairro };
   const faqs = buildFaqs(b);
   const vizinhos = b.vizinhos
     .map((slug) => SJC_BAIRROS.find((x) => x.slug === slug))
