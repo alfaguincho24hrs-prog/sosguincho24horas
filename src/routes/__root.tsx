@@ -2,6 +2,7 @@ import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/r
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { OtherPages } from "@/components/other-pages";
+import { InternalLinks } from "@/components/internal-links";
 import { LegalNotice } from "@/components/legal-notice";
 import { WhatsAppFloat } from "@/components/whatsapp-float";
 import { MobileStickyCTA } from "@/components/mobile-sticky-cta";
@@ -181,6 +182,7 @@ function RootComponent() {
         <Outlet />
       </main>
       <LegalNotice />
+      <InternalLinks />
       <OtherPages />
       <SiteFooter />
       <WhatsAppFloat />
