@@ -27,12 +27,35 @@ export const Route = createFileRoute("/rodovias-vale-do-paraiba")({
           type: "application/ld+json",
           children: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "LocalBusiness",
+            "@graph": [{
+            "@type": ["LocalBusiness", "AutomotiveBusiness"],
+            "@id": `${url}#business`,
             "name": `${SITE.name} - Rodovias`,
-            "telephone": SITE.phone,
+            "telephone": "+5511996451510",
+            "priceRange": "$$",
+            "openingHours": "Mo-Su 00:00-23:59",
+            "openingHoursSpecification": [{
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+              "opens": "00:00",
+              "closes": "23:59"
+            }],
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "São José dos Campos",
+              "addressRegion": "SP",
+              "addressCountry": "BR"
+            },
+            "areaServed": { "@type": "AdministrativeArea", "name": "Vale do Paraíba - SP" },
             "url": url,
             "description": description,
-            "mainEntity": {
+          }, {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://sosguincho24horas.com.br/" },
+                { "@type": "ListItem", "position": 2, "name": "Rodovias do Vale do Paraíba", "item": url }
+              ]
+            }, {
               "@type": "FAQPage",
               "mainEntity": [
                 {
@@ -52,7 +75,7 @@ export const Route = createFileRoute("/rodovias-vale-do-paraiba")({
                   }
                 }
               ]
-            }
+            }]
           })
         }
       ],
