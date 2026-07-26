@@ -92,7 +92,7 @@ export function SjcMapaBairros() {
             strokeLinecap="round"
             className="text-primary/15"
           />
-          <text x="52" y="322" className="fill-muted-foreground text-[13px]">
+          <text x="150" y="500" className="fill-muted-foreground text-[13px]">
             Rio Paraíba do Sul
           </text>
 
@@ -157,8 +157,9 @@ export function SjcMapaBairros() {
                   />
                 )}
                 <text
-                  x={x + 17}
+                  x={x > W * 0.72 ? x - 17 : x + 17}
                   y={y + 5}
+                  textAnchor={x > W * 0.72 ? "end" : "start"}
                   className={
                     selecionado
                       ? "fill-foreground text-[15px] font-semibold"
