@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/accordion";
 import { Phone, Clock, Truck, MapPin, CheckCircle2, ChevronRight } from "lucide-react";
 import { SITE } from "@/components/site-data";
-import { SJC_VEICULOS, getTipoVeiculo, type TipoVeiculo } from "@/lib/sjc-veiculos";
+import { SJC_VEICULOS, getTipoVeiculo, labelServico, type TipoVeiculo } from "@/lib/sjc-veiculos";
 import { SJC_BAIRROS, getBairro, noBairro, type Bairro } from "@/lib/sjc-bairros";
 
 const ORIGIN = "https://sosguincho24horas.com.br";
@@ -59,8 +59,8 @@ export const Route = createFileRoute("/guincho-{$tipo}-sjc/$bairro")({
     const v = loaderData.tipo;
     const b = loaderData.bairro;
     const em = noBairro(b);
-    const title = `Guincho para ${cap(v.nome)} ${em} ${b.nome} — SJC 24h`;
-    const description = `Guincho para ${v.nome} ${em} ${b.nome}, São José dos Campos (SJC), 24 horas. Chegada em ${b.eta}. ${v.equipamento}`;
+    const title = `${labelServico(v)} ${em} ${b.nome} — SJC 24h`;
+    const description = `${labelServico(v)} ${em} ${b.nome}, São José dos Campos (SJC), 24 horas. Chegada em ${b.eta}. ${v.equipamento}`;
     const faqs = buildComboFaqs(v, b);
 
     return {
@@ -92,7 +92,7 @@ export const Route = createFileRoute("/guincho-{$tipo}-sjc/$bairro")({
               {
                 "@type": "Service",
                 "@id": `${url}#service`,
-                name: `Guincho para ${v.nome} ${em} ${b.nome} — São José dos Campos`,
+                name: `${labelServico(v)} ${em} ${b.nome} — São José dos Campos`,
                 serviceType: `Guincho e reboque — ${v.nome}`,
                 description: description.slice(0, 300),
                 url,
@@ -213,7 +213,7 @@ function ComboPage() {
           </nav>
           <Badge className="mb-4">{b.regiao}</Badge>
           <h1 className="mb-4 text-3xl font-bold tracking-tight text-accent md:text-5xl">
-            Guincho para {v.nome} {em} {b.nome} — São José dos Campos (SJC) 24h
+            {labelServico(v)} {em} {b.nome} — São José dos Campos (SJC) 24h
           </h1>
           <p className="mb-6 max-w-3xl text-lg text-muted-foreground">
             {v.intro} {em === "na" ? "Na" : "No"} {b.nome} a chegada média é de {b.eta}.

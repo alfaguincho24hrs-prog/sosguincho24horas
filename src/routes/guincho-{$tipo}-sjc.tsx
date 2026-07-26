@@ -7,6 +7,10 @@ export const Route = createFileRoute("/guincho-{$tipo}-sjc")({
     if (!getTipoVeiculo(params.tipo)) throw notFound();
     return {};
   },
+  head: ({ loaderData }) =>
+    loaderData
+      ? {}
+      : { meta: [{ title: "Página não encontrada" }, { name: "robots", content: "noindex" }] },
   notFoundComponent: TipoNotFound,
   component: () => <Outlet />,
 });

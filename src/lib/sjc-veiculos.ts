@@ -242,6 +242,13 @@ export const SJC_VEICULOS: TipoVeiculo[] = [
   },
 ];
 
+/** Rótulo do serviço: "Guincho para carro" ou "Transporte de veículos" */
+export function labelServico(v: TipoVeiculo): string {
+  return v.slug === "transporte-de-veiculos"
+    ? "Transporte de veículos"
+    : `Guincho para ${v.nome}`;
+}
+
 export function getTipoVeiculo(slug: string): TipoVeiculo | undefined {
   return SJC_VEICULOS.find((v) => v.slug === slug);
 }
