@@ -19,14 +19,25 @@ const checkRoutes = () => {
   files.forEach(file => {
     if (file.startsWith('__') || !file.endsWith('.tsx') || file === 'admin.tsx' || file === 'anuncie.tsx' || file === 'contato.tsx') return;
 
-    const content = fs.readFileSync(path.join(ROUTES_DIR, file), 'utf-8');
+    let content = fs.readFileSync(path.join(ROUTES_DIR, file), 'utf-8');
     const slug = file.replace('.tsx', '').replace('index', '');
     const routePath = slug === '' ? '/' : `/${slug}`;
     const expectedCanonical = `${SITE_URL}${routePath === '/' ? '' : routePath}`;
 
+    // Rotas que delegam head/conteúdo a um componente compartilhado:
+    // inclui o componente na análise para que title/description/canonical sejam vistos.
+    const delegated = [...content.matchAll(/from "@\/components\/([a-z0-9-]+)"/g)].map(m => m[1]);
+    for (const comp of delegated) {
+      const p = path.join(COMPONENTS_DIR, `${comp}.tsx`);
+      if (fs.existsSync(p) && /buildVehicleCityHead|ServicePage|buildHead/.test(content)) {
+        content += '\n' + fs.readFileSync(p, 'utf-8');
+      }
+    }
+
     const hasTitle = content.includes('title:') || content.includes('title,') || content.includes('{ title }') || content.includes('const title =');
     const hasDescription = content.includes('name: "description"') || content.includes('const description =');
     const hasCanonical = content.includes('rel: "canonical"');
+
 
     let titleVal = "";
     let descVal = "";
