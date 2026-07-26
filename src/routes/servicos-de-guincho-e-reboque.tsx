@@ -10,6 +10,25 @@ import { ALL_CITIES, ALPHABET, CITIES_BY_LETTER } from "@/components/cities-data
 import { TIPOS_VEICULO } from "@/lib/city-veiculos";
 import { TIPO_ROUTE } from "@/components/city-vehicle-page";
 
+const PAGE_FAQS: { q: string; a: string }[] = [
+  {
+    q: "Como encontrar um guincho 24 horas na minha cidade?",
+    a: "Busque a cidade na lista de A a Z desta página. Cada cidade tem uma página própria com telefone, tempo médio de chegada e os tipos de guincho disponíveis (carro, moto, caminhão e transporte de veículos).",
+  },
+  {
+    q: "Vocês atendem cidades do interior e da madrugada?",
+    a: "Sim. A rede cobre mais de 800 cidades brasileiras, com forte presença no Estado de São Paulo, e opera 24 horas por dia, 7 dias por semana, inclusive feriados.",
+  },
+  {
+    q: "Qual o preço do guincho e reboque?",
+    a: "O valor é informado antes do envio da plataforma e depende da distância, do tipo de veículo e do local de retirada. Não há cobrança surpresa após o serviço.",
+  },
+  {
+    q: "Quanto tempo demora para o guincho chegar?",
+    a: "Em área urbana a média é de 30 a 45 minutos; em rodovias e trechos de serra, de 40 a 60 minutos, conforme a base parceira mais próxima.",
+  },
+];
+
 export const Route = createFileRoute("/servicos-de-guincho-e-reboque")({
   head: () => ({
     meta: [
@@ -76,6 +95,45 @@ export const Route = createFileRoute("/servicos-de-guincho-e-reboque")({
               { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Auto Socorro Mecânico e Pane Seca" } }
             ]
           }
+        })
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: "Início", item: "https://sosguincho24horas.com.br/" },
+                {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: "Serviços de guincho e reboque",
+                  item: "https://sosguincho24horas.com.br/servicos-de-guincho-e-reboque",
+                },
+              ],
+            },
+            {
+              "@type": "ItemList",
+              name: "Cidades atendidas com guincho e reboque 24h",
+              numberOfItems: ALL_CITIES.length,
+              itemListElement: ALL_CITIES.slice(0, 200).map((c, i) => ({
+                "@type": "ListItem",
+                position: i + 1,
+                name: `Guincho 24h em ${c.name} - ${c.uf}`,
+                url: `https://sosguincho24horas.com.br/guincho-em-${c.slug}-${c.uf.toLowerCase()}`,
+              })),
+            },
+            {
+              "@type": "FAQPage",
+              mainEntity: PAGE_FAQS.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
+            },
+          ],
         })
       }
     ],
@@ -186,6 +244,19 @@ function CitiesIndexPage() {
           ))}
         </div>
       )}
+
+      {/* Perguntas frequentes */}
+      <section className="defer-paint mt-16">
+        <h2 className="text-2xl font-bold text-accent">Perguntas frequentes sobre guincho e reboque</h2>
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
+          {PAGE_FAQS.map((f) => (
+            <div key={f.q} className="rounded-xl border border-border/60 p-5">
+              <h3 className="font-semibold">{f.q}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* CTA final */}
       <section className="mt-16 rounded-2xl bg-secondary/50 p-10 text-center">

@@ -58,6 +58,14 @@ export const Route = createFileRoute("/guincho-postos-dutra-sao-jose-dos-campos"
             "@context": "https://schema.org",
             "@graph": [
               {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://sosguincho24horas.com.br/" },
+                  { "@type": "ListItem", "position": 2, "name": "Guincho em São José dos Campos", "item": "https://sosguincho24horas.com.br/guincho-sjc" },
+                  { "@type": "ListItem", "position": 3, "name": "Postos da Dutra em SJC", "item": URL }
+                ]
+              },
+              {
                 "@type": "Service",
                 name: "Guincho nos postos da Via Dutra em São José dos Campos",
                 serviceType: "Guincho e reboque 24 horas",
