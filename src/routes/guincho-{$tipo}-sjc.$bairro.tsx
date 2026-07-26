@@ -59,7 +59,7 @@ export const Route = createFileRoute("/guincho-{$tipo}-sjc/$bairro")({
     const v = loaderData.tipo;
     const b = loaderData.bairro;
     const em = noBairro(b);
-    const title = `${labelServico(v)} ${em} ${b.nome} — SJC 24h`;
+    const title = `${cap(labelServico(v))} ${em} ${b.nome} — SJC 24h`;
     const description = `${labelServico(v)} ${em} ${b.nome}, São José dos Campos (SJC), 24 horas. Chegada em ${b.eta}. ${v.equipamento}`;
     const faqs = buildComboFaqs(v, b);
 
@@ -177,6 +177,10 @@ export const Route = createFileRoute("/guincho-{$tipo}-sjc/$bairro")({
 });
 
 function cap(s: string) {
+  if (s.startsWith("Guincho para ")) {
+    const r = s.slice("Guincho para ".length);
+    return `Guincho para ${r.charAt(0).toUpperCase()}${r.slice(1)}`;
+  }
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
