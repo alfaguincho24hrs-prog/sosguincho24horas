@@ -15,6 +15,7 @@ import { Route as RodoviasValeDoParaibaRouteImport } from './routes/rodovias-val
 import { Route as RemocaoVeicularRouteImport } from './routes/remocao-veicular'
 import { Route as PaneSecaRouteImport } from './routes/pane-seca'
 import { Route as GuinchosNasRodoviasChar123slugChar125RouteImport } from './routes/guinchos-nas-rodovias-{$slug}'
+import { Route as GuinchoPostosDutraSaoJoseDosCamposRouteImport } from './routes/guincho-postos-dutra-sao-jose-dos-campos'
 import { Route as GuinchoPesadoRouteImport } from './routes/guincho-pesado'
 import { Route as GuinchoLeveRouteImport } from './routes/guincho-leve'
 import { Route as GuinchoEmChar123slugChar125RouteImport } from './routes/guincho-em-{$slug}'
@@ -60,6 +61,12 @@ const GuinchosNasRodoviasChar123slugChar125Route =
   GuinchosNasRodoviasChar123slugChar125RouteImport.update({
     id: '/guinchos-nas-rodovias-{$slug}',
     path: '/guinchos-nas-rodovias-{$slug}',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const GuinchoPostosDutraSaoJoseDosCamposRoute =
+  GuinchoPostosDutraSaoJoseDosCamposRouteImport.update({
+    id: '/guincho-postos-dutra-sao-jose-dos-campos',
+    path: '/guincho-postos-dutra-sao-jose-dos-campos',
     getParentRoute: () => rootRouteImport,
   } as any)
 const GuinchoPesadoRoute = GuinchoPesadoRouteImport.update({
@@ -148,6 +155,7 @@ export interface FileRoutesByFullPath {
   '/guincho-em-{$slug}': typeof GuinchoEmChar123slugChar125Route
   '/guincho-leve': typeof GuinchoLeveRoute
   '/guincho-pesado': typeof GuinchoPesadoRoute
+  '/guincho-postos-dutra-sao-jose-dos-campos': typeof GuinchoPostosDutraSaoJoseDosCamposRoute
   '/guinchos-nas-rodovias-{$slug}': typeof GuinchosNasRodoviasChar123slugChar125Route
   '/pane-seca': typeof PaneSecaRoute
   '/remocao-veicular': typeof RemocaoVeicularRoute
@@ -170,6 +178,7 @@ export interface FileRoutesByTo {
   '/guincho-em-{$slug}': typeof GuinchoEmChar123slugChar125Route
   '/guincho-leve': typeof GuinchoLeveRoute
   '/guincho-pesado': typeof GuinchoPesadoRoute
+  '/guincho-postos-dutra-sao-jose-dos-campos': typeof GuinchoPostosDutraSaoJoseDosCamposRoute
   '/guinchos-nas-rodovias-{$slug}': typeof GuinchosNasRodoviasChar123slugChar125Route
   '/pane-seca': typeof PaneSecaRoute
   '/remocao-veicular': typeof RemocaoVeicularRoute
@@ -193,6 +202,7 @@ export interface FileRoutesById {
   '/guincho-em-{$slug}': typeof GuinchoEmChar123slugChar125Route
   '/guincho-leve': typeof GuinchoLeveRoute
   '/guincho-pesado': typeof GuinchoPesadoRoute
+  '/guincho-postos-dutra-sao-jose-dos-campos': typeof GuinchoPostosDutraSaoJoseDosCamposRoute
   '/guinchos-nas-rodovias-{$slug}': typeof GuinchosNasRodoviasChar123slugChar125Route
   '/pane-seca': typeof PaneSecaRoute
   '/remocao-veicular': typeof RemocaoVeicularRoute
@@ -217,6 +227,7 @@ export interface FileRouteTypes {
     | '/guincho-em-{$slug}'
     | '/guincho-leve'
     | '/guincho-pesado'
+    | '/guincho-postos-dutra-sao-jose-dos-campos'
     | '/guinchos-nas-rodovias-{$slug}'
     | '/pane-seca'
     | '/remocao-veicular'
@@ -239,6 +250,7 @@ export interface FileRouteTypes {
     | '/guincho-em-{$slug}'
     | '/guincho-leve'
     | '/guincho-pesado'
+    | '/guincho-postos-dutra-sao-jose-dos-campos'
     | '/guinchos-nas-rodovias-{$slug}'
     | '/pane-seca'
     | '/remocao-veicular'
@@ -261,6 +273,7 @@ export interface FileRouteTypes {
     | '/guincho-em-{$slug}'
     | '/guincho-leve'
     | '/guincho-pesado'
+    | '/guincho-postos-dutra-sao-jose-dos-campos'
     | '/guinchos-nas-rodovias-{$slug}'
     | '/pane-seca'
     | '/remocao-veicular'
@@ -284,6 +297,7 @@ export interface RootRouteChildren {
   GuinchoEmChar123slugChar125Route: typeof GuinchoEmChar123slugChar125Route
   GuinchoLeveRoute: typeof GuinchoLeveRoute
   GuinchoPesadoRoute: typeof GuinchoPesadoRoute
+  GuinchoPostosDutraSaoJoseDosCamposRoute: typeof GuinchoPostosDutraSaoJoseDosCamposRoute
   GuinchosNasRodoviasChar123slugChar125Route: typeof GuinchosNasRodoviasChar123slugChar125Route
   PaneSecaRoute: typeof PaneSecaRoute
   RemocaoVeicularRoute: typeof RemocaoVeicularRoute
@@ -334,6 +348,13 @@ declare module '@tanstack/react-router' {
       path: '/guinchos-nas-rodovias-{$slug}'
       fullPath: '/guinchos-nas-rodovias-{$slug}'
       preLoaderRoute: typeof GuinchosNasRodoviasChar123slugChar125RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guincho-postos-dutra-sao-jose-dos-campos': {
+      id: '/guincho-postos-dutra-sao-jose-dos-campos'
+      path: '/guincho-postos-dutra-sao-jose-dos-campos'
+      fullPath: '/guincho-postos-dutra-sao-jose-dos-campos'
+      preLoaderRoute: typeof GuinchoPostosDutraSaoJoseDosCamposRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/guincho-pesado': {
@@ -461,6 +482,8 @@ const rootRouteChildren: RootRouteChildren = {
   GuinchoEmChar123slugChar125Route: GuinchoEmChar123slugChar125Route,
   GuinchoLeveRoute: GuinchoLeveRoute,
   GuinchoPesadoRoute: GuinchoPesadoRoute,
+  GuinchoPostosDutraSaoJoseDosCamposRoute:
+    GuinchoPostosDutraSaoJoseDosCamposRoute,
   GuinchosNasRodoviasChar123slugChar125Route:
     GuinchosNasRodoviasChar123slugChar125Route,
   PaneSecaRoute: PaneSecaRoute,

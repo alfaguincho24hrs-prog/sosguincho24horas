@@ -703,6 +703,31 @@ function CityPage() {
         </div>
       </section>
 
+      {city.slug === "sao-jose-dos-campos" && (
+        <section className="mt-14">
+          <Card className="border-primary/40 bg-secondary/40">
+            <CardContent className="flex flex-wrap items-center justify-between gap-4 p-6">
+              <div>
+                <h2 className="text-xl font-bold text-accent">
+                  Parou num posto da Via Dutra em São José dos Campos?
+                </h2>
+                <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
+                  Página dedicada ao socorro dentro dos postos, conveniências e áreas de descanso da
+                  BR-116 em SJC, nos dois sentidos, com acesso rápido ao Litoral Norte pela Tamoios.
+                </p>
+              </div>
+              <Button asChild variant="outline">
+                <Link to="/guincho-postos-dutra-sao-jose-dos-campos">
+                  Guincho nos postos da Dutra →
+                </Link>
+              </Button>
+            </CardContent>
+          </Card>
+        </section>
+      )}
+
+
+
       {/* Bairros e CEPs - SEO local hiper-segmentado */}
       <section className="mt-14">
         <h2 className="text-2xl font-bold md:text-3xl text-accent">{copy.neighborhoodsTitle}</h2>

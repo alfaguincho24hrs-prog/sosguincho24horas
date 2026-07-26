@@ -243,6 +243,14 @@ function RodoviasVPPage() {
             ))}
           </div>
 
+          <div className="mb-8">
+            <Button asChild variant="outline">
+              <Link to="/guincho-postos-dutra-sao-jose-dos-campos">
+                Guincho nos postos da Dutra em São José dos Campos →
+              </Link>
+            </Button>
+          </div>
+
           <h3 className="text-xl font-bold mb-4">Acesso Rápido a Rodovias</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
              {[
