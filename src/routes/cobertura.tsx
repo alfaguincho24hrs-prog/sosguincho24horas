@@ -14,6 +14,7 @@ import { getFeaturedPartners } from "@/lib/admin-data.functions";
 import { buildResponsiveSources } from "@/lib/responsive-image";
 import { ALL_CITIES } from "@/components/cities-data";
 import { TIPOS_VEICULO } from "@/lib/city-veiculos";
+import { TIPO_ROUTE } from "@/components/city-vehicle-page";
 
 const norm = (v: string) =>
   v.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
@@ -304,8 +305,8 @@ function CoveragePage() {
                   {DESTAQUE_CIDADES.map((c) => (
                     <Link
                       key={`${t.slug}-${c.slug}`}
-                      to="/guincho-{$tipo}-em-{$slug}"
-                      params={{ tipo: t.slug, slug: `${c.slug}-${c.uf.toLowerCase()}` }}
+                      to={TIPO_ROUTE[t.slug]}
+                      params={{ slug: `${c.slug}-${c.uf.toLowerCase()}` }}
                       className="rounded-full bg-secondary px-2.5 py-1 text-xs transition-colors hover:text-primary"
                     >
                       {c.name}

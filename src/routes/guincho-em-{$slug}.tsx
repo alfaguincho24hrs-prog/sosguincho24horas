@@ -46,6 +46,7 @@ import { NearbyCitiesModule } from "@/components/nearby-cities";
 import { fetchPublicCityProvidersClient } from "@/lib/public-admin-data";
 import { SJC_BAIRROS, noBairro } from "@/lib/sjc-bairros";
 import { TIPOS_VEICULO } from "@/lib/city-veiculos";
+import { TIPO_ROUTE } from "@/components/city-vehicle-page";
 import { getCityDepoimentos, getCityAggregate } from "@/lib/city-reviews";
 
 
@@ -708,8 +709,8 @@ function CityPage() {
           {TIPOS_VEICULO.map((t) => (
             <Link
               key={t.slug}
-              to="/guincho-{$tipo}-em-{$slug}"
-              params={{ tipo: t.slug, slug: citySlugUf }}
+              to={TIPO_ROUTE[t.slug]}
+              params={{ slug: citySlugUf }}
               className="rounded-lg border border-border/60 p-4 text-sm font-medium transition-colors hover:border-primary hover:text-primary"
             >
               {t.rotulo} em {city.name}

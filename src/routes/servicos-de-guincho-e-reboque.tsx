@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { SITE } from "@/components/site-data";
 import { ALL_CITIES, ALPHABET, CITIES_BY_LETTER } from "@/components/cities-data";
 import { TIPOS_VEICULO } from "@/lib/city-veiculos";
+import { TIPO_ROUTE } from "@/components/city-vehicle-page";
 
 export const Route = createFileRoute("/servicos-de-guincho-e-reboque")({
   head: () => ({
@@ -245,8 +246,8 @@ function CitiesGrid({
                 {TIPOS_VEICULO.map((t) => (
                   <Link
                     key={t.slug}
-                    to="/guincho-{$tipo}-em-{$slug}"
-                    params={{ tipo: t.slug, slug: slugUf }}
+                    to={TIPO_ROUTE[t.slug]}
+                    params={{ slug: slugUf }}
                     className="rounded-full bg-secondary px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:text-primary"
                     title={`${t.rotulo} em ${c.name} - ${c.uf}`}
                   >
