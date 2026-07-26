@@ -10,6 +10,7 @@ import {
 import { Phone, MapPin, ChevronRight, Truck } from "lucide-react";
 import { SITE } from "@/components/site-data";
 import { SJC_BAIRROS } from "@/lib/sjc-bairros";
+import { SjcMapaBairros, SjcMapaLinks } from "@/components/sjc-mapa-bairros";
 import { SJC_VEICULOS } from "@/lib/sjc-veiculos";
 
 const ORIGIN = "https://sosguincho24horas.com.br";
@@ -168,6 +169,24 @@ function GuinchoSjcHub() {
       </section>
 
       <section className="py-12">
+        <div className="container max-w-6xl">
+          <h2 className="mb-2 text-3xl font-bold text-accent">
+            Mapa das áreas atendidas em São José dos Campos
+          </h2>
+          <p className="mb-6 max-w-3xl text-muted-foreground">
+            Clique em um bairro no mapa para ver o tempo médio de chegada e
+            abrir a página do bairro, com guincho para carro, moto, caminhão e
+            transporte de veículos.
+          </p>
+          <SjcMapaBairros />
+          <h3 className="mt-10 text-xl font-semibold">
+            Todos os bairros e serviços por tipo de veículo
+          </h3>
+          <SjcMapaLinks />
+        </div>
+      </section>
+
+      <section className="defer-paint py-12">
         <div className="container max-w-5xl">
           <h2 className="mb-6 text-3xl font-bold text-accent">
             Bairros de São José dos Campos atendidos
