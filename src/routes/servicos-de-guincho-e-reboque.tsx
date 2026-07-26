@@ -10,6 +10,25 @@ import { ALL_CITIES, ALPHABET, CITIES_BY_LETTER } from "@/components/cities-data
 import { TIPOS_VEICULO } from "@/lib/city-veiculos";
 import { TIPO_ROUTE } from "@/components/city-vehicle-page";
 
+const PAGE_FAQS: { q: string; a: string }[] = [
+  {
+    q: "Como encontrar um guincho 24 horas na minha cidade?",
+    a: "Busque a cidade na lista de A a Z desta página. Cada cidade tem uma página própria com telefone, tempo médio de chegada e os tipos de guincho disponíveis (carro, moto, caminhão e transporte de veículos).",
+  },
+  {
+    q: "Vocês atendem cidades do interior e da madrugada?",
+    a: "Sim. A rede cobre mais de 800 cidades brasileiras, com forte presença no Estado de São Paulo, e opera 24 horas por dia, 7 dias por semana, inclusive feriados.",
+  },
+  {
+    q: "Qual o preço do guincho e reboque?",
+    a: "O valor é informado antes do envio da plataforma e depende da distância, do tipo de veículo e do local de retirada. Não há cobrança surpresa após o serviço.",
+  },
+  {
+    q: "Quanto tempo demora para o guincho chegar?",
+    a: "Em área urbana a média é de 30 a 45 minutos; em rodovias e trechos de serra, de 40 a 60 minutos, conforme a base parceira mais próxima.",
+  },
+];
+
 export const Route = createFileRoute("/servicos-de-guincho-e-reboque")({
   head: () => ({
     meta: [
