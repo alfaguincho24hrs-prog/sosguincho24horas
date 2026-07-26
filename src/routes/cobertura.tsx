@@ -281,6 +281,54 @@ function CoveragePage() {
 
 
 
+        {/* DESTAQUE — Estado de São Paulo */}
+        <section className="mt-16 rounded-2xl border border-accent/40 bg-secondary/30 p-6 sm:p-8">
+          <Badge className="mb-3 bg-[image:var(--gradient-cta)] text-primary">Destaque</Badge>
+          <h2 className="text-2xl font-bold text-accent sm:text-3xl">
+            Estado de São Paulo — {SP_CITIES.length} cidades com guincho 24 horas
+          </h2>
+          <p className="mt-3 max-w-3xl text-muted-foreground">
+            São Paulo concentra nossa maior densidade de bases: Capital, ABC, Grande SP,
+            Vale do Paraíba, Litoral Norte e Sul, Campinas, Sorocaba, Ribeirão Preto e todo o
+            interior. Escolha a região e abra a página local com tempo de chegada, frota e
+            perguntas frequentes daquela cidade.
+          </p>
+
+          <div className="mt-8 space-y-8">
+            {SP_REGIONS.map((r) => (
+              <div key={r.slug} className="defer-paint">
+                <h3 className="flex items-center gap-2 text-lg font-semibold">
+                  <MapPin className="h-4 w-4 text-primary" aria-hidden /> {r.label}
+                  <span className="text-sm font-normal text-muted-foreground">
+                    ({r.cities.length} cidades)
+                  </span>
+                </h3>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {r.cities.map((c) => (
+                    <Link
+                      key={`${r.slug}-${c.slug}`}
+                      to="/guincho-em-{$slug}"
+                      params={{ slug: `${c.slug}-sp` }}
+                      title={`Guincho 24h em ${c.name} - SP`}
+                      className="rounded-full border border-border/60 bg-background px-3 py-1.5 text-sm transition-colors hover:border-primary hover:text-primary"
+                    >
+                      {c.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <p className="mt-6 text-sm text-muted-foreground">
+            Precisa de um veículo específico?{" "}
+            <Link to="/servicos-de-guincho-e-reboque" className="text-primary underline">
+              Cada cidade paulista também tem página de carro, moto, caminhão e transporte
+            </Link>
+            .
+          </p>
+        </section>
+
         <h2 className="mt-16 text-2xl font-bold">Capitais atendidas</h2>
         <div className="mt-6 flex flex-wrap gap-2">
           {CITIES.map((c) => {
