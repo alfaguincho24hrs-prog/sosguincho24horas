@@ -12,6 +12,11 @@ import { Phone, Clock, Truck, MapPin, CheckCircle2, ChevronRight } from "lucide-
 import { SITE } from "@/components/site-data";
 import { SJC_VEICULOS, getTipoVeiculo, labelServico, type TipoVeiculo } from "@/lib/sjc-veiculos";
 import { SJC_BAIRROS, getBairro, noBairro, type Bairro } from "@/lib/sjc-bairros";
+import {
+  buildLocalBusiness,
+  OPENING_HOURS_24_7,
+  TEL_E164,
+} from "@/lib/local-business-schema";
 
 const ORIGIN = "https://sosguincho24horas.com.br";
 const TEL = "tel:+5511996451510";
