@@ -20,9 +20,19 @@ const checkRoutes = () => {
     if (file.startsWith('__') || !file.endsWith('.tsx') || file === 'admin.tsx' || file === 'anuncie.tsx' || file === 'contato.tsx') return;
 
     let content = fs.readFileSync(path.join(ROUTES_DIR, file), 'utf-8');
-    const slug = file.replace('.tsx', '').replace('index', '');
+
+    // Rotas de layout (apenas <Outlet />) não têm metadados próprios
+    if (/component:\s*(\(\)\s*=>\s*<Outlet|RouteLayout)/.test(content) && !content.includes('head:')) return;
+
+    // Nome do arquivo -> caminho de rota (pontos viram barras, index é folha)
+    const slug = file
+      .replace('.tsx', '')
+      .split('.')
+      .filter(seg => seg !== 'index')
+      .join('/');
     const routePath = slug === '' ? '/' : `/${slug}`;
     const expectedCanonical = `${SITE_URL}${routePath === '/' ? '' : routePath}`;
+
 
     // Rotas que delegam head/conteúdo a um componente compartilhado:
     // inclui o componente na análise para que title/description/canonical sejam vistos.
