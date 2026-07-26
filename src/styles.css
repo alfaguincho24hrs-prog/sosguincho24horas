@@ -168,3 +168,11 @@
     animation: button-pulse 2s infinite;
   }
 }
+
+/* Performance: seções abaixo da dobra só são renderizadas quando entram
+   perto da viewport. contain-intrinsic-size reserva altura estimada e
+   evita salto de layout (CLS) enquanto a seção ainda não foi pintada. */
+@utility defer-paint {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}

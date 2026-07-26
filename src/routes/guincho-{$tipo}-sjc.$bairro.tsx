@@ -245,7 +245,7 @@ function ComboPage() {
         </div>
       </section>
 
-      <section className="py-12">
+      <section className="defer-paint py-12">
         <div className="container grid max-w-5xl gap-6 md:grid-cols-2">
           <Card>
             <CardHeader>
@@ -282,7 +282,7 @@ function ComboPage() {
         </div>
       </section>
 
-      <section className="border-t bg-muted/30 py-12">
+      <section className="defer-paint border-t bg-muted/30 py-12">
         <div className="container max-w-4xl">
           <h2 className="mb-6 text-2xl font-bold text-accent md:text-3xl">
             Perguntas frequentes — guincho para {v.nome} {em} {b.nome}
@@ -298,7 +298,7 @@ function ComboPage() {
         </div>
       </section>
 
-      <section className="py-12">
+      <section className="defer-paint py-12">
         <div className="container max-w-5xl space-y-8">
           <div>
             <h2 className="mb-3 text-xl font-bold text-accent">

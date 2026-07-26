@@ -226,7 +226,7 @@ function BairroPage() {
         </div>
       </section>
 
-      <section className="py-12">
+      <section className="defer-paint py-12">
         <div className="container grid max-w-5xl gap-6 md:grid-cols-2">
           <Card>
             <CardHeader>
@@ -259,7 +259,7 @@ function BairroPage() {
         </div>
       </section>
 
-      <section className="border-t bg-muted/30 py-12">
+      <section className="defer-paint border-t bg-muted/30 py-12">
         <div className="container max-w-4xl space-y-4">
           <h2 className="text-3xl font-bold text-accent">
             Serviços disponíveis {em} {b.nome} 24 horas
@@ -286,7 +286,7 @@ function BairroPage() {
         </div>
       </section>
 
-      <section className="py-12">
+      <section className="defer-paint py-12">
         <div className="container max-w-5xl">
           <div className="mb-6 flex flex-wrap items-baseline gap-3">
             <h2 className="text-3xl font-bold text-accent">
@@ -337,7 +337,7 @@ function BairroPage() {
         </div>
       </section>
 
-      <section className="border-t bg-muted/30 py-12">
+      <section className="defer-paint border-t bg-muted/30 py-12">
         <div className="container max-w-5xl">
           <h2 className="mb-6 text-2xl font-bold text-accent md:text-3xl">
             Guincho por tipo de veículo {em} {b.nome}
@@ -361,7 +361,7 @@ function BairroPage() {
         </div>
       </section>
 
-      <section className="py-12">
+      <section className="defer-paint py-12">
         <div className="container max-w-4xl">
           <h2 className="mb-6 text-3xl font-bold text-accent">
             Perguntas frequentes sobre guincho {em} {b.nome}
@@ -377,7 +377,7 @@ function BairroPage() {
         </div>
       </section>
 
-      <section className="border-t bg-muted/30 py-12">
+      <section className="defer-paint border-t bg-muted/30 py-12">
         <div className="container max-w-5xl space-y-8">
           <div>
             <h2 className="mb-3 text-2xl font-bold text-accent">
