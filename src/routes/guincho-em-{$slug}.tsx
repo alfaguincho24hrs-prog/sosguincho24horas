@@ -333,6 +333,14 @@ const SERVICE_ITEMS = [
   { icon: ShieldCheck, title: "Remoção veicular", desc: "Retirada de sinistrados, leilões e transportes programados." },
 ];
 
+const SPECIALTY_ITEMS = [
+  { icon: KeyRound, title: "Chaveiro automotivo", desc: "Abertura de veículo com chave trancada, chave quebrada na ignição e cópia de emergência no local." },
+  { icon: MountainSnow, title: "Resgate 4x4 e atolamento", desc: "Retirada de veículos atolados em areia, barro, trilha ou terreno irregular com guincho de arraste e cabo de aço." },
+  { icon: Sailboat, title: "Transporte de embarcações", desc: "Reboque de barcos, lanchas e jet ski sobre carreta própria, com amarração segura até marina, rampa ou garagem." },
+  { icon: Forklift, title: "Empilhadeira e trator", desc: "Transporte de empilhadeiras, tratores, retroescavadeiras e máquinas agrícolas em prancha rebaixada." },
+  { icon: ShieldCheck, title: "Guincho para carro blindado", desc: "Remoção de veículos blindados e de alto valor com plataforma reforçada e operador treinado, sem risco à estrutura." },
+];
+
 const SP_REGIONAL_FAQS = [
   {
     zone: "Zona Norte",
@@ -1143,7 +1151,7 @@ function CityPage() {
       </section>
 
       {/* Depoimentos rotacionados por cidade (variação anti-doorway) */}
-      <LazyTestimonialsCarousel citySeed={`${city.slug}-${city.uf}`} />
+      <LazyTestimonialsCarousel citySeed={`${city.name} - ${city.uf}`} />
 
       {/* Botão de edição (login na rota /admin) */}
       <AdminEditButton citySlugUf={`${city.slug}-${city.uf.toLowerCase()}`} />
