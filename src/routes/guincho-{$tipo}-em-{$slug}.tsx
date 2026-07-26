@@ -38,6 +38,7 @@ function findCity(slug: string): City | undefined {
 
 export const Route = createFileRoute("/guincho-{$tipo}-em-{$slug}")({
   loader: ({ params }) => {
+    console.log("PARAMS", JSON.stringify(params));
     const tipo = findTipo(params.tipo);
     const city = findCity(params.slug);
     if (!tipo || !city) throw notFound();
