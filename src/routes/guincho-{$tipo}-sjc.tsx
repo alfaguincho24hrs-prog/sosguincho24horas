@@ -29,7 +29,7 @@ export const Route = createFileRoute("/guincho-{$tipo}-sjc")({
       };
     }
     const v = loaderData.tipo;
-    const title = `${v.title} | ${SITE.name}`;
+    const title = v.title;
     const description = v.description;
 
     return {
