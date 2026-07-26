@@ -372,3 +372,38 @@ export const CITIES_BY_LETTER: Record<string, City[]> = ALL_CITIES.reduce(
 );
 
 export const ALPHABET = Object.keys(CITIES_BY_LETTER).sort();
+
+// ============================================================
+// Estado de São Paulo — agrupamento por região (destaque no site)
+// ============================================================
+
+const toCities = (raw: Array<[string, string]>): City[] => {
+  const seen = new Set<string>();
+  return raw
+    .map(([name, uf]) => ({ name, uf, slug: slugify(name) }))
+    .filter((c) => {
+      const key = `${c.slug}-${c.uf.toLowerCase()}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .sort((a, b) => a.name.localeCompare(b.name, "pt-BR"));
+};
+
+export type SPRegion = { label: string; slug: string; cities: City[] };
+
+export const SP_REGIONS: SPRegion[] = [
+  { label: "Capital e zonas de São Paulo", slug: "capital", cities: toCities(SP_CAPITAL_ZONAS) },
+  { label: "Grande São Paulo e ABC", slug: "grande-sp", cities: toCities(SP_GRANDE_SP) },
+  { label: "Vale do Paraíba, Litoral Norte e Mantiqueira", slug: "vale-do-paraiba", cities: toCities(SP_VALE_PARAIBA) },
+  { label: "Região de Campinas", slug: "campinas", cities: toCities(SP_CAMPINAS) },
+  { label: "Região de Sorocaba", slug: "sorocaba", cities: toCities(SP_SOROCABA) },
+  { label: "Baixada Santista e Litoral Sul", slug: "litoral", cities: toCities(SP_LITORAL) },
+  { label: "Ribeirão Preto, Franca e Barretos", slug: "ribeirao-preto", cities: toCities(SP_RIBEIRAO) },
+  { label: "São José do Rio Preto e Araçatuba", slug: "rio-preto", cities: toCities(SP_RIO_PRETO) },
+  { label: "Bauru, Marília e Oeste Paulista", slug: "interior-oeste", cities: toCities(SP_INTERIOR_OESTE) },
+  { label: "Sul Paulista, Itapeva e Registro", slug: "sul-paulista", cities: toCities(SP_SUL) },
+];
+
+/** Todas as cidades do Estado de São Paulo, em ordem alfabética. */
+export const SP_CITIES: City[] = ALL_CITIES.filter((c) => c.uf === "SP");
