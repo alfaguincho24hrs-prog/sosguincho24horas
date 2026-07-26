@@ -2,35 +2,73 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Truck, ShieldCheck, MapPin, Wrench } from "lucide-react";
 import { SITE } from "@/components/site-data";
 import { SeoBlock } from "@/components/seo-block";
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
+import { buildLocalBusiness } from "@/lib/local-business-schema";
+
+const URL = "https://sosguincho24horas.com.br/frota-guincho";
+
+const FROTA_FAQS = [
+  {
+    q: "Quais tipos de guincho vocês têm na frota?",
+    a: "Trabalhamos com guincho plataforma leve para carros e SUVs, asa delta para remoções rápidas, plataforma pesada e munk para caminhões, ônibus e máquinas, além de equipamento específico para motocicletas.",
+  },
+  {
+    q: "A frota atende veículos rebaixados e esportivos?",
+    a: "Sim. Usamos plataformas com rampa estendida e rampas auxiliares que evitam contato do para-choque com o solo, transportando veículos rebaixados e de colecionador sem avarias.",
+  },
+  {
+    q: "Os guinchos têm rastreamento e seguro?",
+    a: "Todas as unidades possuem GPS, licenciamento em dia, cintas de amarração profissionais e cobertura para o veículo transportado durante todo o trajeto.",
+  },
+];
 
 export const Route = createFileRoute("/frota-guincho")({
   head: () => ({
     meta: [
       { title: "Nossa Frota de Guinchos 24h | SOS Guincho 24 horas" },
       { name: "description", content: "Conheça nossa frota completa de guinchos plataforma, reboques pesados e auto socorro 24h. Dispomos de equipamentos modernos e seguros para o transporte de veículos em todo o território nacional." },
+      { property: "og:title", content: "Nossa Frota de Guinchos 24h" },
+      { property: "og:description", content: "Guincho plataforma, asa delta, pesado e munk: frota moderna para transporte seguro de qualquer veículo, 24 horas por dia." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: URL },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     scripts: [
       {
         type: "application/ld+json",
         children: JSON.stringify({
           "@context": "https://schema.org",
-          "@type": "LocalBusiness",
-          "name": `${SITE.name} - Frota`,
-          "image": "https://sosguincho24horas.com.br/assets/reboque.webp",
-          "@id": "https://sosguincho24horas.com.br/frota-guincho.html",
-          "url": "https://sosguincho24horas.com.br/frota-guincho",
-          "telephone": SITE.phone,
-          "priceRange": "$$",
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Brasil",
-            "addressRegion": "SP",
-            "addressCountry": "BR"
-          }
+          "@graph": [
+            buildLocalBusiness({
+              url: URL,
+              areaLabel: "Frota nacional",
+              areaServed: { "@type": "Country", name: "Brasil" },
+            }),
+            {
+              "@type": "Service",
+              name: `Frota de guincho e reboque — ${SITE.name}`,
+              serviceType: "Guincho plataforma, asa delta, pesado e munk",
+              provider: { "@id": `${URL}#business` },
+              areaServed: { "@type": "Country", name: "Brasil" },
+              availableChannel: {
+                "@type": "ServiceChannel",
+                servicePhone: SITE.phone,
+                serviceUrl: URL,
+              },
+            },
+            {
+              "@type": "FAQPage",
+              mainEntity: FROTA_FAQS.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
+            },
+          ],
         })
       }
     ],
-    links: [{ rel: "canonical", href: "https://sosguincho24horas.com.br/frota-guincho" }],
+    links: [{ rel: "canonical", href: URL }],
   }),
   component: FrotaPage,
 });
