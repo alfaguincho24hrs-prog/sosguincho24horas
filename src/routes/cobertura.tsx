@@ -12,7 +12,7 @@ import { LazyTestimonialsCarousel } from "@/components/lazy-testimonials";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 import { getFeaturedPartners } from "@/lib/admin-data.functions";
 import { buildResponsiveSources } from "@/lib/responsive-image";
-import { ALL_CITIES } from "@/components/cities-data";
+import { ALL_CITIES, SP_REGIONS, SP_CITIES } from "@/components/cities-data";
 import { TIPOS_VEICULO } from "@/lib/city-veiculos";
 import { TIPO_ROUTE } from "@/components/city-vehicle-page";
 
