@@ -33,7 +33,7 @@ export const Route = createFileRoute("/guincho-sjc/$bairro")({
     const title = `Guincho 24h ${em} ${b.nome} — São José dos Campos/SP | SOS Guincho`;
     const description = b.resumo;
     const faqs = buildFaqs(b);
-  const em = noBairro(b);
+
     return {
       meta: [
         { title },
