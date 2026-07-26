@@ -56,14 +56,6 @@ export const Route = createFileRoute("/frota-guincho")({
                 serviceUrl: URL,
               },
             },
-            {
-              "@type": "FAQPage",
-              mainEntity: FROTA_FAQS.map((f) => ({
-                "@type": "Question",
-                name: f.q,
-                acceptedAnswer: { "@type": "Answer", text: f.a },
-              })),
-            },
           ],
         })
       }
