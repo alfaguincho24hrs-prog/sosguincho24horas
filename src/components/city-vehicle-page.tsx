@@ -22,6 +22,11 @@ import { SITE } from "@/components/site-data";
 import { ALL_CITIES, type City } from "@/components/cities-data";
 import { TIPOS_VEICULO, findTipo, tituloRotulo, type TipoVeiculoBase } from "@/lib/city-veiculos";
 import { getCityDepoimentos, getCityAggregate } from "@/lib/city-reviews";
+import {
+  buildLocalBusiness,
+  OPENING_HOURS_24_7,
+  TEL_E164,
+} from "@/lib/local-business-schema";
 
 const ORIGIN = "https://sosguincho24horas.com.br";
 const TEL = "tel:+5511996451510";
@@ -120,47 +125,13 @@ export function buildVehicleCityHead(loaderData: LoaderData | undefined) {
                     addressCountry: "BR",
                   },
                 },
-                provider: {
-                  "@type": "LocalBusiness",
-                  "@id": `${url}#business`,
-                  name: `${SITE.name} — ${city.name}`,
-                  telephone: "+5511996451510",
-                  url,
-                  priceRange: "$$",
-                  areaServed: { "@type": "City", name: city.name },
-                  openingHoursSpecification: [
-                    {
-                      "@type": "OpeningHoursSpecification",
-                      dayOfWeek: [
-                        "Monday",
-                        "Tuesday",
-                        "Wednesday",
-                        "Thursday",
-                        "Friday",
-                        "Saturday",
-                        "Sunday",
-                      ],
-                      opens: "00:00",
-                      closes: "23:59",
-                    },
-                  ],
-                  aggregateRating: {
-                    "@type": "AggregateRating",
-                    ratingValue: agg.ratingValue,
-                    reviewCount: String(agg.reviewCount),
-                  },
-                  review: reviews.map((r) => ({
-                    "@type": "Review",
-                    author: { "@type": "Person", name: r.autor },
-                    datePublished: r.data,
-                    reviewBody: r.texto,
-                    reviewRating: {
-                      "@type": "Rating",
-                      ratingValue: String(r.nota),
-                      bestRating: "5",
-                    },
-                  })),
+                provider: { "@id": `${url}#business` },
+                availableChannel: {
+                  "@type": "ServiceChannel",
+                  serviceUrl: url,
+                  servicePhone: { "@type": "ContactPoint", telephone: TEL_E164 },
                 },
+                hoursAvailable: OPENING_HOURS_24_7,
                 hasOfferCatalog: {
                   "@type": "OfferCatalog",
                   name: `${v.rotulo} em ${city.name}`,
@@ -170,6 +141,36 @@ export function buildVehicleCityHead(loaderData: LoaderData | undefined) {
                   })),
                 },
               },
+              buildLocalBusiness({
+                url,
+                areaLabel: `${city.name} - ${city.uf}`,
+                areaServed: {
+                  "@type": "City",
+                  name: city.name,
+                  address: {
+                    "@type": "PostalAddress",
+                    addressLocality: city.name,
+                    addressRegion: city.uf,
+                    addressCountry: "BR",
+                  },
+                },
+                aggregateRating: {
+                  "@type": "AggregateRating",
+                  ratingValue: agg.ratingValue,
+                  reviewCount: String(agg.reviewCount),
+                },
+                review: reviews.map((r) => ({
+                  "@type": "Review",
+                  author: { "@type": "Person", name: r.autor },
+                  datePublished: r.data,
+                  reviewBody: r.texto,
+                  reviewRating: {
+                    "@type": "Rating",
+                    ratingValue: String(r.nota),
+                    bestRating: "5",
+                  },
+                })),
+              }),
               {
                 "@type": "FAQPage",
                 "@id": `${url}#faq`,
@@ -180,6 +181,7 @@ export function buildVehicleCityHead(loaderData: LoaderData | undefined) {
                   acceptedAnswer: { "@type": "Answer", text: f.a },
                 })),
               },
+
               {
                 "@type": "BreadcrumbList",
                 itemListElement: [
