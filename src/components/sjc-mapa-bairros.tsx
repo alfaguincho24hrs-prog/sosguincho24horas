@@ -29,23 +29,11 @@ const COORDS: Record<string, { lat: number; lng: number }> = {
   "zona-leste": { lat: -23.2, lng: -45.83 },
 };
 
-const TIPOS: Array<{
-  slug: string;
-  label: string;
-  to:
-    | "/guincho-carro-sjc/$bairro"
-    | "/guincho-moto-sjc/$bairro"
-    | "/guincho-caminhao-sjc/$bairro"
-    | "/guincho-transporte-de-veiculos-sjc/$bairro";
-}> = [
-  { slug: "carro", label: "Carro", to: "/guincho-carro-sjc/$bairro" },
-  { slug: "moto", label: "Moto", to: "/guincho-moto-sjc/$bairro" },
-  { slug: "caminhao", label: "Caminhão", to: "/guincho-caminhao-sjc/$bairro" },
-  {
-    slug: "transporte-de-veiculos",
-    label: "Transporte",
-    to: "/guincho-transporte-de-veiculos-sjc/$bairro",
-  },
+const TIPOS: Array<{ slug: string; label: string }> = [
+  { slug: "carro", label: "Carro" },
+  { slug: "moto", label: "Moto" },
+  { slug: "caminhao", label: "Caminhão" },
+  { slug: "transporte-de-veiculos", label: "Transporte" },
 ];
 
 const LAT_MIN = -23.272;
@@ -218,8 +206,8 @@ export function SjcMapaBairros() {
           {TIPOS.map((t) => (
             <Link
               key={t.slug}
-              to={t.to}
-              params={{ bairro: ativo.slug }}
+              to="/guincho-{$tipo}-sjc/$bairro"
+              params={{ tipo: t.slug, bairro: ativo.slug }}
               className="rounded-lg border px-3 py-2 text-center text-sm transition-colors hover:border-primary hover:text-primary"
             >
               {t.label}
@@ -255,8 +243,8 @@ export function SjcMapaLinks() {
             {TIPOS.map((t) => (
               <Link
                 key={t.slug}
-                to={t.to}
-                params={{ bairro: b.slug }}
+                to="/guincho-{$tipo}-sjc/$bairro"
+                params={{ tipo: t.slug, bairro: b.slug }}
                 className="rounded-full border px-2.5 py-0.5 text-xs text-muted-foreground transition-colors hover:border-primary hover:text-primary"
               >
                 {t.label}
