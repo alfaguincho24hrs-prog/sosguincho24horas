@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <sitemap><loc>https://sosguincho24horas.com.br/sitemap-static.xml</loc></sitemap>
-  <sitemap><loc>https://sosguincho24horas.com.br/sitemap-cities.xml</loc></sitemap>
-  <sitemap><loc>https://sosguincho24horas.com.br/sitemap-veiculos.xml</loc></sitemap>
-  <sitemap><loc>https://sosguincho24horas.com.br/sitemap-highways.xml</loc></sitemap>
-  <sitemap><loc>https://sosguincho24horas.com.br/sitemap-sjc.xml</loc></sitemap>
-  <sitemap><loc>https://sosguincho24horas.com.br/sitemap-blog.xml</loc></sitemap>
+  <sitemap>
+    <loc>https://sosguincho24horas.com.br/sitemap-static.xml</loc>
+    <lastmod>2026-07-26T02:29:14.160Z</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://sosguincho24horas.com.br/sitemap-cities.xml</loc>
+    <lastmod>2026-07-26T02:29:14.160Z</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://sosguincho24horas.com.br/sitemap-highways.xml</loc>
+    <lastmod>2026-07-26T02:29:14.160Z</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://sosguincho24horas.com.br/sitemap-blog.xml</loc>
+    <lastmod>2026-07-26T02:29:14.160Z</lastmod>
+  </sitemap>
 </sitemapindex>
