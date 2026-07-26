@@ -12,6 +12,10 @@ import {
   Fuel,
   Bike,
   Car,
+  KeyRound,
+  MountainSnow,
+  Sailboat,
+  Forklift,
 } from "lucide-react";
 import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
@@ -333,6 +337,14 @@ const SERVICE_ITEMS = [
   { icon: ShieldCheck, title: "Remoção veicular", desc: "Retirada de sinistrados, leilões e transportes programados." },
 ];
 
+const SPECIALTY_ITEMS = [
+  { icon: KeyRound, title: "Chaveiro automotivo", desc: "Abertura de veículo com chave trancada, chave quebrada na ignição e cópia de emergência no local." },
+  { icon: MountainSnow, title: "Resgate 4x4 e atolamento", desc: "Retirada de veículos atolados em areia, barro, trilha ou terreno irregular com guincho de arraste e cabo de aço." },
+  { icon: Sailboat, title: "Transporte de embarcações", desc: "Reboque de barcos, lanchas e jet ski sobre carreta própria, com amarração segura até marina, rampa ou garagem." },
+  { icon: Forklift, title: "Empilhadeira e trator", desc: "Transporte de empilhadeiras, tratores, retroescavadeiras e máquinas agrícolas em prancha rebaixada." },
+  { icon: ShieldCheck, title: "Guincho para carro blindado", desc: "Remoção de veículos blindados e de alto valor com plataforma reforçada e operador treinado, sem risco à estrutura." },
+];
+
 const SP_REGIONAL_FAQS = [
   {
     zone: "Zona Norte",
@@ -472,7 +484,7 @@ function CityPage() {
         "hasOfferCatalog": {
           "@type": "OfferCatalog",
           "name": `Serviços de Reboque em ${city.name}`,
-          "itemListElement": SERVICE_ITEMS.map((s, i) => ({
+          "itemListElement": [...SERVICE_ITEMS, ...SPECIALTY_ITEMS].map((s, i) => ({
             "@type": "Offer",
             "position": i + 1,
             "itemOffered": {
@@ -650,6 +662,32 @@ function CityPage() {
         <p className="mt-2 max-w-3xl text-muted-foreground">{copy.servicesIntro}</p>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICE_ITEMS.map((s) => (
+            <Card key={s.title} className="border-border/60">
+              <CardContent className="p-5">
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-md bg-secondary">
+                  <s.icon className="h-5 w-5 text-primary" />
+                </div>
+                <h4 className="font-semibold">
+                  {s.title} em {city.name}
+                </h4>
+                <p className="mt-1 text-sm text-muted-foreground">{s.desc}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Serviços especializados na cidade */}
+      <section className="mt-14">
+        <h2 className="text-2xl font-bold md:text-3xl text-accent">
+          Serviços especializados em {city.name}
+        </h2>
+        <p className="mt-2 max-w-3xl text-muted-foreground">
+          Além do reboque convencional, atendemos ocorrências que exigem equipamento
+          e operador específicos em {city.name}/{city.uf} — sempre 24 horas por dia.
+        </p>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {SPECIALTY_ITEMS.map((s) => (
             <Card key={s.title} className="border-border/60">
               <CardContent className="p-5">
                 <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-md bg-secondary">
@@ -1143,7 +1181,7 @@ function CityPage() {
       </section>
 
       {/* Depoimentos rotacionados por cidade (variação anti-doorway) */}
-      <LazyTestimonialsCarousel citySeed={`${city.slug}-${city.uf}`} />
+      <LazyTestimonialsCarousel citySeed={`${city.name} - ${city.uf}`} />
 
       {/* Botão de edição (login na rota /admin) */}
       <AdminEditButton citySlugUf={`${city.slug}-${city.uf.toLowerCase()}`} />
