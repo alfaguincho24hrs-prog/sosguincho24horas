@@ -1,13 +1,17 @@
 User-agent: *
 Allow: /
 Allow: /guincho-em-
+Allow: /guincho-sjc
 Allow: /guinchos-nas-rodovias-
+Allow: /blog/
 Disallow: /admin
+Disallow: /api/
 Disallow: /lovable/
 
-# Googlebot — prioridade total nas páginas de cidade
+# Googlebot — prioridade nas páginas de cidade, bairro e rodovia
 User-agent: Googlebot
 Allow: /
-Allow: /guincho-em-
+Disallow: /admin
+Disallow: /api/
 
 Sitemap: https://sosguincho24horas.com.br/sitemap.xml
