@@ -245,6 +245,19 @@ function CitiesIndexPage() {
         </div>
       )}
 
+      {/* Perguntas frequentes */}
+      <section className="defer-paint mt-16">
+        <h2 className="text-2xl font-bold text-accent">Perguntas frequentes sobre guincho e reboque</h2>
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
+          {PAGE_FAQS.map((f) => (
+            <div key={f.q} className="rounded-xl border border-border/60 p-5">
+              <h3 className="font-semibold">{f.q}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* CTA final */}
       <section className="mt-16 rounded-2xl bg-secondary/50 p-10 text-center">
         <h2 className="text-2xl font-bold">
