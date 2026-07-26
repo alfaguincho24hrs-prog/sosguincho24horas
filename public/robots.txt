@@ -15,3 +15,4 @@ Disallow: /admin
 Disallow: /api/
 
 Sitemap: https://sosguincho24horas.com.br/sitemap.xml
+Sitemap: https://sosguincho24horas.com.br/sitemap-index.xml
