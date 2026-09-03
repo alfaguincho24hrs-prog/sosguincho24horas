@@ -298,7 +298,7 @@ function CitiesGrid({
           >
             <CardContent className="p-4">
               <Link
-                to="/guincho-em-$slug"
+                to="/guincho-em-{$slug}"
                 params={{ slug: slugUf }}
                 className="flex items-center gap-3"
               >
