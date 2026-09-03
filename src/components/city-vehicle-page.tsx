@@ -44,11 +44,11 @@ function findCity(slug: string): City | undefined {
 
 export type LoaderData = { tipo: TipoVeiculoBase; city: City };
 
-export const TIPO_ROUTE: Record<string, "/guincho-carro-em-{$slug}" | "/guincho-moto-em-{$slug}" | "/guincho-caminhao-em-{$slug}" | "/guincho-transporte-de-veiculos-em-{$slug}"> = {
-  carro: "/guincho-carro-em-{$slug}",
-  moto: "/guincho-moto-em-{$slug}",
-  caminhao: "/guincho-caminhao-em-{$slug}",
-  "transporte-de-veiculos": "/guincho-transporte-de-veiculos-em-{$slug}",
+export const TIPO_ROUTE: Record<string, "/guincho-carro-em-$slug" | "/guincho-moto-em-$slug" | "/guincho-caminhao-em-$slug" | "/guincho-transporte-de-veiculos-em-$slug"> = {
+  carro: "/guincho-carro-em-$slug",
+  moto: "/guincho-moto-em-$slug",
+  caminhao: "/guincho-caminhao-em-$slug",
+  "transporte-de-veiculos": "/guincho-transporte-de-veiculos-em-$slug",
 };
 
 /** Loader compartilhado pelas 4 rotas por tipo de veículo */
