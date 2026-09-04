@@ -2,8 +2,10 @@ import { memo } from "react";
 
 /**
  * Bloco "Outras Páginas" — lista de termos exibida acima do rodapé.
- * Texto puro (sem links) para não gerar URLs inexistentes.
+ * Cada termo vira link interno para a landing de marketing/SEO.
  */
+const TARGET = "https://sosguincho24horas.com.br/marketing-para-guinchos";
+
 const TERMS: string[] = [
   "Agência de Marketing de SEO para Guinchos e Reboques",
   "Agência de Publicidade para Guinchos e Reboques",
@@ -135,11 +137,14 @@ const OtherPages = memo(() => {
         </h2>
         <ul className="mt-4 flex flex-wrap gap-x-2 gap-y-1.5">
           {TERMS.map((t, i) => (
-            <li
-              key={t}
-              className="text-xs leading-relaxed text-muted-foreground/80"
-            >
-              {t}
+            <li key={t} className="text-xs leading-relaxed text-muted-foreground/80">
+              <a
+                href={TARGET}
+                className="hover:text-accent hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 rounded-sm"
+                rel="noopener noreferrer"
+              >
+                {t}
+              </a>
               {i < TERMS.length - 1 && (
                 <span aria-hidden="true" className="ml-2 opacity-40">
                   ·
